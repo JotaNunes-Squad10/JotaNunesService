@@ -19,6 +19,6 @@ public class KeycloakService : ExternalService
 {
     public required string ClientId { get; set; }
     public required string ClientSecret { get; set; }
-    public readonly string Token = "/realms/DevLog/protocol/openid-connect/token";
-    public readonly string User = "/admin/realms/DevLog/users";
+    public readonly string Token = "/realms/JotaNunes/protocol/openid-connect/token";
+    public readonly string User = "/admin/realms/JotaNunes/users";
 }
