@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotaNunes.Domain", "JotaNun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotaNunes.Infrastructure.Data", "JotaNunes.Infrastructure.Data\JotaNunes.Infrastructure.Data.csproj", "{E68B0732-EA95-4DE9-A1B8-649E476CF686}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotaNunes.Infrastructure.CrossCutting.Commons", "JotaNunes.Infrastructure.CrossCutting.Commons\JotaNunes.Infrastructure.CrossCutting.Commons.csproj", "{DDC82CAC-553F-432F-B56C-0F0455A90A1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotaNunes.Infrastructure.CrossCutting.Integration", "JotaNunes.Infrastructure.CrossCutting.Integration\JotaNunes.Infrastructure.CrossCutting.Integration.csproj", "{728C1DBB-1B1C-492A-B223-729D5FEAAD0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,15 @@ Global
 		{E68B0732-EA95-4DE9-A1B8-649E476CF686}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E68B0732-EA95-4DE9-A1B8-649E476CF686}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E68B0732-EA95-4DE9-A1B8-649E476CF686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC82CAC-553F-432F-B56C-0F0455A90A1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC82CAC-553F-432F-B56C-0F0455A90A1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC82CAC-553F-432F-B56C-0F0455A90A1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC82CAC-553F-432F-B56C-0F0455A90A1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{728C1DBB-1B1C-492A-B223-729D5FEAAD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{728C1DBB-1B1C-492A-B223-729D5FEAAD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{728C1DBB-1B1C-492A-B223-729D5FEAAD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{728C1DBB-1B1C-492A-B223-729D5FEAAD0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
