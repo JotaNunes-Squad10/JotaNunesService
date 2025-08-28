@@ -7,11 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\JotaNunes.Domain\JotaNunes.Domain.csproj" />
       <ProjectReference Include="..\JotaNunes.Infrastructure.CrossCutting.Commons\JotaNunes.Infrastructure.CrossCutting.Commons.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>
