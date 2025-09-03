@@ -1,17 +1,24 @@
 using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using FluentValidation;
+using JotaNunes.Api.Configuration.AutoMapper;
+using JotaNunes.Api.Configuration.HealthChecks;
 using JotaNunes.Api.Configuration.Swagger;
+using JotaNunes.Domain.Interfaces;
+using JotaNunes.Domain.Models;
 using JotaNunes.Domain.Services;
 using JotaNunes.Domain.Services.Base;
-using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Notification;
-using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
+using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Interfaces;
-using JotaNunes.Infrastructure.Data.Settings;
+using JotaNunes.Infrastructure.Data.Contexts;
+using JotaNunes.Infrastructure.Data.Repositories.Base;
 using Keycloak.AuthServices.Authentication;
+using Keycloak.AuthServices.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using KeycloakService = JotaNunes.Infrastructure.CrossCutting.Integration.Services.KeycloakService;
 
@@ -21,17 +28,18 @@ public static class ApiConfig
 {
     public static IServiceCollection ConfigureStartupApi(this IServiceCollection services, IConfiguration configuration)
     {
-        if (services == null) throw new ArgumentNullException(nameof(services));
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration));
-     
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(configuration);
+
         services.AddSwaggerConfiguration();
         services.AddApiConfiguration();
         services.AddMediatorConfiguration();
+        services.AddAutoMapperConfiguration();
         services.RegisterApiVersion();
         services.RegisterAppSettings(configuration);
+        services.RegisterPatterns();
         services.RegisterIoC();
         services.AddHttpClient();
-        services.AddAuthenticationConfiguration(configuration);
 
         return services;
     }
@@ -59,7 +67,9 @@ public static class ApiConfig
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
-        // services.AddHealthCheckSetup();
+        services.AddHealthCheckSetup();
+
+        services.AddCustomAuth();
     }
 
     private static void RegisterAppSettings(this IServiceCollection services, IConfiguration configuration)
@@ -74,23 +84,27 @@ public static class ApiConfig
         if (appProvider.ExternalServices == null || appProvider.ExternalServices.KeycloakService == null || string.IsNullOrWhiteSpace(appProvider.ExternalServices.KeycloakService.Url))
             throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService.Url is missing.");
 
+        var connectionString = configuration.GetConnectionString("AppConnectionString");
+        
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new InvalidOperationException("Invalid ApplicationProvider configuration: AppConnectionString is missing.");
+        
+        appProvider.DataBase = Encoding.UTF8.GetString(Convert.FromBase64String(connectionString));
+        
         services.AddSingleton(appProvider);
         services.AddContexts();
     }
 
     private static void AddContexts(this IServiceCollection services)
     {
-        services.Configure<DatabaseSettings>(options =>
-        {
-            options.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")!;
-            options.DatabaseName = Environment.GetEnvironmentVariable("DATABASE_NAME")!;
-        });
+        services.AddDbContext<ApplicationContext>();
+        services.AddScoped<DbContext, ApplicationContext>();
     }
-
-    private static void AddAuthenticationConfiguration(this IServiceCollection services, IConfiguration configuration)
+    
+    public static IServiceCollection AddCustomAuth(this IServiceCollection services)
     {
-        services.AddKeycloakWebApiAuthentication(configuration);
-        services.AddAuthorization();
+        services.AddSingleton<IUser, User>();
+        return services;
     }
 
     private static void AddMediatorConfiguration(this IServiceCollection services)
@@ -121,16 +135,14 @@ public static class ApiConfig
 
         app.UseCors("AllowFrontend");
 
-        // app.UseAppHealthChecks();
+        app.UseAppHealthChecks();
 
         app.UseStaticFiles();
 
         app.UseAuthentication();
 
         app.UseAuthorization();
-
-        // app.UseCustomAuth();
-
+        
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
@@ -139,15 +151,39 @@ public static class ApiConfig
         app.UseSwaggerConfiguration();
     }
 
+    private static void UseKeycloakAuthentication(this IConfiguration configuration, IServiceCollection services, IWebHostEnvironment env)
+    {
+        services.AddKeycloakWebApiAuthentication(configuration, options =>
+        {
+            options.RequireHttpsMetadata = !env.IsDevelopment();
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true
+            };
+        });
+        
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Administrador", policy =>
+                policy.RequireClaim("groups", "Administrador"));
+            options.AddPolicy("Gestor", policy =>
+                policy.RequireClaim("groups", "Gestor"));
+            options.AddPolicy("Operador", policy =>
+                policy.RequireClaim("groups", "Operador"));
+        });
+    }
+
     private static void RegisterIoC(this IServiceCollection services)
     {
         services.AddScoped<IDomainService, DomainService>();
-        services.AddScoped<DefaultResponse>();
-        services.AddScoped<INotifications, Notifications>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IKeycloakService, KeycloakService>();
         services.RegisterTypes(AppDataProvider.GetIntegration(), typeof(BaseHttpService));
         // services.RegisterTypes(AppDataProvider.GetApplication(), typeof(BaseQueries<,,>));
-        // services.RegisterTypes(AppDataProvider.GetData(), typeof(BaseRepository<>));
+        services.RegisterTypes(AppDataProvider.GetData(), typeof(BaseRepository<>));
     }
 
     private static void RegisterTypes(this IServiceCollection services, Assembly assembly, Type baseType)

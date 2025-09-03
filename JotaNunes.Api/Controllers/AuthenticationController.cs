@@ -3,7 +3,7 @@ using JotaNunes.Application.UseCases.Authentication.Commands.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JotaNunes.Api.Controllers.Authentication;
+namespace JotaNunes.Api.Controllers;
 
 public class AuthenticationController(
     IMediator mediator

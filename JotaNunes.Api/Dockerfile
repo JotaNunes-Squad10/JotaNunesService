@@ -1,7 +1,8 @@
 ﻿# docker build -f Dockerfile -t jotanunes.api .
 # docker run -p 8000:8080 \
-#   --env ApplicationProvider:ExternalServices:KeycloakService:ClientId=ClientId \
-#   --env ApplicationProvider:ExternalServices:KeycloakService:ClientSecret=ClientSecret \
+#   --env ApplicationProvider__ExternalServices__KeycloakService__ClientId=ClientId \
+#   --env ApplicationProvider__ExternalServices__KeycloakService__ClientSecret=ClientSecret \
+#   --env ConnectionStrings__AppConnectionString=ConnectionString \
 #   --name jotanunes.api jotanunes.api
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
