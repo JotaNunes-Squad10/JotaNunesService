@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace JotaNunes.Domain.Services.Base;
 
-public class BaseHttpService(HttpClient httpClient, IDomainService domainService)
+public abstract class BaseHttpService(HttpClient httpClient, IDomainService domainService)
 {
     protected ExternalServices ExternalServices => domainService.AppProvider.ExternalServices;
     

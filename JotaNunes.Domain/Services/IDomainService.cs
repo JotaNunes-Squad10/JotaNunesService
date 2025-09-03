@@ -1,3 +1,5 @@
+using AutoMapper;
+using JotaNunes.Domain.Interfaces;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Notification;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
@@ -8,5 +10,8 @@ public interface IDomainService
 {
     ApplicationProvider AppProvider { get; }
     DefaultResponse Response { get; }
+    IMapper Mapper { get; }
     INotifications Notifications { get; }
+    IUnitOfWork UnitOfWork { get; }
+    IUser User { get; }
 }
