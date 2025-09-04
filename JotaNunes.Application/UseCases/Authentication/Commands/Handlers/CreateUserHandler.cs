@@ -30,7 +30,7 @@ public class CreateUserHandler(
                 LastName = request.LastName,
                 Email = request.Email,
                 Enabled = true,
-                Groups = [(Group)request.Profile],
+                Groups = [((Group)request.Profile).GetName()],
                 Credentials = [new() { Type = "password", Value = request.Password }]
             };
             var response = await keycloakService.CreateUser(keycloakRequest);

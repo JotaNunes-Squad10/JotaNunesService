@@ -12,7 +12,7 @@ public class CreateUserRequest
     
     public required bool Enabled { get; set; }
     
-    public List<Group>? Groups { get; set; }
+    public List<string>? Groups { get; set; }
     
     public required List<Credentials> Credentials { get; set; }
 }

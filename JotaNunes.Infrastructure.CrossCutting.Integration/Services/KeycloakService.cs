@@ -43,7 +43,7 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
             var content = await response.Content.ReadAsStringAsync();
             var error = JsonSerializer.Deserialize<ErrorResponse>(content);
             
-            AddError(nameof(CreateUser), $"{response.StatusCode}: {error?.ErrorMessage}");
+            AddError(nameof(CreateUser), $"{response.StatusCode}: {error?.Error}");
             
             return new CreateUserResponse
                 { Message = "User creation failed." };
