@@ -2,6 +2,7 @@ using JotaNunes.Domain.Interfaces.Base;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.ErrorMessages;
+using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
 
 namespace JotaNunes.Application.UseCases.Base;
 
@@ -12,7 +13,10 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
     where TResponse : class
     where TRepository : IBaseRepository<TEntity>
 {
-    private async Task<TResponse> CommitAsync(TEntity entity)
+    private readonly IDomainService _domainService = domainService;
+    protected ExternalServices ExternalServices => _domainService.AppProvider.ExternalServices;
+    
+    private async Task<TResponse?> CommitAsync(TEntity entity)
     {
         if (!IsNull(entity))
         {

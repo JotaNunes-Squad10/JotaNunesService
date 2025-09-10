@@ -7,7 +7,7 @@ using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Interfaces;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Responses.Keycloak;
 using CreateUserRequest = JotaNunes.Application.UseCases.Authentication.Commands.Requests.CreateUserRequest;
-using KeycloakUser = JotaNunes.Infrastructure.CrossCutting.Integration.Requests.Keycloak.CreateUserRequest;
+using KeycloakCreateUserRequest = JotaNunes.Infrastructure.CrossCutting.Integration.Requests.Keycloak.CreateUserRequest;
 using MediatR;
 
 namespace JotaNunes.Application.UseCases.Authentication.Commands.Handlers;
@@ -23,7 +23,7 @@ public class CreateUserHandler(
     {
         try
         {
-            var keycloakRequest = new KeycloakUser
+            var createUserRequest = new KeycloakCreateUserRequest
             {
                 Username = request.Username,
                 FirstName = request.FirstName,
@@ -33,7 +33,7 @@ public class CreateUserHandler(
                 Groups = [((Group)request.Profile).GetName()],
                 Credentials = [new() { Type = "password", Value = request.Password }]
             };
-            var response = await keycloakService.CreateUser(keycloakRequest);
+            var response = await keycloakService.CreateUser(createUserRequest);
             return Response(response);
         }
         catch (Exception)

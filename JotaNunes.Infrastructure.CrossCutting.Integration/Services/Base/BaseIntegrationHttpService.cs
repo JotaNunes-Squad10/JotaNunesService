@@ -10,7 +10,7 @@ public class BaseIntegrationHttpService(
     IDomainService domainService
 ) : BaseHttpService(httpClient, domainService)
 {
-    protected static FormUrlEncodedContent  PrepareTokenRequest(TokenRequest request)
+    protected static FormUrlEncodedContent  PrepareAuthenticationRequest(AuthenticationRequest request)
         => HttpContentHelper.ToFormUrlEncodedContent(request);
     
     protected static StringContent PrepareCreateUserRequest(CreateUserRequest request)

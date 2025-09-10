@@ -9,6 +9,13 @@ public class AuthenticationController(
     IMediator mediator
 ) : BaseController(mediator)
 {
+    [HttpPost("Authenticate")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> AuthenticateAsync([FromBody] AuthenticationRequest request)
+        => CustomResponse(await Send(request));
+    
+    
     [HttpPost("CreateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

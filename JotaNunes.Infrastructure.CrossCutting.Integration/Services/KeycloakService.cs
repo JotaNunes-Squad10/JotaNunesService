@@ -15,26 +15,29 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
     private string _token = string.Empty;
     private DateTime _tokenExpiry;
 
-    private async Task<string> GetToken()
+    private async Task<string> GetMasterToken()
     {
         if (string.IsNullOrEmpty(_token) || DateTime.UtcNow >= _tokenExpiry)
         {
-            var request = new TokenRequest
+            var request = new AuthenticationRequest
             {
                 ClientId = ExternalServices.KeycloakService.ClientId,
                 ClientSecret = ExternalServices.KeycloakService.ClientSecret,
                 GrantType = "client_credentials"
             };
-            var response = await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareTokenRequest(request));
+            var response = await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareAuthenticationRequest(request));
             _token = response.AccessToken;
             _tokenExpiry = DateTime.UtcNow.AddSeconds(response.ExpiresIn - 30);
         }
         return _token;
     }
+
+    public async Task<TokenResponse> Authenticate(AuthenticationRequest request)
+        => await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareAuthenticationRequest(request));
     
     public async Task<CreateUserResponse> CreateUser(CreateUserRequest request)
     {
-        SetAuthorization("Bearer", await GetToken());
+        SetAuthorization("Bearer", await GetMasterToken());
         
         var response = await PostAsync($"{ExternalServices.KeycloakService.User}", PrepareCreateUserRequest(request));
 
