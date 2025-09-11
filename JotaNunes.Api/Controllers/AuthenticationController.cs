@@ -1,5 +1,7 @@
 using JotaNunes.Api.Controllers.Base;
 using JotaNunes.Application.UseCases.Authentication.Commands.Requests;
+using JotaNunes.Domain.Attributes;
+using JotaNunes.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +17,7 @@ public class AuthenticationController(
     public async Task<IActionResult> AuthenticateAsync([FromBody] AuthenticationRequest request)
         => CustomResponse(await Send(request));
     
-    
+    [AuthorizeGroup(Group.Administrador)]
     [HttpPost("CreateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

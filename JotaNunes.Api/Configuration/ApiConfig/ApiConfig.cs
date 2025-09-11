@@ -1,11 +1,8 @@
-using System.Reflection;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 using FluentValidation;
 using JotaNunes.Api.Configuration.AutoMapper;
 using JotaNunes.Api.Configuration.HealthChecks;
 using JotaNunes.Api.Configuration.Swagger;
+using JotaNunes.Domain.Extensions;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Models;
 using JotaNunes.Domain.Services;
@@ -17,10 +14,14 @@ using JotaNunes.Infrastructure.Data.Contexts;
 using JotaNunes.Infrastructure.Data.Repositories.Base;
 using Keycloak.AuthServices.Authentication;
 using Keycloak.AuthServices.Authorization;
+using KeycloakService = JotaNunes.Infrastructure.CrossCutting.Integration.Services.KeycloakService;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
-using KeycloakService = JotaNunes.Infrastructure.CrossCutting.Integration.Services.KeycloakService;
+using System.Reflection;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace JotaNunes.Api.Configuration.ApiConfig;
 
@@ -40,14 +41,13 @@ public static class ApiConfig
         services.RegisterPatterns();
         services.RegisterIoC();
         services.AddHttpClient();
+        services.AddCustomAuth(configuration);
 
         return services;
     }
     
     private static void AddApiConfiguration(this IServiceCollection services)
     {
-        // services.AddControllersWithViews();
-        
         services
             .AddControllers(options =>
             {
@@ -68,8 +68,6 @@ public static class ApiConfig
             });
 
         services.AddHealthCheckSetup();
-
-        services.AddCustomAuth();
     }
 
     private static void RegisterAppSettings(this IServiceCollection services, IConfiguration configuration)
@@ -100,11 +98,38 @@ public static class ApiConfig
         services.AddDbContext<ApplicationContext>();
         services.AddScoped<DbContext, ApplicationContext>();
     }
-    
-    public static IServiceCollection AddCustomAuth(this IServiceCollection services)
+
+    private static void AddCustomAuth(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IUser, User>();
-        return services;
+        
+        var keycloakSection = configuration.GetSection("ApplicationProvider:ExternalServices:KeycloakService");
+        
+        if (keycloakSection == null)
+            throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService is missing.");
+        
+        if (string.IsNullOrWhiteSpace(keycloakSection["Url"]))
+            throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService.Url is missing.");
+        
+        if (string.IsNullOrWhiteSpace(keycloakSection["ClientId"]))
+            throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService.ClientId is missing.");
+
+        services.AddKeycloakWebApiAuthentication(
+            keycloakOptions =>
+            {
+                keycloakOptions.AuthServerUrl = keycloakSection["Url"];
+                keycloakOptions.Realm = "JotaNunes";
+                keycloakOptions.Resource = keycloakSection["ClientId"]!;
+            },
+            jwtBearerOptions =>
+            {
+                jwtBearerOptions.RequireHttpsMetadata = false;
+            });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddGroupPolicies();
+        }).AddKeycloakAuthorization();
     }
 
     private static void AddMediatorConfiguration(this IServiceCollection services)
@@ -114,8 +139,6 @@ public static class ApiConfig
         AssemblyScanner
             .FindValidatorsInAssembly(assembly)
             .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
-
-        // services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PipelineBehavior<,>));
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
     }
@@ -133,8 +156,6 @@ public static class ApiConfig
 
         app.UseRouting();
 
-        app.UseCors("AllowFrontend");
-
         app.UseAppHealthChecks();
 
         app.UseStaticFiles();
@@ -149,31 +170,6 @@ public static class ApiConfig
         });
 
         app.UseSwaggerConfiguration();
-    }
-
-    private static void UseKeycloakAuthentication(this IConfiguration configuration, IServiceCollection services, IWebHostEnvironment env)
-    {
-        services.AddKeycloakWebApiAuthentication(configuration, options =>
-        {
-            options.RequireHttpsMetadata = !env.IsDevelopment();
-            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true
-            };
-        });
-        
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("Administrador", policy =>
-                policy.RequireClaim("groups", "Administrador"));
-            options.AddPolicy("Gestor", policy =>
-                policy.RequireClaim("groups", "Gestor"));
-            options.AddPolicy("Operador", policy =>
-                policy.RequireClaim("groups", "Operador"));
-        });
     }
 
     private static void RegisterIoC(this IServiceCollection services)

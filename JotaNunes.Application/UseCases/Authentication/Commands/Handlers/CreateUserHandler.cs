@@ -1,4 +1,5 @@
 using JotaNunes.Application.UseCases.Base;
+using JotaNunes.Domain.Extensions;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Interfaces.Base;
 using JotaNunes.Domain.Models;
@@ -6,7 +7,7 @@ using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Interfaces;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Responses.Keycloak;
-using CreateUserRequest = JotaNunes.Application.UseCases.Authentication.Commands.Requests.CreateUserRequest;
+using JotaNunes.Application.UseCases.Authentication.Commands.Requests;
 using KeycloakCreateUserRequest = JotaNunes.Infrastructure.CrossCutting.Integration.Requests.Keycloak.CreateUserRequest;
 using MediatR;
 

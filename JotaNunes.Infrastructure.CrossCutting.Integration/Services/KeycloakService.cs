@@ -23,7 +23,8 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
             {
                 ClientId = ExternalServices.KeycloakService.ClientId,
                 ClientSecret = ExternalServices.KeycloakService.ClientSecret,
-                GrantType = "client_credentials"
+                GrantType = "client_credentials",
+                Scope = "openid"
             };
             var response = await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareAuthenticationRequest(request));
             _token = response.AccessToken;
