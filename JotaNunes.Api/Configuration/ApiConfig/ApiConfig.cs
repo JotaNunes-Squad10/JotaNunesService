@@ -45,7 +45,7 @@ public static class ApiConfig
 
         return services;
     }
-    
+
     private static void AddApiConfiguration(this IServiceCollection services)
     {
         services
@@ -67,6 +67,16 @@ public static class ApiConfig
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                builder =>
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+        });
+
         services.AddHealthCheckSetup();
     }
 
@@ -83,12 +93,12 @@ public static class ApiConfig
             throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService.Url is missing.");
 
         var connectionString = configuration.GetConnectionString("AppConnectionString");
-        
+
         if (string.IsNullOrWhiteSpace(connectionString))
             throw new InvalidOperationException("Invalid ApplicationProvider configuration: AppConnectionString is missing.");
-        
+
         appProvider.DataBase = Encoding.UTF8.GetString(Convert.FromBase64String(connectionString));
-        
+
         services.AddSingleton(appProvider);
         services.AddContexts();
     }
@@ -102,15 +112,15 @@ public static class ApiConfig
     private static void AddCustomAuth(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IUser, User>();
-        
+
         var keycloakSection = configuration.GetSection("ApplicationProvider:ExternalServices:KeycloakService");
-        
+
         if (keycloakSection == null)
             throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService is missing.");
-        
+
         if (string.IsNullOrWhiteSpace(keycloakSection["Url"]))
             throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService.Url is missing.");
-        
+
         if (string.IsNullOrWhiteSpace(keycloakSection["ClientId"]))
             throw new InvalidOperationException("Invalid ApplicationProvider configuration: ExternalServices.KeycloakService.ClientId is missing.");
 
@@ -156,6 +166,8 @@ public static class ApiConfig
 
         app.UseRouting();
 
+        app.UseCors("AllowAll");
+
         app.UseAppHealthChecks();
 
         app.UseStaticFiles();
@@ -163,7 +175,7 @@ public static class ApiConfig
         app.UseAuthentication();
 
         app.UseAuthorization();
-        
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
@@ -185,7 +197,7 @@ public static class ApiConfig
     private static void RegisterTypes(this IServiceCollection services, Assembly assembly, Type baseType)
     {
         var types = assembly.DefinedTypes
-            .Where(x => x.ImplementedInterfaces.Any() 
+            .Where(x => x.ImplementedInterfaces.Any()
                 && x is { IsInterface: false, IsAbstract: false, BaseType: not null }
                 && x.BaseType.Name.Equals(baseType.Name));
 
