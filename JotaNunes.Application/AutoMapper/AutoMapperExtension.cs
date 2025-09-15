@@ -28,5 +28,4 @@ public static class AutoMapperExtension
 
         return map;
     }
-    
 }

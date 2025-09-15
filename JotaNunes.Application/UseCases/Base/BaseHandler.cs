@@ -49,14 +49,29 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
     public TEntity Map(TRequest request)
         => Map<TEntity, TRequest>(request);
 
-    protected async Task<TResponse> InsertAsync(TRequest request)
+    protected async Task<TResponse?> InsertAsync(TRequest request)
         => await InsertAsync(Map(request));
 
-    protected async Task<TResponse> InsertAsync(TEntity entity)
+    protected async Task<TResponse?> InsertAsync(TEntity entity)
     {
         if (!IsNull(entity))
             await Repository.InsertAsync(entity);
 
+        return await CommitAsync(entity);
+    }
+
+    protected async Task<TResponse?> UpdateAsync(TRequest request)
+    {
+        var entity = await Repository.GetByIdAsync(Map(request).Id);
+        
+        if (IsNull(entity)) return null;
+        
+        return await UpdateAsync(entity!);
+    }
+
+    protected async Task<TResponse?> UpdateAsync(TEntity entity)
+    {
+        Repository.Update(entity);
         return await CommitAsync(entity);
     }
 }

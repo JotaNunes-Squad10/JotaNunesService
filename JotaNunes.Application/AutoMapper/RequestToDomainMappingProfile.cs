@@ -14,10 +14,13 @@ public class RequestToDomainMappingProfile : Profile
 {
     public RequestToDomainMappingProfile(IUser user)
     {
+        CreateMap<CreateEmpreendimentoRequest, Empreendimento>().CreateMapper(user);
         CreateMap<CreateItemRequest, Item>().CreateMapper(user);
         CreateMap<CreateMarcaRequest, Marca>().CreateMapper(user);
         CreateMap<CreateMaterialRequest, Material>().CreateMapper(user);
         CreateMap<CreateTopicoRequest, Topico>().CreateMapper(user);
-        CreateMap<CreateEmpreendimentoRequest, Empreendimento>().CreateMapper(user);
+
+        CreateMap<UpdateAmbienteRequest, Ambiente>().UpdateMapper(user);
+        CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
     }
 }
