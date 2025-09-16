@@ -1,5 +1,5 @@
 using JotaNunes.Application.UseCases.Authentication.Commands.Requests;
-using JotaNunes.Application.UseCases.Base;
+using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Interfaces.Base;
 using JotaNunes.Domain.Models;

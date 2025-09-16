@@ -4,7 +4,7 @@ using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.ErrorMessages;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
 
-namespace JotaNunes.Application.UseCases.Base;
+namespace JotaNunes.Application.UseCases.Base.Commands;
 
 public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDomainService domainService, TRepository repository)
     : BaseUseCase<TEntity, TResponse, TRepository>(domainService, repository)
@@ -65,6 +65,8 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
         var entity = await Repository.GetByIdAsync(Map(request).Id);
         
         if (IsNull(entity)) return null;
+        
+        Map(request, entity);
         
         return await UpdateAsync(entity!);
     }

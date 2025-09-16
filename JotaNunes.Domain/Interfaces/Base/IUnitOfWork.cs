@@ -1,4 +1,4 @@
-namespace JotaNunes.Domain.Interfaces;
+namespace JotaNunes.Domain.Interfaces.Base;
 
 public interface IUnitOfWork
 {

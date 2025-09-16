@@ -1,4 +1,4 @@
-using JotaNunes.Domain.Interfaces;
+using JotaNunes.Domain.Interfaces.Base;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Notification;
 using JotaNunes.Infrastructure.Data.Contexts;

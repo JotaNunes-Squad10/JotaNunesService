@@ -2,8 +2,10 @@ using FluentValidation;
 using JotaNunes.Api.Configuration.AutoMapper;
 using JotaNunes.Api.Configuration.HealthChecks;
 using JotaNunes.Api.Configuration.Swagger;
+using JotaNunes.Application.UseCases.Base.Queries;
 using JotaNunes.Domain.Extensions;
 using JotaNunes.Domain.Interfaces;
+using JotaNunes.Domain.Interfaces.Base;
 using JotaNunes.Domain.Models;
 using JotaNunes.Domain.Services;
 using JotaNunes.Domain.Services.Base;
@@ -190,7 +192,7 @@ public static class ApiConfig
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IKeycloakService, KeycloakService>();
         services.RegisterTypes(AppDataProvider.GetIntegration(), typeof(BaseHttpService));
-        // services.RegisterTypes(AppDataProvider.GetApplication(), typeof(BaseQueries<,,>));
+        services.RegisterTypes(AppDataProvider.GetApplication(), typeof(BaseQueries<,,>));
         services.RegisterTypes(AppDataProvider.GetData(), typeof(BaseRepository<>));
     }
 
