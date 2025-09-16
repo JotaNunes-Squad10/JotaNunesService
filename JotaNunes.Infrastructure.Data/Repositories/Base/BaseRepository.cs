@@ -24,6 +24,9 @@ public abstract class BaseRepository<TEntity>(ApplicationContext applicationCont
     private IQueryable<T> GetFromSql<T>(string sql, params object[] parameters) where T : class
         => applicationContext.Set<T>().FromSqlRaw(sql, parameters);
     
+    public virtual async Task<List<TEntity>> GetAllAsync()
+        => await GetTracking.OrderBy(x => x.Id).ToListAsync();
+    
     public virtual async Task<TEntity?> GetByIdAsync(long id)
         => await GetTracking.FirstOrDefaultAsync(x => x.Id == id);
 

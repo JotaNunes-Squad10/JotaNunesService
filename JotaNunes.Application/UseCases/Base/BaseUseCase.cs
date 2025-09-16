@@ -1,5 +1,6 @@
 using JotaNunes.Domain.Interfaces.Base;
 using JotaNunes.Domain.Services;
+using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.ErrorMessages;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 
 namespace JotaNunes.Application.UseCases.Base;
@@ -52,6 +53,19 @@ public abstract class BaseUseCase<TEntity, TResponse, TRepository>(IDomainServic
         if (value == null)
         {
             AddError("IsNull", message);
+            return true;
+        }
+        return false;
+    }
+
+    public bool ListIsNullOrEmpty(IEnumerable<TEntity> value)
+        => ListIsNullOrEmpty<TEntity>(value);
+
+    public bool ListIsNullOrEmpty<T>(IEnumerable<T>? value)
+    {
+        if (value == null || !value.Any())
+        {
+            AddError(typeof(IEnumerable<T>).Name, ErrorMessage.ListIsNullOrEmpty);
             return true;
         }
         return false;

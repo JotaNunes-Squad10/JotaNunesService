@@ -1,5 +1,6 @@
 ﻿using JotaNunes.Api.Controllers.Base;
 using JotaNunes.Application.UseCases.Topico.Commands.Requests;
+using JotaNunes.Application.UseCases.Topico.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,18 @@ public class TopicoController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateTopicoAsync([FromBody] CreateTopicoRequest request)
         => CustomResponse(await Send(request));
+    
+    [HttpGet("GetAllTopicos")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAllTopicosAsync()
+        => CustomResponse(await topicoQueries.GetAllAsync());
+    
+    [HttpGet("GetTopicoById/{id:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAmbienteById([FromRoute] long id)
+        => CustomResponse(await topicoQueries.GetByIdAsync(id));
     
     [HttpPatch("UpdateTopico")]
     [ProducesResponseType(StatusCodes.Status200OK)]
