@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,11 @@ namespace JotaNunes.Api.Controllers.Base;
 [Route("/api/v{version:apiVersion}/[controller]")]
 public class BaseController(IMediator mediator) : ControllerBase
 {
-    protected Task<TResponse> Send<TResponse>(IRequest<TResponse> request) => mediator.Send(request);
+    protected Task<TResponse> Send<TResponse>(IRequest<TResponse> request)
+        => mediator.Send(request);
+
+    protected Task<DefaultResponse> Send(long id)
+        => mediator.Send(new BaseRequest { Id = id });
     
     protected ActionResult CustomResponse(DefaultResponse response)
     {

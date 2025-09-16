@@ -76,4 +76,19 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
         Repository.Update(entity);
         return await CommitAsync(entity);
     }
+
+    protected async Task<TResponse?> DeleteAsync(long id)
+    {
+        var entity = await Repository.GetByIdAsync(id);
+        
+        if (IsNull(entity)) return null;
+        
+        return await DeleteAsync(entity!);
+    }
+
+    protected async Task<TResponse?> DeleteAsync(TEntity entity)
+    {
+        entity.Delete();
+        return await UpdateAsync(entity);
+    }
 }

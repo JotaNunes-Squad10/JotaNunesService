@@ -18,10 +18,6 @@ public class UpdateAmbienteHandler(
     {
         try
         {
-            var ambiente = await Repository.GetByIdAsync(request.Id);
-            
-            if (IsNull(ambiente)) return Response();
-            
             return Response(await UpdateAsync(request));
         }
         catch (Exception e)

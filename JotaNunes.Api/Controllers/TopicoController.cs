@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace JotaNunes.Api.Controllers;
 
 public class TopicoController(
-    IMediator mediator
+    IMediator mediator,
+    ITopicoQueries topicoQueries
 ) : BaseController(mediator)
 {
     [HttpPost("CreateTopico")]
@@ -15,6 +16,13 @@ public class TopicoController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateTopicoAsync([FromBody] CreateTopicoRequest request)
         => CustomResponse(await Send(request));
+    
+    [HttpDelete("DeleteTopico/{id:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteTopicoAsync([FromRoute] long id)
+        => CustomResponse(await Send(id));
     
     [HttpGet("GetAllTopicos")]
     [ProducesResponseType(StatusCodes.Status200OK)]

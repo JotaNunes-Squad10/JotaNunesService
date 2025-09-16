@@ -1,10 +1,8 @@
-using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
-using MediatR;
+using JotaNunes.Application.UseCases.Base.Commands;
 
 namespace JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 
-public class UpdateAmbienteRequest : IRequest<DefaultResponse>
+public class UpdateAmbienteRequest : BaseRequest
 {
-    public long Id { get; set; }
     public string? Nome { get; set; }
 }

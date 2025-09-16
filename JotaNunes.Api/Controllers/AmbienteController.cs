@@ -1,6 +1,7 @@
 using JotaNunes.Api.Controllers.Base;
 using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 using JotaNunes.Application.UseCases.Ambiente.Queries;
+using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,13 @@ public class AmbienteController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAmbienteAsync([FromBody] CreateAmbienteRequest request)
         => CustomResponse(await Send(request));
+    
+    [HttpDelete("DeleteAmbiente/{id:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteAmbienteAsync([FromRoute] long id)
+        => CustomResponse(await Send(id));
     
     [HttpGet("GetAllAmbientes")]
     [ProducesResponseType(StatusCodes.Status200OK)]

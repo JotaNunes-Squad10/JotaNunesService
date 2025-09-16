@@ -22,10 +22,6 @@ public abstract class BaseAuditEntity : BaseEntity
         DataHoraAlteracao = DateTime.UtcNow;
     }
     
-    public void AuditDelete(long userId)
-    {
-        UsuarioAlteracaoId = userId;
-        DataHoraAlteracao = DateTime.UtcNow;
-        Excluido = true;
-    }
+    public void Delete()
+        => Excluido = true;
 }
