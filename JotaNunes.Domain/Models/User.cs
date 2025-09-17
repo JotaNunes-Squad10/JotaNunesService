@@ -3,9 +3,13 @@ using JotaNunes.Domain.Models.Base;
 
 namespace JotaNunes.Domain.Models;
 
-public class User : BaseAuditEntity, IUser
+public class User : BaseEntity, IUser
 {
-    public required string Name { get; set; }
-    public required string Email { get; set; }
-    public required Group Group { get; set; }
+    public new Guid Id { get; set; }
+    public string? Email { get; set; }
+    public required bool EmailVerified { get; set; }
+    public required bool Enabled { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public required string Username { get; set; }
 }

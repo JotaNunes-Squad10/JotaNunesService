@@ -9,7 +9,7 @@ namespace JotaNunes.Infrastructure.Data.Repositories.Base;
 public class UnitOfWork(ApplicationContext applicationContext, INotifications notifications)
     : IUnitOfWork, IDisposable
 {
-    public async Task<bool> CommitAsync(long userId)
+    public async Task<bool> CommitAsync(Guid userId)
     {
         try
         {

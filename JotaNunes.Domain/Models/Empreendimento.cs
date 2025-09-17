@@ -7,5 +7,8 @@ public class Empreendimento : BaseAuditEntity
     public required string Nome { get; set; }
     public required long TamanhoArea { get; set; }
     public required string Localizacao { get; set; }
+    public required long EmpreendimentoStatusId { get; set; }
+    
+    public required EmpreendimentoStatus EmpreendimentoStatus { get; set; }
     public required List<EmpreendimentoTopico> EmpreendimentoTopicos { get; set; }
 }

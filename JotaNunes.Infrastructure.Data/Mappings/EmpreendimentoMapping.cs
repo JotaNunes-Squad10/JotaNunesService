@@ -24,5 +24,9 @@ public class EmpreendimentoMapping : BaseAuditEntityMapping<Empreendimento>
         builder.Property(x => x.Localizacao)
             .HasColumnName("localizacao")
             .IsRequired();
+        
+        builder.HasOne(x => x.EmpreendimentoStatus)
+            .WithMany(x => x.Empreendimentos)
+            .HasForeignKey(x => x.EmpreendimentoStatusId);
     }
 }

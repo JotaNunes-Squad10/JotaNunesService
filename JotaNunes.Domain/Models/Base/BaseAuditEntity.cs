@@ -2,13 +2,13 @@ namespace JotaNunes.Domain.Models.Base;
 
 public abstract class BaseAuditEntity : BaseEntity
 {
-    public long UsuarioInclusaoId { get; set; }
-    public long UsuarioAlteracaoId { get; set; }
+    public Guid UsuarioInclusaoId { get; set; }
+    public Guid UsuarioAlteracaoId { get; set; }
     public DateTime DataHoraInclusao { get; set; }
     public DateTime DataHoraAlteracao { get; set; }
     public bool Excluido { get; set; }
 
-    public void AuditInsert(long userId)
+    public override void AuditInsert(Guid userId)
     {
         UsuarioInclusaoId = userId;
         UsuarioAlteracaoId = userId;
@@ -16,12 +16,12 @@ public abstract class BaseAuditEntity : BaseEntity
         DataHoraAlteracao = DateTime.UtcNow;
     }
 
-    public void AuditUpdate(long userId)
+    public override void AuditUpdate(Guid userId)
     {
         UsuarioAlteracaoId = userId;
         DataHoraAlteracao = DateTime.UtcNow;
     }
     
-    public void Delete()
+    public override void Delete()
         => Excluido = true;
 }

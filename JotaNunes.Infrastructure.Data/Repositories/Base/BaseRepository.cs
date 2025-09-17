@@ -15,13 +15,13 @@ public abstract class BaseRepository<TEntity>(ApplicationContext applicationCont
 
     public IDomainService DomainService => domainService;
 
-    private IQueryable<TEntity> Get
+    protected IQueryable<TEntity> Get
         => _applicationDbSet.AsNoTracking();
 
-    private IQueryable<TEntity> GetTracking
+    protected IQueryable<TEntity> GetTracking
         => _applicationDbSet.AsQueryable<TEntity>();
 
-    private IQueryable<T> GetFromSql<T>(string sql, params object[] parameters) where T : class
+    protected IQueryable<T> GetFromSql<T>(string sql, params object[] parameters) where T : class
         => applicationContext.Set<T>().FromSqlRaw(sql, parameters);
     
     public virtual async Task<List<TEntity>> GetAllAsync()

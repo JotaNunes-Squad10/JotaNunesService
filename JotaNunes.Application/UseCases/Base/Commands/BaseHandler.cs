@@ -8,7 +8,7 @@ namespace JotaNunes.Application.UseCases.Base.Commands;
 
 public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDomainService domainService, TRepository repository)
     : BaseUseCase<TEntity, TResponse, TRepository>(domainService, repository)
-    where TEntity : BaseAuditEntity
+    where TEntity : BaseEntity
     where TRequest : class
     where TResponse : class
     where TRepository : IBaseRepository<TEntity>
