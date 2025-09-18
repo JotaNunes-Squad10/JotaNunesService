@@ -7,11 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="UseCases\Authentication\Queries\" />
-      <Folder Include="UseCases\Authentication\Responses\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\JotaNunes.Infrastructure.CrossCutting.Integration\JotaNunes.Infrastructure.CrossCutting.Integration.csproj" />
     </ItemGroup>
 
