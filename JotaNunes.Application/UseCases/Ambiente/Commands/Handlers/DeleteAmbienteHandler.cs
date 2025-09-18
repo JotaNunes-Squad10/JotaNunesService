@@ -1,3 +1,4 @@
+using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 using JotaNunes.Application.UseCases.Ambiente.Responses;
 using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Domain.Interfaces;
@@ -10,10 +11,10 @@ namespace JotaNunes.Application.UseCases.Ambiente.Commands.Handlers;
 public class DeleteAmbienteHandler(
     IDomainService domainService,
     IAmbienteRepository repository
-) : BaseHandler<Domain.Models.Ambiente, BaseRequest, AmbienteResponse, IAmbienteRepository>(domainService, repository),
-    IRequestHandler<BaseRequest, DefaultResponse>
+) : BaseHandler<Domain.Models.Ambiente, DeleteAmbienteRequest, AmbienteResponse, IAmbienteRepository>(domainService, repository),
+    IRequestHandler<DeleteAmbienteRequest, DefaultResponse>
 {
-    public async Task<DefaultResponse> Handle(BaseRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(DeleteAmbienteRequest request, CancellationToken cancellationToken)
     {
         try
         {

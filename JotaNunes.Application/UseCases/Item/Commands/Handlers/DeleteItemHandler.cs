@@ -1,5 +1,6 @@
-using JotaNunes.Application.UseCases.Item.Responses;
 using JotaNunes.Application.UseCases.Base.Commands;
+using JotaNunes.Application.UseCases.Item.Commands.Requests;
+using JotaNunes.Application.UseCases.Item.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
@@ -10,10 +11,10 @@ namespace JotaNunes.Application.UseCases.Item.Commands.Handlers;
 public class DeleteItemHandler(
     IDomainService domainService,
     IItemRepository repository
-) : BaseHandler<Domain.Models.Item, BaseRequest, ItemResponse, IItemRepository>(domainService, repository),
-    IRequestHandler<BaseRequest, DefaultResponse>
+) : BaseHandler<Domain.Models.Item, DeleteItemRequest, ItemResponse, IItemRepository>(domainService, repository),
+    IRequestHandler<DeleteItemRequest, DefaultResponse>
 {
-    public async Task<DefaultResponse> Handle(BaseRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(DeleteItemRequest request, CancellationToken cancellationToken)
     {
         try
         {

@@ -23,7 +23,7 @@ public class ItemsController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteItemAsync([FromRoute] long id)
-        => CustomResponse(await Send(id));
+        => CustomResponse(await Send(new DeleteItemRequest { Id = id }));
     
     [HttpGet("GetAllItems")]
     [ProducesResponseType(StatusCodes.Status200OK)]

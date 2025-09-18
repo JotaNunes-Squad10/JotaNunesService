@@ -22,7 +22,7 @@ public class TopicoController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteTopicoAsync([FromRoute] long id)
-        => CustomResponse(await Send(id));
+        => CustomResponse(await Send(new DeleteTopicoRequest { Id = id }));
     
     [HttpGet("GetAllTopicos")]
     [ProducesResponseType(StatusCodes.Status200OK)]

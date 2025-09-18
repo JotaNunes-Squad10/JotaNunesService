@@ -1,0 +1,9 @@
+using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
+using MediatR;
+
+namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
+
+public class DeleteEmpreendimentoRequest : IRequest<DefaultResponse>
+{
+    public long Id { get; set; }
+}

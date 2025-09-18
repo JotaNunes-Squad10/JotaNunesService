@@ -11,18 +11,18 @@ public class MaterialController(
     IMaterialQueries materialQueries
 ) : BaseController(mediator)
 {
-    [HttpDelete("DeleteMaterial/{id:long}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteMaterialAsync([FromRoute] long id)
-        => CustomResponse(await Send(id));
-    
     [HttpPost("CreateMaterial")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateMaterialAsync([FromBody] CreateMaterialRequest request)
         => CustomResponse(await Send(request));
+    
+    [HttpDelete("DeleteMaterial/{id:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteMaterialAsync([FromRoute] long id)
+        => CustomResponse(await Send(new DeleteMaterialRequest { Id = id }));
     
     [HttpGet("GetAllMateriais")]
     [ProducesResponseType(StatusCodes.Status200OK)]

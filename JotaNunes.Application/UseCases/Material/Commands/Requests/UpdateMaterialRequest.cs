@@ -1,9 +1,9 @@
 ﻿using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 
-namespace JotaNunes.Application.UseCases.Item.Commands.Requests;
+namespace JotaNunes.Application.UseCases.Material.Commands.Requests;
 
-public class UpdateItemRequest : IRequest<DefaultResponse>
+public class UpdateMaterialRequest : IRequest<DefaultResponse>
 {
     public string? Nome { get; set; }
 }
