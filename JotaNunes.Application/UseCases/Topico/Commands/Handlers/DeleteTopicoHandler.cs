@@ -1,4 +1,5 @@
 using JotaNunes.Application.UseCases.Base.Commands;
+using JotaNunes.Application.UseCases.Topico.Commands.Requests;
 using JotaNunes.Application.UseCases.Topico.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
@@ -10,10 +11,10 @@ namespace JotaNunes.Application.UseCases.Topico.Commands.Handlers;
 public class DeleteTopicoHandler(
     IDomainService domainService,
     ITopicoRepository repository
-) : BaseHandler<Domain.Models.Topico, BaseRequest, TopicoResponse, ITopicoRepository>(domainService, repository),
-    IRequestHandler<BaseRequest, DefaultResponse>
+) : BaseHandler<Domain.Models.Topico, DeleteTopicoRequest, TopicoResponse, ITopicoRepository>(domainService, repository),
+    IRequestHandler<DeleteTopicoRequest, DefaultResponse>
 {
-    public async Task<DefaultResponse> Handle(BaseRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(DeleteTopicoRequest request, CancellationToken cancellationToken)
     {
         try
         {

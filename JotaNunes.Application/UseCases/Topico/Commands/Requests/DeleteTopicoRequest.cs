@@ -3,7 +3,7 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Topico.Commands.Requests;
 
-public class UpdateTopicoRequest : IRequest<DefaultResponse>
+public class DeleteTopicoRequest : IRequest<DefaultResponse>
 {
-    public string? Nome { get; set; }
+    public long Id { get; set; }
 }

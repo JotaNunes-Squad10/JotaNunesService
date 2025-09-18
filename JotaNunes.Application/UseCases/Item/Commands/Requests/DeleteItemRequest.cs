@@ -1,9 +1,9 @@
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 
-namespace JotaNunes.Application.UseCases.Base.Commands;
+namespace JotaNunes.Application.UseCases.Item.Commands.Requests;
 
-public class BaseRequest : IRequest<DefaultResponse>
+public class DeleteItemRequest : IRequest<DefaultResponse>
 {
     public long Id { get; set; }
 }

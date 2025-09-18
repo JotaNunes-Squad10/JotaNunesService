@@ -13,9 +13,6 @@ public class BaseController(IMediator mediator) : ControllerBase
 {
     protected Task<TResponse> Send<TResponse>(IRequest<TResponse> request)
         => mediator.Send(request);
-
-    protected Task<DefaultResponse> Send(long id)
-        => mediator.Send(new BaseRequest { Id = id });
     
     protected ActionResult CustomResponse(DefaultResponse response)
     {

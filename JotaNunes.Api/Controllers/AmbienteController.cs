@@ -22,7 +22,7 @@ public class AmbienteController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAmbienteAsync([FromRoute] long id)
-        => CustomResponse(await Send(id));
+        => CustomResponse(await Send(new DeleteAmbienteRequest { Id = id }));
     
     [HttpGet("GetAllAmbientes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
