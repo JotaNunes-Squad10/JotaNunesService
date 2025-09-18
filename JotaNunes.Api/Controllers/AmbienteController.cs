@@ -1,7 +1,6 @@
 using JotaNunes.Api.Controllers.Base;
 using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 using JotaNunes.Application.UseCases.Ambiente.Queries;
-using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +33,7 @@ public class AmbienteController(
     [HttpGet("GetAmbienteById/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetAmbienteById([FromRoute] long id)
         => CustomResponse(await ambienteQueries.GetByIdAsync(id));
     

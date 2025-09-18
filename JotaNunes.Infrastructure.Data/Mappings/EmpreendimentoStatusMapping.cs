@@ -11,7 +11,7 @@ public class EmpreendimentoStatusMapping : BaseEntityMapping<EmpreendimentoStatu
     {
         base.Configure(builder);
         
-        builder.ToTable("tp_empreendimento_status", "public");
+        builder.ToTable("tb_empreendimento_status", "public");
         
         builder.Property(x => x.Descricao)
             .HasColumnName("descricao")

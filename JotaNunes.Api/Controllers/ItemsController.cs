@@ -34,6 +34,7 @@ public class ItemsController(
     [HttpGet("GetItemsById/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetItemsById([FromRoute] long id)
         => CustomResponse(await itemQueries.GetByIdAsync(id));
     
