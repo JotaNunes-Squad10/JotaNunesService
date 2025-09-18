@@ -22,5 +22,9 @@ public class RequestToDomainMappingProfile : Profile
 
         CreateMap<UpdateAmbienteRequest, Ambiente>().UpdateMapper(user);
         CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
+        CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);
+        CreateMap<UpdateItemRequest, Item>().UpdateMapper(user);
+        
+        
     }
 }
