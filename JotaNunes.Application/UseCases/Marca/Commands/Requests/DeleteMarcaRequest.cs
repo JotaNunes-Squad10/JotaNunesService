@@ -4,5 +4,5 @@ using MediatR;
 namespace JotaNunes.Application.UseCases.Marca.Commands.Requests;
 public class DeleteMarcaRequest : IRequest<DefaultResponse>
 {
-    public required Guid Id { get; set; }
+    public required long Id { get; set; }
 }
