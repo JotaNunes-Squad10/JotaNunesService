@@ -33,13 +33,14 @@ public class TopicoController(
     [HttpGet("GetTopicoById/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetAmbienteById([FromRoute] long id)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetTopicoById([FromRoute] long id)
         => CustomResponse(await topicoQueries.GetByIdAsync(id));
     
     [HttpPatch("UpdateTopico")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateAmbienteAsync([FromBody] UpdateTopicoRequest request)
+    public async Task<IActionResult> UpdateTopicoAsync([FromBody] UpdateTopicoRequest request)
         => CustomResponse(await Send(request));
 }
