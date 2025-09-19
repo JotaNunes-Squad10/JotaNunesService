@@ -1,8 +1,8 @@
 using JotaNunes.Application.UseCases.Base.Commands;
-using JotaNunes.Domain.Extensions;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Interfaces.Base;
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Keycloak;
+using JotaNunes.Domain.Extensions;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Interfaces;

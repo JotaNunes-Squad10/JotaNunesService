@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Marca.Commands.Handlers;
 public class CreateMarcaHandler(
     IDomainService domainService,
     IMarcaRepository repository
-) : BaseHandler<Domain.Models.Marca, CreateMarcaRequest, MarcaResponse, IMarcaRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Marca, CreateMarcaRequest, MarcaResponse, IMarcaRepository>(domainService, repository),
     IRequestHandler<CreateMarcaRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(CreateMarcaRequest request, CancellationToken cancellationToken)

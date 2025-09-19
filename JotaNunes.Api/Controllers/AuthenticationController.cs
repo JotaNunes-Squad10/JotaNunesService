@@ -2,7 +2,7 @@ using JotaNunes.Api.Controllers.Base;
 using JotaNunes.Application.UseCases.Authentication.Commands.Requests;
 using JotaNunes.Application.UseCases.Authentication.Queries;
 using JotaNunes.Domain.Attributes;
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Keycloak;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

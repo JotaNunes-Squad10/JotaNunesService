@@ -1,6 +1,6 @@
 using JotaNunes.Domain.Models.Base;
 
-namespace JotaNunes.Domain.Models;
+namespace JotaNunes.Domain.Models.Public;
 
 public class EmpreendimentoTopico : BaseAuditEntity
 {

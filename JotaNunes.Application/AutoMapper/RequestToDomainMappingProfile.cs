@@ -6,7 +6,7 @@ using JotaNunes.Application.UseCases.Marca.Commands.Requests;
 using JotaNunes.Application.UseCases.Material.Commands.Requests;
 using JotaNunes.Application.UseCases.Topico.Commands.Requests;
 using JotaNunes.Domain.Interfaces;
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Public;
 
 namespace JotaNunes.Application.AutoMapper;
 
@@ -21,9 +21,9 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<CreateTopicoRequest, Topico>().CreateMapper(user);
 
         CreateMap<UpdateAmbienteRequest, Ambiente>().UpdateMapper(user);
-        CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
-        CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);
         CreateMap<UpdateItemRequest, Item>().UpdateMapper(user);
+        CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);
+        CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
         
         
     }

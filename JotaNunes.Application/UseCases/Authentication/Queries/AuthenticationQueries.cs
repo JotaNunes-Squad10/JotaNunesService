@@ -7,7 +7,7 @@ using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 namespace JotaNunes.Application.UseCases.Authentication.Queries;
 
 public class AuthenticationQueries(IDomainService domainService, IUserRepository repository)
-    : BaseQueries<Domain.Models.User, UserResponse, IUserRepository>(domainService, repository), IAuthenticationQueries
+    : BaseQueries<Domain.Models.Keycloak.User, UserResponse, IUserRepository>(domainService, repository), IAuthenticationQueries
 {
     public new async Task<DefaultResponse> GetAllAsync()
     {

@@ -1,10 +1,9 @@
 using JotaNunes.Domain.Models.Base;
 
-namespace JotaNunes.Domain.Models;
+namespace JotaNunes.Domain.Models.Public;
 
-public class Material : BaseAuditEntity
+public class Marca : BaseAuditEntity
 {
     public required string Nome { get; set; }
-
     public required List<ItemMaterial> ItemMateriais { get; set; }
 }

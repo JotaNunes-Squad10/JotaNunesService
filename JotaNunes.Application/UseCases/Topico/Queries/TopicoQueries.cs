@@ -6,7 +6,7 @@ using JotaNunes.Domain.Services;
 namespace JotaNunes.Application.UseCases.Topico.Queries;
 
 public class TopicoQueries(IDomainService domainService, ITopicoRepository repository)
-    : BaseQueries<Domain.Models.Topico, TopicoResponse, ITopicoRepository>(domainService, repository), ITopicoQueries
+    : BaseQueries<Domain.Models.Public.Topico, TopicoResponse, ITopicoRepository>(domainService, repository), ITopicoQueries
 {
     
 }

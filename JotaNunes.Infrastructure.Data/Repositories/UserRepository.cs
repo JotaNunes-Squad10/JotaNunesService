@@ -1,5 +1,5 @@
 using JotaNunes.Domain.Interfaces;
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.Data.Contexts;
 using JotaNunes.Infrastructure.Data.Repositories.Base;

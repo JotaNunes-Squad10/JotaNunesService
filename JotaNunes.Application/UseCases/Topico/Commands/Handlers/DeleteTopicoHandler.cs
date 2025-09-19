@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Topico.Commands.Handlers;
 public class DeleteTopicoHandler(
     IDomainService domainService,
     ITopicoRepository repository
-) : BaseHandler<Domain.Models.Topico, DeleteTopicoRequest, TopicoResponse, ITopicoRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Topico, DeleteTopicoRequest, TopicoResponse, ITopicoRepository>(domainService, repository),
     IRequestHandler<DeleteTopicoRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(DeleteTopicoRequest request, CancellationToken cancellationToken)

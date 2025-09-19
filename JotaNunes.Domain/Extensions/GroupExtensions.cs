@@ -1,4 +1,4 @@
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Keycloak;
 using System.ComponentModel;
 using System.Reflection;
 

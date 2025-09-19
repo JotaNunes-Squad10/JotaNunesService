@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Ambiente.Commands.Handlers;
 public class DeleteAmbienteHandler(
     IDomainService domainService,
     IAmbienteRepository repository
-) : BaseHandler<Domain.Models.Ambiente, DeleteAmbienteRequest, AmbienteResponse, IAmbienteRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Ambiente, DeleteAmbienteRequest, AmbienteResponse, IAmbienteRepository>(domainService, repository),
     IRequestHandler<DeleteAmbienteRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(DeleteAmbienteRequest request, CancellationToken cancellationToken)
