@@ -1,19 +1,19 @@
 using JotaNunes.Application.UseCases.Base.Commands;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Responses;
+using JotaNunes.Application.UseCases.Marca.Commands.Requests;
+using JotaNunes.Application.UseCases.Marca.Commands.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 
-namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
-public class UpdateEmpreendimentoHandler(
+namespace JotaNunes.Application.UseCases.Marca.Commands.Handlers;
+public class UpdateMarcaHandler(
     IDomainService domainService,
-    IEmpreendimentoRepository repository
-) : BaseHandler<Domain.Models.Empreendimento, UpdateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
-    IRequestHandler<UpdateEmpreendimentoRequest, DefaultResponse>
+    IMarcaRepository repository
+) : BaseHandler<Domain.Models.Marca, UpdateMarcaRequest, MarcaResponse, IMarcaRepository>(domainService, repository),
+    IRequestHandler<UpdateMarcaRequest, DefaultResponse>
 {
-    public async Task<DefaultResponse> Handle(UpdateEmpreendimentoRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(UpdateMarcaRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -21,7 +21,7 @@ public class UpdateEmpreendimentoHandler(
         }
         catch (Exception e)
         {
-            AddError("UpdateEmpreendimentoHandler", "Error updating empreendimento:", e);
+            AddError("UpdateMarcaHandler", "Error updating marca:", e);
             return Response();
         }
     }
