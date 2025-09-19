@@ -9,38 +9,44 @@ public class DomainToResponseMappingProfile : Profile
 {
     public DomainToResponseMappingProfile()
     {
-        const string sufix = "Response";
-        var excludeTypes = new List<Type>() { };
+        var sufix = "Response";
+        var excludeTypes = new List<Type>();
 
-        var responses = AppDataProvider.GetApplication()
-            .DefinedTypes.Where(x => !x.IsInterface
-                 && !x.IsAbstract
-                 && !x.IsEnum
-                 && x.IsVisible
-                 && x.IsPublic
-                 && x.UnderlyingSystemType.Name.Contains(sufix)).Select(x => x.UnderlyingSystemType)
+        var responses = new[] { AppDataProvider.GetApplication(), AppDataProvider.GetIntegration() }
+            .SelectMany(a => a.DefinedTypes)
+            .Where(x =>
+                !x.IsInterface
+                && !x.IsAbstract
+                && !x.IsEnum
+                && x.IsVisible
+                && x.IsPublic
+                && x.UnderlyingSystemType.Name.Contains(sufix))
+            .Select(x => x.UnderlyingSystemType)
+            .Distinct()
             .ToList();
 
-        if (responses.Count > 0)
+        if (responses.Any())
         {
             var models = AppDataProvider.GetDomain()
                 .DefinedTypes
-                .Where(x => !x.IsInterface
-                     && !x.IsAbstract
-                     && !x.IsEnum
-                     && x.IsVisible
-                     && x.IsPublic
-                     && !excludeTypes.Contains(x.UnderlyingSystemType)
-                     && x.BaseType != null
-                     && (x.BaseType.Name.Equals(nameof(BaseEntity))
-                         || x.BaseType.Name.Equals(nameof(BaseAuditEntity))
-                         || x.BaseType.Name.Equals(nameof(Object))
-                         || x.BaseType.Name.Equals(nameof(ValueObject)))
-                     && responses.Select(r => r.Name).Contains(x.UnderlyingSystemType.Name + sufix))
-                .Select(x => x.UnderlyingSystemType)
+                .Where(x =>
+                    !x.IsInterface
+                    && !x.IsAbstract
+                    && !x.IsEnum
+                    && x.IsVisible
+                    && x.IsPublic
+                    && !excludeTypes.Contains(x.UnderlyingSystemType)
+                    && x.BaseType != null
+                    && (x.BaseType.Name.Equals(nameof(BaseEntity))
+                        || x.BaseType.Name.Equals(nameof(BaseAuditEntity))
+                        || x.BaseType.Name.Equals(nameof(Object))
+                        || x.BaseType.Name.Equals(nameof(ValueObject)))
+                    && responses.Select(r => r.Name)
+                        .Contains(x.UnderlyingSystemType.Name + sufix))
+                        .Select(x => x.UnderlyingSystemType)
                 .ToList();
 
-            if (models.Count > 0)
+            if (models.Any())
             {
                 foreach (var model in models)
                 {
