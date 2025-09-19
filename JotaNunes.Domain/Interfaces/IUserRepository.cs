@@ -5,5 +5,6 @@ namespace JotaNunes.Domain.Interfaces;
 
 public interface IUserRepository : IBaseRepository<User>
 {
+    new Task<List<User>> GetAllAsync();
     Task<User?> GetByIdAsync(Guid id);
 }

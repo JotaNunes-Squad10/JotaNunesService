@@ -10,6 +10,10 @@ namespace JotaNunes.Infrastructure.Data.Repositories;
 public class UserRepository(ApplicationContext applicationContext, IDomainService domainService)
     : BaseRepository<User>(applicationContext, domainService), IUserRepository
 {
+    public override async Task<List<User>> GetAllAsync()
+        => await GetTracking.Include(x => x.Attributes).ToListAsync();
+    
     public async Task<User?> GetByIdAsync(Guid id)
-        => await GetTracking.FirstOrDefaultAsync(x => x.Id == id);
+        => await GetTracking.Include(x => x.Attributes)
+            .FirstOrDefaultAsync(x => x.Id == id);
 }

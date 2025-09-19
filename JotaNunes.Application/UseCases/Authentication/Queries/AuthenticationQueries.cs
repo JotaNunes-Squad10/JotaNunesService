@@ -12,20 +12,44 @@ public class AuthenticationQueries(IDomainService domainService, IUserRepository
     public new async Task<DefaultResponse> GetAllAsync()
     {
         var list = (await Repository.GetAllAsync())
-            .Where(u => u.FirstName != null)
-            .ToList();
+            .Where(u => u.FirstName != null).ToList();
 
         if (ListIsNullOrEmpty(list)) return Response();
+        
+        var response = new List<UserResponse>();
 
-        return Response(Map(list));
+        foreach (var user in list)
+        {
+            response.Add(new UserResponse
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Phone = user.Attributes?.FirstOrDefault(x => x.Name == "phone")?.Value
+            });
+        }
+
+        return Response(response);
     }
     
     public virtual async Task<DefaultResponse> GetByIdAsync(Guid id)
     {
         var entity = await Repository.GetByIdAsync(id);
-
+        
         if (IsNull(entity)) return Response();
 
-        return Response(Map(entity!));
+        var response = new UserResponse
+        {
+            Id = entity!.Id,
+            Username = entity.Username,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
+            Email = entity.Email,
+            Phone = entity.Attributes?.FirstOrDefault(x => x.Name == "phone")?.Value
+        };
+
+        return Response(response);
     }
 }

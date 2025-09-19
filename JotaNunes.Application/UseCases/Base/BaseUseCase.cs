@@ -46,7 +46,7 @@ public abstract class BaseUseCase<TEntity, TResponse, TRepository>(IDomainServic
         => AddError(property, $"{message} {e.Message} {e.InnerException?.Message}");
 
     public bool IsNull(object? value)
-        => IsNull(value, "The requested object does not exist.");
+        => IsNull(value, ErrorMessage.ObjectNotFound);
 
     public bool IsNull(object? value, string message)
     {
