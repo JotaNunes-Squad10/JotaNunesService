@@ -11,7 +11,7 @@ public class TopicoAmbienteMapping : BaseAuditEntityMapping<TopicoAmbiente>
     {
         base.Configure(builder);
         
-        builder.ToTable("tb_topico_ambiente", "public");
+        builder.ToTable("rl_topico_ambiente", "public");
         
         builder.Property(x => x.TopicoId)
             .HasColumnName("topico_fk")

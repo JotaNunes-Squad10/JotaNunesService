@@ -11,7 +11,7 @@ public class AmbienteItemMapping : BaseAuditEntityMapping<AmbienteItem>
     {
         base.Configure(builder);
         
-        builder.ToTable("tb_ambiente_item", "public");
+        builder.ToTable("rl_ambiente_item", "public");
         
         builder.Property(x => x.AmbienteId)
             .HasColumnName("ambiente_fk")

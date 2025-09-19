@@ -12,9 +12,15 @@ public class ItemMapping : BaseAuditEntityMapping<Item>
         base.Configure(builder);
         
         builder.ToTable("tb_item", "public");
-        
+
         builder.Property(x => x.Nome)
             .HasColumnName("nome")
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.Property(x => x.Descricao)
+            .HasColumnName("descricao")
+            .HasMaxLength(200)
             .IsRequired();
     }
 }

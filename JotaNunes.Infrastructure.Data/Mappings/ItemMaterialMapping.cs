@@ -11,7 +11,7 @@ public class ItemMaterialMapping : BaseAuditEntityMapping<ItemMaterial>
     {
         base.Configure(builder);
         
-        builder.ToTable("tb_item_material", "public");
+        builder.ToTable("rl_item_material", "public");
         
         builder.Property(x => x.ItemId)
             .HasColumnName("item_fk")
