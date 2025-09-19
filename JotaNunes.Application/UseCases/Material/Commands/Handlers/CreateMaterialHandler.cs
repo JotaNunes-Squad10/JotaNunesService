@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Material.Commands.Handlers;
 public class CreateMaterialHandler(
     IDomainService domainService,
     IMaterialRepository repository
-) : BaseHandler<Domain.Models.Material, CreateMaterialRequest, MaterialResponse, IMaterialRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Material, CreateMaterialRequest, MaterialResponse, IMaterialRepository>(domainService, repository),
     IRequestHandler<CreateMaterialRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(CreateMaterialRequest request, CancellationToken cancellationToken)

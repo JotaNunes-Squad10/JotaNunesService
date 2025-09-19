@@ -13,7 +13,7 @@ namespace JotaNunes.Application.UseCases.Material.Commands.Handlers;
 public class UpdateMaterialHandler(
     IDomainService domainService,
     IMaterialRepository repository
-) : BaseHandler<Domain.Models.Material, UpdateMaterialRequest, MaterialResponse, IMaterialRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Material, UpdateMaterialRequest, MaterialResponse, IMaterialRepository>(domainService, repository),
     IRequestHandler<UpdateMaterialRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(UpdateMaterialRequest request, CancellationToken cancellationToken)

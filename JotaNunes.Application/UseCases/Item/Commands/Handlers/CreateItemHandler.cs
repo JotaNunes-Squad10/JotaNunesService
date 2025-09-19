@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Item.Commands.Handlers;
 public class CreateItemHandler(
     IDomainService domainService,
     IItemRepository repository
-) : BaseHandler<Domain.Models.Item, CreateItemRequest, ItemResponse, IItemRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Item, CreateItemRequest, ItemResponse, IItemRepository>(domainService, repository),
     IRequestHandler<CreateItemRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(CreateItemRequest request, CancellationToken cancellationToken)

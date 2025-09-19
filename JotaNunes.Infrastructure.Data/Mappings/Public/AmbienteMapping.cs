@@ -1,9 +1,9 @@
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Public;
 using JotaNunes.Infrastructure.Data.Mappings.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JotaNunes.Infrastructure.Data.Mappings;
+namespace JotaNunes.Infrastructure.Data.Mappings.Public;
 
 public class AmbienteMapping : BaseAuditEntityMapping<Ambiente>
 {

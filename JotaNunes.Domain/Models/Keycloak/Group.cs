@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace JotaNunes.Domain.Models;
+namespace JotaNunes.Domain.Models.Keycloak;
 
 public enum Group
 {

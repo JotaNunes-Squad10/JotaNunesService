@@ -1,6 +1,4 @@
-﻿using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
-using JotaNunes.Application.UseCases.Ambiente.Responses;
-using JotaNunes.Application.UseCases.Base.Commands;
+﻿using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Application.UseCases.Item.Commands.Requests;
 using JotaNunes.Application.UseCases.Item.Responses;
 using JotaNunes.Domain.Interfaces;
@@ -13,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Item.Commands.Handlers;
 public class UpdateItemHandler(
     IDomainService domainService,
     IItemRepository repository
-) : BaseHandler<Domain.Models.Item, UpdateItemRequest, ItemResponse, IItemRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Item, UpdateItemRequest, ItemResponse, IItemRepository>(domainService, repository),
     IRequestHandler<UpdateItemRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(UpdateItemRequest request, CancellationToken cancellationToken)

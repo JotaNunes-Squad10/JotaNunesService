@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Topico.Commands.Handlers;
 public class CreateTopicoHandler(
     IDomainService domainService,
     ITopicoRepository repository
-) : BaseHandler<Domain.Models.Topico, CreateTopicoRequest, TopicoResponse, ITopicoRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Topico, CreateTopicoRequest, TopicoResponse, ITopicoRepository>(domainService, repository),
     IRequestHandler<CreateTopicoRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(CreateTopicoRequest request, CancellationToken cancellationToken)

@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Item.Commands.Handlers;
 public class DeleteItemHandler(
     IDomainService domainService,
     IItemRepository repository
-) : BaseHandler<Domain.Models.Item, DeleteItemRequest, ItemResponse, IItemRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Item, DeleteItemRequest, ItemResponse, IItemRepository>(domainService, repository),
     IRequestHandler<DeleteItemRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(DeleteItemRequest request, CancellationToken cancellationToken)

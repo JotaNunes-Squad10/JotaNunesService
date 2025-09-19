@@ -1,9 +1,9 @@
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Infrastructure.Data.Mappings.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace JotaNunes.Infrastructure.Data.Mappings;
+namespace JotaNunes.Infrastructure.Data.Mappings.Keycloak;
 
 public class UserMapping : BaseEntityMapping<User>
 {

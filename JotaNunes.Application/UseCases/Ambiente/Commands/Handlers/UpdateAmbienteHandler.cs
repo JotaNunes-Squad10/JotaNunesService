@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Ambiente.Commands.Handlers;
 public class UpdateAmbienteHandler(
     IDomainService domainService,
     IAmbienteRepository repository
-) : BaseHandler<Domain.Models.Ambiente, UpdateAmbienteRequest, AmbienteResponse, IAmbienteRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Ambiente, UpdateAmbienteRequest, AmbienteResponse, IAmbienteRepository>(domainService, repository),
     IRequestHandler<UpdateAmbienteRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(UpdateAmbienteRequest request, CancellationToken cancellationToken)

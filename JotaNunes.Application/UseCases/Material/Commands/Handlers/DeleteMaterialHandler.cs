@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Material.Commands.Handlers;
 public class DeleteMaterialHandler(
     IDomainService domainService,
     IMaterialRepository repository
-) : BaseHandler<Domain.Models.Material, DeleteMaterialRequest, MaterialResponse, IMaterialRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Material, DeleteMaterialRequest, MaterialResponse, IMaterialRepository>(domainService, repository),
     IRequestHandler<DeleteMaterialRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(DeleteMaterialRequest request, CancellationToken cancellationToken)

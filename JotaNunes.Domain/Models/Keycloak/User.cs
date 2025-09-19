@@ -1,7 +1,7 @@
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Models.Base;
 
-namespace JotaNunes.Domain.Models;
+namespace JotaNunes.Domain.Models.Keycloak;
 
 public class User : BaseEntity, IUser
 {

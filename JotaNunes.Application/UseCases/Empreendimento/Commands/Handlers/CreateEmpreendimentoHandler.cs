@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
 public class CreateEmpreendimentoHandler(
     IDomainService domainService,
     IEmpreendimentoRepository repository
-) : BaseHandler<Domain.Models.Empreendimento, CreateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Empreendimento, CreateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
     IRequestHandler<CreateEmpreendimentoRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(CreateEmpreendimentoRequest request, CancellationToken cancellationToken)

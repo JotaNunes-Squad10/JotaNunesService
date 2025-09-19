@@ -1,4 +1,4 @@
-using JotaNunes.Domain.Models;
+using JotaNunes.Domain.Models.Keycloak;
 using Microsoft.AspNetCore.Authorization;
 
 namespace JotaNunes.Domain.Extensions;
