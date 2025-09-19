@@ -1,19 +1,19 @@
 using JotaNunes.Application.UseCases.Base.Commands;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Responses;
+using JotaNunes.Application.UseCases.Marca.Commands.Requests;
+using JotaNunes.Application.UseCases.Marca.Commands.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 
-namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
-public class DeleteEmpreendimentoHandler(
+namespace JotaNunes.Application.UseCases.Marca.Commands.Handlers;
+public class DeleteMarcaHandler(
     IDomainService domainService,
-    IEmpreendimentoRepository repository
-) : BaseHandler<Domain.Models.Empreendimento, DeleteEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
-    IRequestHandler<DeleteEmpreendimentoRequest, DefaultResponse>
+    IMarcaRepository repository
+) : BaseHandler<Domain.Models.Marca, DeleteMarcaRequest, MarcaResponse, IMarcaRepository>(domainService, repository),
+    IRequestHandler<DeleteMarcaRequest, DefaultResponse>
 {
-    public async Task<DefaultResponse> Handle(DeleteEmpreendimentoRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(DeleteMarcaRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -21,7 +21,7 @@ public class DeleteEmpreendimentoHandler(
         }
         catch (Exception e)
         {
-            AddError("DeleteEmpreendimentoHandler", "Error deleting empreendimento:", e);
+            AddError("DeleteMarcaHandler", "Error deleting marca:", e);
             return Response();
         }
     }
