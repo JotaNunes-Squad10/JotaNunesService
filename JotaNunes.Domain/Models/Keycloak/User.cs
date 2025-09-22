@@ -14,4 +14,5 @@ public class User : BaseEntity, IUser
     public required string Username { get; set; }
     
     public required List<UserAttribute> Attributes { get; set; }
+    public required List<UserGroup> UserGroups  { get; set; }
 }

@@ -27,7 +27,8 @@ public class AuthenticationQueries(IDomainService domainService, IUserRepository
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Phone = user.Attributes?.FirstOrDefault(x => x.Name == "phone")?.Value
+                Phone = user.Attributes?.FirstOrDefault(a => a.Name == "phone")?.Value,
+                Profiles = user.UserGroups.Select(ug => new Profile(ug)).ToList()
             });
         }
 
@@ -47,7 +48,8 @@ public class AuthenticationQueries(IDomainService domainService, IUserRepository
             FirstName = entity.FirstName,
             LastName = entity.LastName,
             Email = entity.Email,
-            Phone = entity.Attributes?.FirstOrDefault(x => x.Name == "phone")?.Value
+            Phone = entity.Attributes?.FirstOrDefault(a => a.Name == "phone")?.Value,
+            Profiles = entity.UserGroups.Select(ug => new Profile(ug)).ToList()
         };
 
         return Response(response);
