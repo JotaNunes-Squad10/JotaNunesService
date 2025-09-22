@@ -9,13 +9,12 @@ public class UserMapping : BaseEntityMapping<User>
 {
     public override void Configure(EntityTypeBuilder<User> builder)
     {
-        base.Configure(builder);
-
         builder.ToTable("user_entity", "keycloak");
-        
+
         builder.Property(x => x.Id)
             .HasColumnName("id")
             .HasColumnType("varchar")
+            .HasMaxLength(36)
             .IsRequired();
 
         builder.Property(x => x.Email)
@@ -31,7 +30,7 @@ public class UserMapping : BaseEntityMapping<User>
             .HasColumnName("enabled")
             .HasDefaultValue(false)
             .IsRequired();
-        
+
         builder.Property(x => x.FirstName)
             .HasColumnName("first_name")
             .HasMaxLength(255);
