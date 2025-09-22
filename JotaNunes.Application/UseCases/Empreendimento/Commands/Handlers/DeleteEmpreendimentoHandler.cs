@@ -1,6 +1,6 @@
 using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Responses;
+using JotaNunes.Application.UseCases.Empreendimento.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
@@ -18,7 +18,7 @@ public class DeleteEmpreendimentoHandler(
     {
         try
         {
-            return Response(await DeleteAsync(request));
+            return Response(await DeleteAsync(request.Id));
         }
         catch (Exception e)
         {

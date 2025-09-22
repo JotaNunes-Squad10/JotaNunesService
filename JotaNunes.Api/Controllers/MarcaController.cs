@@ -36,8 +36,8 @@ public class MarcaController(
         => CustomResponse(await queries.GetByIdAsync(id));
 
     [HttpDelete("DeleteMarca/{id:long}")]
-    [ProducesResponseType(StatusCodes.Status20OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> DeleteMarcaAsync(long id)
-        => CustomResponse(await Send(new DeleteMarcaRequest(id)));
+        => CustomResponse(await Send(new DeleteMarcaRequest { Id = id }));
 }
