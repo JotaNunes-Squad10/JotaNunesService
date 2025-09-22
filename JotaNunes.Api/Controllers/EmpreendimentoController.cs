@@ -4,6 +4,7 @@ using JotaNunes.Application.UseCases.Empreendimento.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace JotaNunes.Api.Controllers;
 
 public class EmpreendimentoController(
@@ -39,5 +40,5 @@ public class EmpreendimentoController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> DeleteEmpreendimentoAsync(long id)
-        => CustomResponse(await Send(new DeleteEmpreendimentoRequest(id)));
+        => CustomResponse(await Send(new DeleteEmpreendimentoRequest { Id = id }));
 }

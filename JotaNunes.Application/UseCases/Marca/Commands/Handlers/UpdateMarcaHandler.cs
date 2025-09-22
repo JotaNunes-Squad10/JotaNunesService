@@ -1,6 +1,6 @@
 using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Application.UseCases.Marca.Commands.Requests;
-using JotaNunes.Application.UseCases.Marca.Commands.Responses;
+using JotaNunes.Application.UseCases.Marca.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
