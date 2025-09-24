@@ -1,4 +1,3 @@
-using System.Text.Json;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Interfaces;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Requests.Keycloak;
@@ -35,25 +34,38 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
 
     public async Task<TokenResponse> Authenticate(AuthenticationRequest request)
         => await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareAuthenticationRequest(request));
-    
-    public async Task<CreateUserResponse> CreateUser(CreateUserRequest request)
+
+    public async Task<UserResponse> CreateUser(CreateUserRequest request)
     {
         SetAuthorization("Bearer", await GetMasterToken());
-        
+
         var response = await PostAsync($"{ExternalServices.KeycloakService.User}", PrepareCreateUserRequest(request));
 
         if (!response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadAsStringAsync();
-            var error = JsonSerializer.Deserialize<ErrorResponse>(content);
-            
-            AddError(nameof(CreateUser), $"{response.StatusCode}: {error?.Error}");
-            
-            return new CreateUserResponse
+            AddError(nameof(CreateUser), response);
+            return new UserResponse
                 { Message = "User creation failed." };
         }
-        
-        return new CreateUserResponse
+
+        return new UserResponse
             { Message = "User created successfully." };
+    }
+
+    public async Task<UserResponse> UpdateUser(UpdateUserRequest request)
+    {
+        SetAuthorization("Bearer", await GetMasterToken());
+
+        var response = await PutAsync($"{ExternalServices.KeycloakService.User}/{request.Id}", PrepareUpdateUserRequest(request));
+
+        if (!response.IsSuccessStatusCode)
+        {
+            AddError(nameof(UpdateUser), response);
+            return new UserResponse
+                { Message = "User creation failed." };
+        }
+
+        return new UserResponse
+            { Message = "User updated successfully." };
     }
 }

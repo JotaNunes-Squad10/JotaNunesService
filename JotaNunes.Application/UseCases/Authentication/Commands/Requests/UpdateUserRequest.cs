@@ -1,0 +1,15 @@
+using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
+using MediatR;
+
+namespace JotaNunes.Application.UseCases.Authentication.Commands.Requests;
+
+public class UpdateUserRequest : IRequest<DefaultResponse>
+{
+    public required Guid Id { get; set; }
+    public required string Username { get; set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+    public required string Email { get; set; }
+    public required string Phone { get; set; }
+    public required int Profile { get; set; }
+}
