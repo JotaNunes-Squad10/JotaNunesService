@@ -12,7 +12,10 @@ public class BaseIntegrationHttpService(
 {
     protected static FormUrlEncodedContent  PrepareAuthenticationRequest(AuthenticationRequest request)
         => HttpContentHelper.ToFormUrlEncodedContent(request);
-    
+
     protected static StringContent PrepareCreateUserRequest(CreateUserRequest request)
+        => HttpContentHelper.ToJsonStringContent(request);
+
+    protected static StringContent PrepareUpdateUserRequest(UpdateUserRequest request)
         => HttpContentHelper.ToJsonStringContent(request);
 }

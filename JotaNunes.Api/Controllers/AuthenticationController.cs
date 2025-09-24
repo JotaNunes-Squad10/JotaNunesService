@@ -18,24 +18,37 @@ public class AuthenticationController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AuthenticateAsync([FromBody] AuthenticationRequest request)
         => CustomResponse(await Send(request));
-    
+
     [AuthorizeGroup(Group.Administrador)]
     [HttpPost("CreateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserRequest request)
         => CustomResponse(await Send(request));
-    
+
     [HttpGet("GetAllUsers")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllUsersAsync()
         => CustomResponse(await authenticationQueries.GetAllAsync());
-    
+
     [HttpGet("GetUserById/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetUserById([FromRoute] Guid id)
         => CustomResponse(await authenticationQueries.GetByIdAsync(id));
+
+    [HttpPut("UpdateUser")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserRequest request)
+        => CustomResponse(await Send(request));
+
+    // [HttpDelete("DeleteUser/{id:guid}")]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    // public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid id)
+    //     => CustomResponse(await Send(new DeleteUserRequest { Id = id }));
 }
