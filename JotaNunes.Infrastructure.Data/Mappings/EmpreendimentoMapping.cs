@@ -25,6 +25,10 @@ public class EmpreendimentoMapping : BaseAuditEntityMapping<Empreendimento>
             .HasColumnName("localizacao")
             .IsRequired();
         
+        builder.Property(x => x.EmpreendimentoStatusId)
+            .HasColumnName("status_fk")
+            .IsRequired();
+        
         builder.HasOne(x => x.EmpreendimentoStatus)
             .WithMany(x => x.Empreendimentos)
             .HasForeignKey(x => x.EmpreendimentoStatusId);
