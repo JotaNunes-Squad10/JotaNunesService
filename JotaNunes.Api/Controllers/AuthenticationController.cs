@@ -26,12 +26,14 @@ public class AuthenticationController(
     public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserRequest request)
         => CustomResponse(await Send(request));
 
+    [AuthorizeGroup(Group.Administrador)]
     [HttpGet("GetAllUsers")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllUsersAsync()
         => CustomResponse(await authenticationQueries.GetAllAsync());
 
+    [AuthorizeGroup(Group.Administrador)]
     [HttpGet("GetUserById/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -39,7 +41,8 @@ public class AuthenticationController(
     public async Task<IActionResult> GetUserById([FromRoute] Guid id)
         => CustomResponse(await authenticationQueries.GetByIdAsync(id));
 
-    [HttpPut("UpdateUser")]
+    [AuthorizeGroup(Group.Administrador)]
+    [HttpPatch("UpdateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

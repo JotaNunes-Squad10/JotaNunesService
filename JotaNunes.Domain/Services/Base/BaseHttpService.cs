@@ -69,4 +69,7 @@ public abstract class BaseHttpService(HttpClient httpClient, IDomainService doma
         var result = JsonConvert.DeserializeObject<T>(stringResponse, HttpContentHelper.SnakeCaseSettings);
         return result ?? throw new Exception(response.ReasonPhrase);
     }
+
+    protected async Task<HttpResponseMessage> DeleteAsync(string route)
+        => await httpClient.DeleteAsync(route);
 }
