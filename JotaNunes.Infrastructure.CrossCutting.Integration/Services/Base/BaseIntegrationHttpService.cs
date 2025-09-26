@@ -18,4 +18,7 @@ public class BaseIntegrationHttpService(
 
     protected static StringContent PrepareUpdateUserRequest(UpdateUserRequest request)
         => HttpContentHelper.ToJsonStringContent(request);
+
+    protected static StringContent PrepareUpdateUserGroupsRequest(UpdateUserGroupsRequest request)
+        => HttpContentHelper.ToJsonStringContent(request);
 }

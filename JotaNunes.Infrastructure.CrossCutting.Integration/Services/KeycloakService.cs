@@ -68,4 +68,38 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
         return new UserResponse
             { Message = "User updated successfully." };
     }
+
+    public async Task<UserResponse> AddUserGroup(UpdateUserGroupsRequest request)
+    {
+        SetAuthorization("Bearer", await GetMasterToken());
+
+        var response = await PutAsync($"{ExternalServices.KeycloakService.User}/{request.UserId}/groups/{request.GroupId}", PrepareUpdateUserGroupsRequest(request));
+
+        if (!response.IsSuccessStatusCode)
+        {
+            AddError(nameof(UpdateUser), response);
+            return new UserResponse
+                { Message = "User group addition failed." };
+        }
+
+        return new UserResponse
+            { Message = "User group added successfully." };
+    }
+
+    public async Task<UserResponse> RemoveUserGroup(UpdateUserGroupsRequest request)
+    {
+        SetAuthorization("Bearer", await GetMasterToken());
+
+        var response = await DeleteAsync($"{ExternalServices.KeycloakService.User}/{request.UserId}/groups/{request.GroupId}");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            AddError(nameof(UpdateUser), response);
+            return new UserResponse
+                { Message = "User group removal failed." };
+        }
+
+        return new UserResponse
+            { Message = "User group removed successfully." };
+    }
 }

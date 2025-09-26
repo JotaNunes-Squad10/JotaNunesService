@@ -33,4 +33,22 @@ public static class GroupExtensions
 
         throw new KeyNotFoundException($"No mapping was found for the GroupId: {groupId}");
     }
+
+    /// <summary>
+    /// Convert a int to the corresponding Guid
+    /// </summary>
+    /// <param name="group">The enum of the group to convert</param>
+    /// <returns>The corresponding Group Guid</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when the enum is not found in the GroupMappings dictionary</exception>
+    public static Guid ToGuid(this Group group)
+    {
+        try
+        {
+            return GroupMappings.Single(kvp => kvp.Value == group).Key;
+        }
+        catch (InvalidOperationException)
+        {
+            throw new KeyNotFoundException($"No mapping was found for the Group: {group}");
+        }
+    }
 }

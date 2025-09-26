@@ -8,6 +8,7 @@ using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Interfaces;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Responses.Keycloak;
 using KeycloakUpdateUserRequest = JotaNunes.Infrastructure.CrossCutting.Integration.Requests.Keycloak.UpdateUserRequest;
+using UpdateUserGroupsRequest = JotaNunes.Infrastructure.CrossCutting.Integration.Requests.Keycloak.UpdateUserGroupsRequest;
 using MediatR;
 
 namespace JotaNunes.Application.UseCases.Authentication.Commands.Handlers;
@@ -30,20 +31,39 @@ public class UpdateUserHandler(
             var updateUserRequest = new KeycloakUpdateUserRequest
             {
                 Id = request.Id,
-                Username = request.Username,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
+                Username = request.Username ?? user!.Username,
+                FirstName = request.FirstName ?? user!.FirstName,
+                LastName = request.LastName ?? user!.LastName,
+                Email = request.Email ?? user!.Email,
                 Enabled = user!.Enabled,
-                Groups = [((Group)request.Profile).GetName()],
                 Attributes = new()
                 {
-                    ["phone"] = new() { request.Phone },
+                    ["phone"] = new() { request.Phone ?? user!.Attributes?.FirstOrDefault(a => a.Name == "phone")?.Value ?? "" },
                     ["deleted"] = new() { user.Attributes?.FirstOrDefault(a => a.Name == "deleted")?.Value ?? "false" }
                 }
             };
-            var response = await keycloakService.UpdateUser(updateUserRequest);
-            return Response(response);
+
+            var userResponse = await keycloakService.UpdateUser(updateUserRequest);
+
+            user.UserGroups.ForEach(async void (group) =>
+            {
+                var removeUserGroupRequest = new UpdateUserGroupsRequest
+                {
+                    UserId = request.Id,
+                    GroupId = group.KeycloakGroup.Id
+                };
+                var removeUserGroupResponse = await keycloakService.RemoveUserGroup(removeUserGroupRequest);
+            });
+
+            var addUserGroupRequest = new UpdateUserGroupsRequest
+            {
+                UserId = request.Id,
+                GroupId = ((Group)request.Profile).ToGuid()
+            };
+
+            var addUserGroupResponse = await keycloakService.AddUserGroup(addUserGroupRequest);
+
+            return Response(userResponse);
         }
         catch (Exception)
         {
