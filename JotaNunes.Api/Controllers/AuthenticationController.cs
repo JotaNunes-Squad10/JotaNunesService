@@ -20,6 +20,13 @@ public class AuthenticationController(
         => CustomResponse(await Send(request));
 
     [AuthorizeGroup(Group.Administrador)]
+    [HttpDelete("DeleteUser/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid id)
+        => CustomResponse(await Send(new DeleteUserRequest { Id = id }));
+
+    [AuthorizeGroup(Group.Administrador)]
     [HttpPost("CreateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -48,10 +55,4 @@ public class AuthenticationController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserRequest request)
         => CustomResponse(await Send(request));
-
-    // [HttpDelete("DeleteUser/{id:guid}")]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid id)
-    //     => CustomResponse(await Send(new DeleteUserRequest { Id = id }));
 }
