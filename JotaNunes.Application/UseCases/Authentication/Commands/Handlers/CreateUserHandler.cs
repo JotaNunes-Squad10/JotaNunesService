@@ -32,7 +32,12 @@ public class CreateUserHandler(
                 Email = request.Email,
                 Enabled = true,
                 Groups = [((Group)request.Profile).GetName()],
-                Credentials = [new() { Type = "password", Value = request.Password }]
+                Credentials = [new() { Type = "password", Value = request.Password }],
+                Attributes = new()
+                {
+                    ["phone"] = new() { request.Phone ?? "" },
+                    ["deleted"] = new() { "false" }
+                }
             };
             var response = await keycloakService.CreateUser(createUserRequest);
             return Response(response);
