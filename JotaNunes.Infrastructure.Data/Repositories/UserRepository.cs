@@ -15,6 +15,7 @@ public class UserRepository(ApplicationContext applicationContext, IDomainServic
             .Include(x => x.Attributes)
             .Include(x => x.UserGroups)
                 .ThenInclude(ug => ug.KeycloakGroup)
+            .Include(x => x.UserRequiredActions)
             .Where(x => x.Enabled && x.Attributes.Any(a => a.Name == "deleted" && a.Value == "false"))
             .OrderBy(x => x.Username)
             .ToListAsync();
@@ -24,5 +25,6 @@ public class UserRepository(ApplicationContext applicationContext, IDomainServic
             .Include(x => x.Attributes)
             .Include(x => x.UserGroups)
                 .ThenInclude(ug => ug.KeycloakGroup)
+            .Include(x => x.UserRequiredActions)
             .FirstOrDefaultAsync(x => x.Id == id && x.Enabled && x.Attributes.Any(a => a.Name == "deleted" && a.Value == "false"));
 }

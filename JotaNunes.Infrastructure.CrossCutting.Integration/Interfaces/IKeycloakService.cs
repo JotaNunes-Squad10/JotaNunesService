@@ -10,4 +10,5 @@ public interface IKeycloakService
     Task<UserResponse> UpdateUser(UpdateUserRequest request);
     Task<UserResponse> AddUserGroup(UpdateUserGroupsRequest request);
     Task<UserResponse> RemoveUserGroup(UpdateUserGroupsRequest request);
+    Task<UserResponse> ResetPassword(Guid userId, ResetPasswordRequest request);
 }

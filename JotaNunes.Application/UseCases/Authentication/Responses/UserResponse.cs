@@ -12,6 +12,7 @@ public class UserResponse
     public string? LastName { get; set; }
     public string? Email { get; set; }
     public string? Phone { get; set; }
+    public required List<string> RequiredActions { get; set; }
     private List<Profile> _profiles = new();
 
     public required List<Profile> Profiles

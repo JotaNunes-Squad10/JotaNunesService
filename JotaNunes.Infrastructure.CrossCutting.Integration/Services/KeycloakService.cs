@@ -25,7 +25,7 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
                 GrantType = "client_credentials",
                 Scope = "openid"
             };
-            var response = await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareAuthenticationRequest(request));
+            var response = await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareFormUrlEncodedRequest(request));
             _token = response.AccessToken;
             _tokenExpiry = DateTime.UtcNow.AddSeconds(response.ExpiresIn - 30);
         }
@@ -33,13 +33,13 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
     }
 
     public async Task<TokenResponse> Authenticate(AuthenticationRequest request)
-        => await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareAuthenticationRequest(request));
+        => await PostAsync<TokenResponse>($"{ExternalServices.KeycloakService.Token}", PrepareFormUrlEncodedRequest(request));
 
     public async Task<UserResponse> CreateUser(CreateUserRequest request)
     {
         SetAuthorization("Bearer", await GetMasterToken());
 
-        var response = await PostAsync($"{ExternalServices.KeycloakService.User}", PrepareCreateUserRequest(request));
+        var response = await PostAsync($"{ExternalServices.KeycloakService.User}", PrepareJsonRequest(request));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -56,7 +56,7 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
     {
         SetAuthorization("Bearer", await GetMasterToken());
 
-        var response = await PutAsync($"{ExternalServices.KeycloakService.User}/{request.Id}", PrepareUpdateUserRequest(request));
+        var response = await PutAsync($"{ExternalServices.KeycloakService.User}/{request.Id}", PrepareJsonRequest(request));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -73,7 +73,7 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
     {
         SetAuthorization("Bearer", await GetMasterToken());
 
-        var response = await PutAsync($"{ExternalServices.KeycloakService.User}/{request.UserId}/groups/{request.GroupId}", PrepareUpdateUserGroupsRequest(request));
+        var response = await PutAsync($"{ExternalServices.KeycloakService.User}/{request.UserId}/groups/{request.GroupId}", PrepareJsonRequest(request));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -101,5 +101,22 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
 
         return new UserResponse
             { Message = "User group removed successfully." };
+    }
+
+    public async Task<UserResponse> ResetPassword(Guid userId, ResetPasswordRequest request)
+    {
+        SetAuthorization("Bearer", await GetMasterToken());
+
+        var response = await PutAsync($"{ExternalServices.KeycloakService.User}/{userId}/reset-password", PrepareJsonRequest(request));
+
+        if (!response.IsSuccessStatusCode)
+        {
+            AddError(nameof(ResetPassword), response);
+            return new UserResponse
+                { Message = "User password reset failed." };
+        }
+
+        return new UserResponse
+            { Message = "User password reset successfully." };
     }
 }
