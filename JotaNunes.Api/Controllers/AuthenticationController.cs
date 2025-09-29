@@ -49,6 +49,13 @@ public class AuthenticationController(
         => CustomResponse(await authenticationQueries.GetByIdAsync(id));
 
     [AuthorizeGroup(Group.Administrador)]
+    [HttpPatch("ResetPassword")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
+        => CustomResponse(await Send(request));
+
+    [AuthorizeGroup(Group.Administrador)]
     [HttpPatch("UpdateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
