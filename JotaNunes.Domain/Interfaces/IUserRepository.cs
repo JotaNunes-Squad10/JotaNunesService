@@ -7,4 +7,5 @@ public interface IUserRepository : IBaseRepository<User>
 {
     new Task<List<User>> GetAllAsync();
     Task<User?> GetByIdAsync(Guid id);
+    Task<User?> GetByUsernameAsync(string username);
 }
