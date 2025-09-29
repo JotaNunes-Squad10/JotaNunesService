@@ -17,43 +17,29 @@ public class AuthenticationQueries(IDomainService domainService, IUserRepository
 
         if (ListIsNullOrEmpty(list)) return Response();
 
-        var response = new List<UserResponse>();
-
-        foreach (var user in list)
-        {
-            response.Add(new UserResponse
-            {
-                Id = user.Id,
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Phone = user.Attributes?.FirstOrDefault(a => a.Name == "phone")?.Value,
-                RequiredActions = user.UserRequiredActions.Select(ura => ura.Action).ToList(),
-                Profiles = user.UserGroups.Select(ug => new Profile(ug)).ToList()
-            });
-        }
+        var response = Map(list);
 
         return Response(response);
     }
 
     public virtual async Task<DefaultResponse> GetByIdAsync(Guid id)
     {
-        var entity = await Repository.GetByIdAsync(id);
+        var user = await Repository.GetByIdAsync(id);
 
-        if (IsNull(entity)) return Response();
+        if (IsNull(user)) return Response();
 
-        var response = new UserResponse
-        {
-            Id = entity!.Id,
-            Username = entity.Username,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName,
-            Email = entity.Email,
-            Phone = entity.Attributes?.FirstOrDefault(a => a.Name == "phone")?.Value,
-            RequiredActions = entity.UserRequiredActions.Select(ura => ura.Action).ToList(),
-            Profiles = entity.UserGroups.Select(ug => new Profile(ug)).ToList()
-        };
+        var response = Map(user!);
+
+        return Response(response);
+    }
+
+    public virtual async Task<DefaultResponse> GetByUsernameAsync(string username)
+    {
+        var user = await Repository.GetByUsernameAsync(username);
+
+        if (IsNull(user)) return Response();
+
+        var response = Map(user!);
 
         return Response(response);
     }

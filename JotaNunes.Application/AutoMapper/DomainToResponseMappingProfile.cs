@@ -1,7 +1,10 @@
-using AutoMapper;
+using JotaNunes.Application.UseCases.Authentication.Responses;
 using JotaNunes.Domain.Models.Base;
+using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.ValueObjects.Base;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
+using UserProfile = JotaNunes.Application.UseCases.Authentication.Responses.Profile;
+using Profile = AutoMapper.Profile;
 
 namespace JotaNunes.Application.AutoMapper;
 
@@ -56,5 +59,14 @@ public class DomainToResponseMappingProfile : Profile
                 }
             }
         }
+
+        CreateMap<User, UserResponse>()
+            .ForMember(dest => dest.Phone,
+                opt => opt.MapFrom(src => src.Attributes.FirstOrDefault(a => a.Name == "phone") != null ? src.Attributes.First(a => a.Name == "phone").Value : string.Empty))
+            .ForMember(dest => dest.RequiredActions,
+                opt => opt.MapFrom(src => src.UserRequiredActions.Select(ura => ura.Action).ToList()))
+            .ForMember(dest => dest.Profiles,
+                opt => opt.MapFrom(src => src.UserGroups.Select(ug => new UserProfile(ug)).ToList()))
+            .ReverseMap();
     }
 }

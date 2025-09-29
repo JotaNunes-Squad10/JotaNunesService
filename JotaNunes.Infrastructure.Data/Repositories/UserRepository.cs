@@ -27,4 +27,12 @@ public class UserRepository(ApplicationContext applicationContext, IDomainServic
                 .ThenInclude(ug => ug.KeycloakGroup)
             .Include(x => x.UserRequiredActions)
             .FirstOrDefaultAsync(x => x.Id == id && x.Enabled && x.Attributes.Any(a => a.Name == "deleted" && a.Value == "false"));
+
+    public async Task<User?> GetByUsernameAsync(string username)
+        => await GetTracking
+            .Include(x => x.Attributes)
+            .Include(x => x.UserGroups)
+                .ThenInclude(ug => ug.KeycloakGroup)
+            .Include(x => x.UserRequiredActions)
+            .FirstOrDefaultAsync(x => x.Username == username && x.Enabled && x.Attributes.Any(a => a.Name == "deleted" && a.Value == "false"));
 }

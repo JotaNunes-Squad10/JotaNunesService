@@ -49,6 +49,14 @@ public class AuthenticationController(
         => CustomResponse(await authenticationQueries.GetByIdAsync(id));
 
     [AuthorizeGroup(Group.Administrador)]
+    [HttpGet("GetUserByUsername/{username}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUserByUsername([FromRoute] string username)
+        => CustomResponse(await authenticationQueries.GetByUsernameAsync(username));
+
+    [AuthorizeGroup(Group.Administrador)]
     [HttpPatch("ResetPassword")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
