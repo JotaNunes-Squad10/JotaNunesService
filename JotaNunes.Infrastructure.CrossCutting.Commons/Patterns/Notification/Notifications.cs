@@ -12,6 +12,12 @@ public class Notifications(ILogger<Notifications> logger, DefaultResponse defaul
     public void AddError(ValidationFailure failure)
         => defaultResponse.ValidationResult.Errors.Add(failure);
 
+    public void ClearErrors()
+        => defaultResponse.ValidationResult.Errors.Clear();
+
+    public List<string> GetErrors()
+        => defaultResponse.ValidationResult.Errors.Select(x => x.ErrorMessage).ToList();
+
     public bool HasError()
         => !defaultResponse.ValidationResult.IsValid;
 

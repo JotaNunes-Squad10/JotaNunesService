@@ -6,6 +6,8 @@ public interface INotifications
 {
     void AddError(string property, string message);
     void AddError(ValidationFailure failure);
+    void ClearErrors();
+    List<string> GetErrors();
     bool HasError();
     void LogErrors();
 }

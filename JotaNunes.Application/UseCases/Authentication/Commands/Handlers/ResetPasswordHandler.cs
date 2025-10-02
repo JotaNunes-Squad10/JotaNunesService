@@ -6,8 +6,8 @@ using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Interfaces;
-using MediatR;
 using KeycloakResetPasswordRequest = JotaNunes.Infrastructure.CrossCutting.Integration.Requests.Keycloak.ResetPasswordRequest;
+using MediatR;
 
 namespace JotaNunes.Application.UseCases.Authentication.Commands.Handlers;
 
@@ -29,7 +29,7 @@ public class ResetPasswordHandler(
             var resetPasswordRequest = new KeycloakResetPasswordRequest
             {
                 Type = "password",
-                Value = request.Password,
+                Value = request.NewPassword,
                 Temporary = true
             };
 
