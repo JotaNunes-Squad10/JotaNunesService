@@ -64,6 +64,13 @@ public class AuthenticationController(
         => CustomResponse(await Send(request));
 
     [AuthorizeGroup(Group.Administrador)]
+    [HttpPatch("UpdatePassword")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdatePasswordAsync([FromBody] UpdatePasswordRequest request)
+        => CustomResponse(await Send(request));
+
+    [AuthorizeGroup(Group.Administrador)]
     [HttpPatch("UpdateUser")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

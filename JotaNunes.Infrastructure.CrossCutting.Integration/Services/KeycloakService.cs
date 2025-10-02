@@ -113,10 +113,10 @@ public class KeycloakService : BaseIntegrationHttpService, IKeycloakService
         {
             AddError(nameof(ResetPassword), response);
             return new UserResponse
-                { Message = "User password reset failed." };
+                { Message = "User password update failed." };
         }
 
         return new UserResponse
-            { Message = "User password reset successfully." };
+            { Message = "User password updated successfully." };
     }
 }

@@ -3,8 +3,9 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Authentication.Commands.Requests;
 
-public class ResetPasswordRequest : IRequest<DefaultResponse>
+public class UpdatePasswordRequest : IRequest<DefaultResponse>
 {
-    public required Guid UserId { get; set; }
+    public required string Username { get; set; }
+    public required string CurrentPassword { get; set; }
     public required string NewPassword { get; set; }
 }
