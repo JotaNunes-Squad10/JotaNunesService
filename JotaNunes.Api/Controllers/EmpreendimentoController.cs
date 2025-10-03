@@ -4,7 +4,6 @@ using JotaNunes.Application.UseCases.Empreendimento.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace JotaNunes.Api.Controllers;
 
 public class EmpreendimentoController(
@@ -18,11 +17,11 @@ public class EmpreendimentoController(
     public async Task<IActionResult> CreateEmpreendimentoAsync([FromBody] CreateEmpreendimentoRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpPut("UpdateEmpreendimento")]
+    [HttpDelete("DeleteEmpreendimento/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateEmpreendimentoAsync([FromBody] UpdateEmpreendimentoRequest request)
-        => CustomResponse(await Send(request));
+    public async Task<IActionResult> DeleteEmpreendimentoAsync(long id)
+        => CustomResponse(await Send(new DeleteEmpreendimentoRequest { Id = id }));
 
     [HttpGet("GetAllEmpreendimentos")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -36,9 +35,10 @@ public class EmpreendimentoController(
     public async Task<IActionResult> GetEmpreendimentoByIdAsync(long id)
         => CustomResponse(await queries.GetByIdAsync(id));
 
-    [HttpDelete("DeleteEmpreendimento/{id:long}")]
+    [HttpPatch("UpdateEmpreendimento")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DeleteEmpreendimentoAsync(long id)
-        => CustomResponse(await Send(new DeleteEmpreendimentoRequest { Id = id }));
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateEmpreendimentoAsync([FromBody] UpdateEmpreendimentoRequest request)
+        => CustomResponse(await Send(request));
 }

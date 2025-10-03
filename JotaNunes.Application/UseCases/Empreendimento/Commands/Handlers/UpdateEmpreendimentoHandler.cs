@@ -10,7 +10,7 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
 public class UpdateEmpreendimentoHandler(
     IDomainService domainService,
     IEmpreendimentoRepository repository
-) : BaseHandler<Domain.Models.Empreendimento, UpdateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Empreendimento, UpdateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
     IRequestHandler<UpdateEmpreendimentoRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(UpdateEmpreendimentoRequest request, CancellationToken cancellationToken)

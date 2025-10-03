@@ -7,10 +7,11 @@ using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 
 namespace JotaNunes.Application.UseCases.Marca.Commands.Handlers;
+
 public class UpdateMarcaHandler(
     IDomainService domainService,
     IMarcaRepository repository
-) : BaseHandler<Domain.Models.Marca, UpdateMarcaRequest, MarcaResponse, IMarcaRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.Marca, UpdateMarcaRequest, MarcaResponse, IMarcaRepository>(domainService, repository),
     IRequestHandler<UpdateMarcaRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(UpdateMarcaRequest request, CancellationToken cancellationToken)
