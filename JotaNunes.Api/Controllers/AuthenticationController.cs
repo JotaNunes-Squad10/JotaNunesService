@@ -40,7 +40,6 @@ public class AuthenticationController(
     public async Task<IActionResult> GetAllUsersAsync()
         => CustomResponse(await authenticationQueries.GetAllAsync());
 
-    [AuthorizeGroup(Group.Administrador)]
     [HttpGet("GetUserById/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -48,7 +47,6 @@ public class AuthenticationController(
     public async Task<IActionResult> GetUserById([FromRoute] Guid id)
         => CustomResponse(await authenticationQueries.GetByIdAsync(id));
 
-    [AuthorizeGroup(Group.Administrador)]
     [HttpGet("GetUserByUsername/{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -63,7 +61,6 @@ public class AuthenticationController(
     public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
         => CustomResponse(await Send(request));
 
-    [AuthorizeGroup(Group.Administrador)]
     [HttpPatch("UpdatePassword")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
