@@ -1,6 +1,4 @@
-﻿using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
-using JotaNunes.Application.UseCases.Ambiente.Responses;
-using JotaNunes.Application.UseCases.Base.Commands;
+﻿using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Application.UseCases.Material.Commands.Requests;
 using JotaNunes.Application.UseCases.Material.Responses;
 using JotaNunes.Domain.Interfaces;
