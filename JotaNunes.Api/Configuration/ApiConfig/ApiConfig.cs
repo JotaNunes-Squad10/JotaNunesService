@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using QuestPDF.Infrastructure;
 
 namespace JotaNunes.Api.Configuration.ApiConfig;
 
@@ -34,10 +35,11 @@ public static class ApiConfig
         ArgumentNullException.ThrowIfNull(services);
         ArgumentNullException.ThrowIfNull(configuration);
 
-        services.AddSwaggerConfiguration();
         services.AddApiConfiguration();
-        services.AddMediatorConfiguration();
         services.AddAutoMapperConfiguration();
+        services.AddMediatorConfiguration();
+        services.AddQuestPdfConfiguration();
+        services.AddSwaggerConfiguration();
         services.RegisterApiVersion();
         services.RegisterAppSettings(configuration);
         services.RegisterPatterns();
@@ -153,6 +155,11 @@ public static class ApiConfig
             .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
+    }
+
+    private static void AddQuestPdfConfiguration(this IServiceCollection services)
+    {
+        QuestPDF.Settings.License = LicenseType.Community;
     }
 
     public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)

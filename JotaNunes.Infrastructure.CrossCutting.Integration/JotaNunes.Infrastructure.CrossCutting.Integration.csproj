@@ -11,4 +11,19 @@
       <ProjectReference Include="..\JotaNunes.Infrastructure.CrossCutting.Commons\JotaNunes.Infrastructure.CrossCutting.Commons.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="QuestPDF" Version="2025.7.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\QuestPdf\Assets\" />
+      <Folder Include="Services\QuestPdf\Documents\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Services\QuestPdf\Assets\**\*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
 </Project>

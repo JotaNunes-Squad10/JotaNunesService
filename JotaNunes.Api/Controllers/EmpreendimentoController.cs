@@ -29,6 +29,12 @@ public class EmpreendimentoController(
     public async Task<IActionResult> GetAllEmpreendimentosAsync()
         => CustomResponse(await queries.GetAllAsync());
 
+    [HttpPost("GenerateDocumentoEmpreendimento")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GenerateDocumentoEmpreendimento([FromBody] GenerateDocumentoEmpreendimentoRequest request)
+        => CustomResponse(await Send(request));
+
     [HttpGet("GetEmpreendimentoById/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
