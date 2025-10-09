@@ -15,22 +15,41 @@ public class EmpreendimentoMapping : BaseAuditEntityMapping<Empreendimento>
 
         builder.Property(x => x.Nome)
             .HasColumnName("nome")
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.Property(x => x.Descricao)
+            .HasColumnName("descricao")
+            .HasMaxLength(500)
+            .IsRequired();
+
+        builder.Property(x => x.Localizacao)
+            .HasColumnName("localizacao")
+            .HasMaxLength(200)
             .IsRequired();
 
         builder.Property(x => x.TamanhoArea)
             .HasColumnName("tamanho_area")
             .IsRequired();
 
-        builder.Property(x => x.Localizacao)
-            .HasColumnName("localizacao")
+        builder.Property(x => x.Versao)
+            .HasColumnName("versao")
             .IsRequired();
 
-        builder.Property(x => x.EmpreendimentoStatusId)
+        builder.Property(x => x.Padrao)
+            .HasColumnName("padrao_fk")
+            .IsRequired();
+
+        builder.Property(x => x.Status)
             .HasColumnName("status_fk")
             .IsRequired();
 
+        builder.HasOne(x => x.EmpreendimentoPadrao)
+            .WithMany(x => x.Empreendimentos)
+            .HasForeignKey(x => x.Padrao);
+
         builder.HasOne(x => x.EmpreendimentoStatus)
             .WithMany(x => x.Empreendimentos)
-            .HasForeignKey(x => x.EmpreendimentoStatusId);
+            .HasForeignKey(x => x.Status);
     }
 }

@@ -1,6 +1,8 @@
 using JotaNunes.Application.UseCases.Authentication.Responses;
+using JotaNunes.Application.UseCases.Empreendimento.Responses;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Domain.Models.Keycloak;
+using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.ValueObjects.Base;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
 using UserProfile = JotaNunes.Application.UseCases.Authentication.Responses.Profile;
@@ -59,6 +61,10 @@ public class DomainToResponseMappingProfile : Profile
                 }
             }
         }
+
+        CreateMap<Empreendimento, EmpreendimentoResponse>()
+            .ForMember(dest => dest.Padrao, opt => opt.MapFrom(src => src.EmpreendimentoPadrao.Nome))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao));
 
         CreateMap<User, UserResponse>()
             .ForMember(dest => dest.Phone,
