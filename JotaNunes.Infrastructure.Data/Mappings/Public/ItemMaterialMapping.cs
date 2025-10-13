@@ -28,9 +28,5 @@ public class ItemMaterialMapping : BaseAuditEntityMapping<ItemMaterial>
         builder.HasOne(x => x.Material)
             .WithMany(x => x.ItemMateriais)
             .HasForeignKey(x => x.MaterialId);
-        
-        builder.HasOne(x => x.Marca)
-            .WithMany(x => x.ItemMateriais)
-            .HasForeignKey(x => x.MarcaId);
     }
 }

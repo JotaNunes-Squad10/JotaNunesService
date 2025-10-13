@@ -16,5 +16,13 @@ public class MaterialMapping : BaseAuditEntityMapping<Material>
         builder.Property(x => x.Nome)
             .HasColumnName("nome")
             .IsRequired();
+
+        builder.Property(x => x.MarcaId)
+            .HasColumnName("marca_fk")
+            .IsRequired();
+
+        builder.HasOne(x => x.Marca)
+            .WithMany(x => x.Materiais)
+            .HasForeignKey(x => x.MarcaId);
     }
 }

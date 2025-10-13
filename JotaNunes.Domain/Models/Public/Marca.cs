@@ -5,5 +5,5 @@ namespace JotaNunes.Domain.Models.Public;
 public class Marca : BaseAuditEntity
 {
     public required string Nome { get; set; }
-    public required List<ItemMaterial> ItemMateriais { get; set; }
+    public required List<Material> Materiais { get; set; }
 }
