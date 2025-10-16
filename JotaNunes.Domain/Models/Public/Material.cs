@@ -8,5 +8,5 @@ public class Material : BaseAuditEntity
     public required long MarcaId { get; set; }
 
     public required Marca Marca { get; set; }
-    public required List<ItemMaterial> ItemMateriais { get; set; }
+    public required List<EmpreendimentoMaterial> EmpreendimentoMateriais { get; set; }
 }

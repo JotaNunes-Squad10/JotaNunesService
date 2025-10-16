@@ -5,28 +5,28 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JotaNunes.Infrastructure.Data.Mappings.Public;
 
-public class ItemMaterialMapping : BaseAuditEntityMapping<ItemMaterial>
+public class EmpreendimentoMaterialMapping : BaseAuditEntityMapping<EmpreendimentoMaterial>
 {
-    public override void Configure(EntityTypeBuilder<ItemMaterial> builder)
+    public override void Configure(EntityTypeBuilder<EmpreendimentoMaterial> builder)
     {
         base.Configure(builder);
         
-        builder.ToTable("rl_item_material", "public");
+        builder.ToTable("rl_empreendimento_material", "public");
         
-        builder.Property(x => x.ItemId)
-            .HasColumnName("item_fk")
+        builder.Property(x => x.EmpreendimentoId)
+            .HasColumnName("empreendimento_fk")
             .IsRequired();
         
         builder.Property(x => x.MaterialId)
             .HasColumnName("material_fk")
             .IsRequired();
         
-        builder.HasOne(x => x.Item)
-            .WithMany(x => x.ItemMateriais)
-            .HasForeignKey(x => x.ItemId);
+        builder.HasOne(x => x.Empreendimento)
+            .WithMany(x => x.EmpreendimentoMaterials)
+            .HasForeignKey(x => x.EmpreendimentoId);
         
         builder.HasOne(x => x.Material)
-            .WithMany(x => x.ItemMateriais)
+            .WithMany(x => x.EmpreendimentoMateriais)
             .HasForeignKey(x => x.MaterialId);
     }
 }
