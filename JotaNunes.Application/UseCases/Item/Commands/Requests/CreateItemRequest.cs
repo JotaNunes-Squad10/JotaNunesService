@@ -6,4 +6,5 @@ namespace JotaNunes.Application.UseCases.Item.Commands.Requests;
 public class CreateItemRequest : IRequest<DefaultResponse>
 {
     public required string Nome { get; set; }
+    public required string Descricao { get; set; }
 }

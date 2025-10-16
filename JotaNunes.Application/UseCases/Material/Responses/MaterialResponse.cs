@@ -4,4 +4,5 @@ public class MaterialResponse
 {
     public required long Id { get; set; }
     public required string Nome { get; set; }
+    public required string Marca { get; set; }
 }

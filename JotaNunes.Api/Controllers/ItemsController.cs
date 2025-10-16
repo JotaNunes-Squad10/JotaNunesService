@@ -31,11 +31,11 @@ public class ItemsController(
     public async Task<IActionResult> GetAllItemsAsync()
         => CustomResponse(await itemQueries.GetAllAsync());
     
-    [HttpGet("GetItemsById/{id:long}")]
+    [HttpGet("GetItemById/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetItemsById([FromRoute] long id)
+    public async Task<IActionResult> GetItemById([FromRoute] long id)
         => CustomResponse(await itemQueries.GetByIdAsync(id));
     
     [HttpPatch("UpdateItem")]
