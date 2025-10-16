@@ -69,7 +69,7 @@ public class DomainToResponseMappingProfile : Profile
 
         CreateMap<Material, MaterialResponse>()
             .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Marca.Nome));
-        
+
         CreateMap<User, UserResponse>()
             .ForMember(dest => dest.Phone,
                 opt => opt.MapFrom(src => src.Attributes.FirstOrDefault(a => a.Name == "phone") != null ? src.Attributes.First(a => a.Name == "phone").Value : string.Empty))
