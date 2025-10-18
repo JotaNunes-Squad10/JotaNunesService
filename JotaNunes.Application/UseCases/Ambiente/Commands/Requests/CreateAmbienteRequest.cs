@@ -6,4 +6,5 @@ namespace JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 public class CreateAmbienteRequest : IRequest<DefaultResponse>
 {
     public required string Nome { get; set; }
+    public required long TopicoId { get; set; }
 }

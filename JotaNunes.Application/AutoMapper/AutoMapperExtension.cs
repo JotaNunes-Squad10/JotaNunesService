@@ -23,6 +23,7 @@ public static class AutoMapperExtension
         this IMappingExpression<TSource, TDestination> map, IUser user)
         where TDestination : BaseAuditEntity
     {
+        map.ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         map.ForMember(d => d.UsuarioAlteracaoId, opt => opt.MapFrom(x => user.Id));
         map.ForMember(d => d.DataHoraAlteracao, opt => opt.MapFrom(x => DateTime.Now));
 

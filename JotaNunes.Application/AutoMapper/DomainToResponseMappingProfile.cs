@@ -1,3 +1,4 @@
+using JotaNunes.Application.UseCases.Ambiente.Responses;
 using JotaNunes.Application.UseCases.Authentication.Responses;
 using JotaNunes.Application.UseCases.Empreendimento.Responses;
 using JotaNunes.Application.UseCases.Material.Responses;
@@ -62,6 +63,9 @@ public class DomainToResponseMappingProfile : Profile
                 }
             }
         }
+
+        CreateMap<Ambiente, AmbienteResponse>()
+            .ForMember(dest => dest.Topico, opt => opt.MapFrom(src => src.Topico));
 
         CreateMap<Empreendimento, EmpreendimentoResponse>()
             .ForMember(dest => dest.Padrao, opt => opt.MapFrom(src => src.EmpreendimentoPadrao.Nome))

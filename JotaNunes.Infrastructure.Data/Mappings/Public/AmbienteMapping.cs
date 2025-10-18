@@ -16,5 +16,13 @@ public class AmbienteMapping : BaseAuditEntityMapping<Ambiente>
         builder.Property(x => x.Nome)
             .HasColumnName("nome")
             .IsRequired();
+        
+        builder.Property(x => x.TopicoId)
+            .HasColumnName("topico_fk")
+            .IsRequired();
+
+        builder.HasOne(x => x.Topico)
+            .WithMany(x => x.Ambientes)
+            .HasForeignKey(x => x.TopicoId);
     }
 }

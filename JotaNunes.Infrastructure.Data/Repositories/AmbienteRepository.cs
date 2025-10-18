@@ -3,6 +3,7 @@ using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.Data.Contexts;
 using JotaNunes.Infrastructure.Data.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace JotaNunes.Infrastructure.Data.Repositories;
 
@@ -10,4 +11,14 @@ public class AmbienteRepository(ApplicationContext applicationContext, IDomainSe
     : BaseRepository<Ambiente>(applicationContext, domainService), IAmbienteRepository
 {
     
+    public override async Task<List<Ambiente>> GetAllAsync()
+        => await GetTracking
+            .Include(x => x.Topico)
+            .OrderBy(x => x.Nome)
+            .ToListAsync();
+
+    public override async Task<Ambiente?> GetByIdAsync(long id)
+        => await GetTracking
+            .Include(x => x.Topico)
+            .FirstOrDefaultAsync(x => x.Id == id);
 }

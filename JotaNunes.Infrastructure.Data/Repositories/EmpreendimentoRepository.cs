@@ -23,6 +23,7 @@ public class EmpreendimentoRepository(ApplicationContext applicationContext, IDo
             .Include(x => x.EmpreendimentoMaterials)
                 .ThenInclude(x => x.Material)
                     .ThenInclude(x => x.Marca)
+            .OrderBy(x => x.Nome)
             .ToListAsync();
 
     public override async Task<Empreendimento?> GetByIdAsync(long id)
