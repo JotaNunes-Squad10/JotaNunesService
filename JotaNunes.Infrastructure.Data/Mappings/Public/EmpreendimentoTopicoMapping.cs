@@ -21,6 +21,10 @@ public class EmpreendimentoTopicoMapping : BaseAuditEntityMapping<Empreendimento
             .HasColumnName("topico_fk")
             .IsRequired();
         
+        builder.Property(x => x.Posicao)
+            .HasColumnName("posicao")
+            .IsRequired();
+        
         builder.HasOne(x => x.Empreendimento)
             .WithMany(x => x.EmpreendimentoTopicos)
             .HasForeignKey(x => x.EmpreendimentoId);

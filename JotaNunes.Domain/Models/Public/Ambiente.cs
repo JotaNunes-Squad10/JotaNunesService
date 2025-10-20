@@ -8,5 +8,5 @@ public class Ambiente : BaseAuditEntity
     public required long TopicoId { get; set; }
     
     public required Topico Topico { get; set; }
-    public required List<EmpreendimentoAmbiente> EmpreendimentoAmbientes { get; set; }
+    public required List<TopicoAmbiente> EmpreendimentoAmbientes { get; set; }
 }

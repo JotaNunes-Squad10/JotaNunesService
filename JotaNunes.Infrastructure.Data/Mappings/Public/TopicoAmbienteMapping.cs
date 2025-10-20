@@ -5,25 +5,29 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JotaNunes.Infrastructure.Data.Mappings.Public;
 
-public class EmpreendimentoAmbienteMapping : BaseAuditEntityMapping<EmpreendimentoAmbiente>
+public class TopicoAmbienteMapping : BaseAuditEntityMapping<TopicoAmbiente>
 {
-    public override void Configure(EntityTypeBuilder<EmpreendimentoAmbiente> builder)
+    public override void Configure(EntityTypeBuilder<TopicoAmbiente> builder)
     {
         base.Configure(builder);
         
-        builder.ToTable("rl_empreendimento_ambiente", "public");
+        builder.ToTable("rl_topico_ambiente", "public");
         
-        builder.Property(x => x.EmpreendimentoId)
-            .HasColumnName("empreendimento_fk")
+        builder.Property(x => x.TopicoId)
+            .HasColumnName("topico_fk")
             .IsRequired();
         
         builder.Property(x => x.AmbienteId)
             .HasColumnName("ambiente_fk")
             .IsRequired();
         
-        builder.HasOne(x => x.Empreendimento)
-            .WithMany(x => x.EmpreendimentoAmbientes)
-            .HasForeignKey(x => x.EmpreendimentoId);
+        builder.Property(x => x.Posicao)
+            .HasColumnName("posicao")
+            .IsRequired();
+        
+        builder.HasOne(x => x.EmpreendimentoTopico)
+            .WithMany(x => x.TopicoAmbientes)
+            .HasForeignKey(x => x.TopicoId);
         
         builder.HasOne(x => x.Ambiente)
             .WithMany(x => x.EmpreendimentoAmbientes)
