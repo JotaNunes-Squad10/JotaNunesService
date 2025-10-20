@@ -1,39 +1,12 @@
 using JotaNunes.Domain.Models.Public;
+using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Styles;
 using QuestPDF.Fluent;
-using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 
 namespace JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents;
 
-public static class Typography
+public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
 {
-    public static TextStyle Title => TextStyle
-        .Default
-        .FontFamily("Calibri")
-        .FontColor("#000000")
-        .FontSize(14)
-        .LineHeight(2)
-        .Bold();
-
-    public static TextStyle Topic => TextStyle
-        .Default
-        .FontFamily("Calibri")
-        .FontColor("#000000")
-        .FontSize(12)
-        .Bold();
-
-    public static TextStyle Normal => TextStyle
-        .Default
-        .FontFamily("Calibri")
-        .FontColor("#000000")
-        .FontSize(12)
-        .LineHeight(2);
-}
-
-public class DocumentoEmpreendimento(Empreendimento model) : IDocument
-{
-    public Empreendimento Model { get; } = model;
-
     public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
     public DocumentSettings GetSettings() => DocumentSettings.Default;
 
@@ -57,25 +30,57 @@ public class DocumentoEmpreendimento(Empreendimento model) : IDocument
                     {
                         column.Item().Text("ESPECIFICAÇÃO TÉCNICA").Style(Typography.Title).AlignCenter();
                         column.Item().Text("").Style(Typography.Normal);
-                        column.Item().Text($"Empreendimento: {model.Nome}.").Style(Typography.Normal);
-                        column.Item().Text($"Localização: {model.Localizacao}.").Style(Typography.Normal);
-                        column.Item().Text($"Descrição: {model.Descricao}").Style(Typography.Normal);
+                        column.Item().Text($"Empreendimento: {empreendimento.Nome}.").Style(Typography.Normal);
+                        column.Item().Text($"Localização: {empreendimento.Localizacao}.").Style(Typography.Normal);
+                        column.Item().Text($"Descrição: {empreendimento.Descricao}").Style(Typography.Normal);
+                        column.Item().Text("").Style(Typography.Normal);
 
-                        AddListItem(column, 0, "1.", "UNIDADES PRIVATIVAS", Typography.Topic);
-                        AddListItem(column, 1, "1.1", "Sala de Estar / Jantar", Typography.Topic);
+                        empreendimento.EmpreendimentoTopicos.OrderBy(et => et.Posicao).ToList().ForEach(et =>
+                        {
+                            AddListItem(column, 0, $"{et.Posicao}.", et.Topico.Nome, Typography.Topic);
+                            
+                            et.TopicoAmbientes.OrderBy(ta => ta.Posicao).ToList().ForEach(ta =>
+                            {
+                                column.Item().Text("").Style(Typography.Normal);
+                                AddListItem(column, 1, $"{et.Posicao}.{ta.Posicao}. ", ta.Ambiente.Nome, Typography.Topic);
+                                column.Item().Text("").Style(Typography.Normal);
+
+                                column.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.RelativeColumn(3); // 30%
+                                        columns.RelativeColumn(7); // 70%
+                                    });
+                                    
+                                    table.Cell().Element(Table.HeaderCell).Text("Item");
+                                    table.Cell().Element(Table.HeaderCell).Text("Descrição");
+                                    
+                                    ta.AmbienteItens.OrderBy(ai => ai.Item.Nome).ToList().ForEach(ai =>
+                                    {
+                                        table.Cell().Element(Table.BodyCell).Text(ai.Item.Nome);
+                                        table.Cell().Element(Table.BodyCell).Text(ai.Item.Descricao);
+                                    });
+                                });
+                            });
+                            column.Item().Text("").Style(Typography.Normal);
+                        });
+                        
                     });
 
-                page.Footer().Height(50).Background(Colors.Grey.Lighten1);
+                page.Footer().Height(40).Row(row =>
+                {
+                    row.RelativeItem().AlignCenter().PaddingTop(12).Image(GetImage("footer.png")).FitHeight();
+                });
             });
     }
 
-    void AddListItem(ColumnDescriptor column, int nestingLevel, string bulletText, string text, TextStyle style)
+    private void AddListItem(ColumnDescriptor column, int nestingLevel, string bulletText, string text, TextStyle style)
     {
-
         column.Item().Row(row =>
         {
             row.ConstantItem(NestingSize * nestingLevel);
-            row.ConstantItem(NestingSize).Text(bulletText);
+            row.ConstantItem(NestingSize).Text(bulletText).Style(style);
             row.RelativeItem().Text(text).Style(style);
         });
     }
