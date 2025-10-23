@@ -37,35 +37,65 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
 
                         empreendimento.EmpreendimentoTopicos.OrderBy(et => et.Posicao).ToList().ForEach(et =>
                         {
-                            AddListItem(column, 0, $"{et.Posicao}.", et.Topico.Nome, Typography.Topic);
-                            
-                            et.TopicoAmbientes.OrderBy(ta => ta.Posicao).ToList().ForEach(ta =>
-                            {
-                                column.Item().Text("").Style(Typography.Normal);
-                                AddListItem(column, 1, $"{et.Posicao}.{ta.Posicao}. ", ta.Ambiente.Nome, Typography.Topic);
-                                column.Item().Text("").Style(Typography.Normal);
+                            AddListTopic(column, 0, $"{et.Posicao}.", et.Topico.Nome, Typography.Topic);
 
-                                column.Item().Table(table =>
+                            if (et.TopicoId != 3) // Diferente de Marcas
+                            {
+                                et.TopicoAmbientes.OrderBy(ta => ta.Posicao).ToList().ForEach(ta =>
                                 {
-                                    table.ColumnsDefinition(columns =>
+                                    column.Item().Text("").Style(Typography.Normal);
+                                    AddListTopic(column, 1, $"{et.Posicao}.{ta.Posicao}.", ta.Ambiente.Nome, Typography.Topic);
+                                    column.Item().Text("").Style(Typography.Normal);
+
+                                    column.Item().Table(table =>
                                     {
-                                        columns.RelativeColumn(3); // 30%
-                                        columns.RelativeColumn(7); // 70%
-                                    });
-                                    
-                                    table.Cell().Element(Table.HeaderCell).Text("Item");
-                                    table.Cell().Element(Table.HeaderCell).Text("Descrição");
-                                    
-                                    ta.AmbienteItens.OrderBy(ai => ai.Item.Nome).ToList().ForEach(ai =>
-                                    {
-                                        table.Cell().Element(Table.BodyCell).Text(ai.Item.Nome);
-                                        table.Cell().Element(Table.BodyCell).Text(ai.Item.Descricao);
+                                        table.ColumnsDefinition(columns =>
+                                        {
+                                            columns.RelativeColumn(3);
+                                            columns.RelativeColumn(7);
+                                        });
+
+                                        if (ta.AmbienteItens.Count > 0)
+                                        {
+                                            table.Cell().Element(Table.HeaderCell).Text("Item");
+                                            table.Cell().Element(Table.HeaderCell).Text("Descrição");
+                                        }
+
+                                        ta.AmbienteItens.OrderBy(ai => ai.Item.Nome).ToList().ForEach(ai =>
+                                        {
+                                            table.Cell().Element(Table.BodyCell).Text(ai.Item.Nome);
+                                            table.Cell().Element(Table.BodyCell).Text(ai.Item.Descricao);
+                                        });
                                     });
                                 });
-                            });
+                            }
+
+                            else
+                            {
+                                column.Item().Text("").Style(Typography.Normal);
+                                column.Item().Table(table =>
+                                {
+                                    if (et.TopicoMateriais.Count > 0)
+                                    {
+                                        table.ColumnsDefinition(columns =>
+                                        {
+                                            columns.RelativeColumn(3);
+                                            columns.RelativeColumn(7);
+                                        });
+                                        table.Cell().Element(Table.HeaderCell).Text("Item");
+                                        table.Cell().Element(Table.HeaderCell).Text("Descrição");
+                                    }
+
+                                    et.TopicoMateriais.OrderBy(tm => tm.Material.Nome).ToList().ForEach(tm =>
+                                    {
+                                        table.Cell().Element(Table.BodyCell).Text(tm.Material.Nome);
+                                        table.Cell().Element(Table.BodyCell).Text(tm.Material.Marca.Nome);
+                                    });
+                                });
+                            }
+
                             column.Item().Text("").Style(Typography.Normal);
                         });
-                        
                     });
 
                 page.Footer().Height(40).Row(row =>
@@ -75,13 +105,13 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
             });
     }
 
-    private void AddListItem(ColumnDescriptor column, int nestingLevel, string bulletText, string text, TextStyle style)
+    private void AddListTopic(ColumnDescriptor column, int nestingLevel, string bulletText, string text, TextStyle style)
     {
         column.Item().Row(row =>
         {
             row.ConstantItem(NestingSize * nestingLevel);
-            row.ConstantItem(NestingSize).Text(bulletText).Style(style);
-            row.RelativeItem().Text(text).Style(style);
+            row.AutoItem().PaddingRight(4).Text(bulletText).Style(style);
+            row.AutoItem().Text(text).Style(style);
         });
     }
 
