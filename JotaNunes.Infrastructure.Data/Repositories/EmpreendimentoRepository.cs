@@ -26,9 +26,10 @@ public class EmpreendimentoRepository(ApplicationContext applicationContext, IDo
             .Include(x => x.EmpreendimentoTopicos)
                 .ThenInclude(x => x.TopicoAmbientes)
                     .ThenInclude(x => x.AmbienteItens)
-                        .ThenInclude(x => x.ItemMateriais)
-                            .ThenInclude(x => x.Material)
-                                .ThenInclude(x => x.Marca)
+            .Include(x => x.EmpreendimentoTopicos)
+                .ThenInclude(x => x.TopicoMateriais)
+                    .ThenInclude(x => x.Material)
+                        .ThenInclude(x => x.Marca)
             .OrderBy(x => x.Nome)
             .ToListAsync();
 
@@ -48,8 +49,9 @@ public class EmpreendimentoRepository(ApplicationContext applicationContext, IDo
             .Include(x => x.EmpreendimentoTopicos)
                 .ThenInclude(x => x.TopicoAmbientes)
                     .ThenInclude(x => x.AmbienteItens)
-                        .ThenInclude(x => x.ItemMateriais)
-                            .ThenInclude(x => x.Material)
-                                .ThenInclude(x => x.Marca)
+            .Include(x => x.EmpreendimentoTopicos)
+                .ThenInclude(x => x.TopicoMateriais)
+                    .ThenInclude(x => x.Material)
+                        .ThenInclude(x => x.Marca)
             .FirstOrDefaultAsync(x => x.Id == id);
 }

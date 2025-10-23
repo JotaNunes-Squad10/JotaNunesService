@@ -9,6 +9,4 @@ public class AmbienteItem : BaseAuditEntity
 
     public required TopicoAmbiente TopicoAmbiente { get; set; }
     public required Item Item { get; set; }
-    
-    public required List<ItemMaterial> ItemMateriais { get; set; }
 }

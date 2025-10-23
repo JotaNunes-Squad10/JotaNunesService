@@ -10,6 +10,7 @@ public class EmpreendimentoTopico : BaseAuditEntity
 
     public required Empreendimento Empreendimento { get; set; }
     public required Topico Topico { get; set; }
-    
+
     public required List<TopicoAmbiente> TopicoAmbientes { get; set; }
+    public required List<TopicoMaterial> TopicoMateriais { get; set; }
 }
