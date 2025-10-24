@@ -18,7 +18,10 @@ public class CreateEmpreendimentoHandler(
     {
         try
         {
-            return Response(await InsertAsync(request));
+            var numberOfEmpreendimentosWithSameName = (await Repository.GetByNameAsync(request.Nome)).Count;
+            request.Versao = numberOfEmpreendimentosWithSameName + 1;
+            var empreendimento = Map(request);
+            return Response(await InsertAsync(empreendimento));
         }
         catch (Exception e)
         {

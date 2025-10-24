@@ -14,6 +14,6 @@ public class Empreendimento : BaseAuditEntity
 
     public required Padrao EmpreendimentoPadrao { get; set; }
     public required EmpreendimentoStatus EmpreendimentoStatus { get; set; }
-    
+
     public required List<EmpreendimentoTopico> EmpreendimentoTopicos { get; set; }
 }

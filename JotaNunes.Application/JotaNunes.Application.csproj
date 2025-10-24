@@ -16,4 +16,10 @@
       <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.8" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Swashbuckle.AspNetCore.SwaggerGen">
+        <HintPath>..\..\..\.nuget\packages\swashbuckle.aspnetcore.swaggergen\9.0.3\lib\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

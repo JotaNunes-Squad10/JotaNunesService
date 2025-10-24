@@ -71,6 +71,11 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.Padrao, opt => opt.MapFrom(src => src.EmpreendimentoPadrao.Nome))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao));
 
+        CreateMap<Empreendimento, EmpreendimentoFullResponse>()
+            .ForMember(dest => dest.Padrao, opt => opt.MapFrom(src => src.EmpreendimentoPadrao.Nome))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
+            .ForMember(dest => dest.EmpreendimentoTopicos, opt => opt.MapFrom(src => src.EmpreendimentoTopicos));
+
         CreateMap<Material, MaterialResponse>()
             .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Marca.Nome));
 

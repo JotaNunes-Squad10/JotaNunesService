@@ -54,4 +54,7 @@ public class EmpreendimentoRepository(ApplicationContext applicationContext, IDo
                     .ThenInclude(x => x.Material)
                         .ThenInclude(x => x.Marca)
             .FirstOrDefaultAsync(x => x.Id == id);
+
+    public async Task<List<Empreendimento>> GetByNameAsync(string name)
+        => await Get.Where(x => x.Nome == name).ToListAsync();
 }

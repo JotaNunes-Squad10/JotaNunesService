@@ -21,13 +21,16 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<CreateMaterialRequest, Material>().CreateMapper(user);
         CreateMap<CreateTopicoRequest, Topico>().CreateMapper(user);
 
+        CreateMap<AmbienteItemRequest, AmbienteItem>().CreateMapper(user);
+        CreateMap<EmpreendimentoTopicoRequest, EmpreendimentoTopico>().CreateMapper(user);
+        CreateMap<TopicoAmbienteRequest, TopicoAmbiente>().CreateMapper(user);
+        CreateMap<TopicoMaterialRequest, TopicoMaterial>().CreateMapper(user);
+
         CreateMap<UpdateAmbienteRequest, Ambiente>().UpdateMapper(user);
         CreateMap<UpdateEmpreendimentoRequest, Empreendimento>().UpdateMapper(user);
         CreateMap<UpdateItemRequest, Item>().UpdateMapper(user);
         CreateMap<UpdateMarcaRequest, Marca>().UpdateMapper(user);
         CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);
         CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
-        
-        
     }
 }
