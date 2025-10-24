@@ -19,17 +19,25 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
             {
                 page.Margin(50);
 
-                page.Header().Height(100).Row(row =>
+                // ===== HEADER =====
+                page.Header().Height(60).Row(row =>
                 {
+                    // Logo do footer agora no canto superior esquerdo
+                    row.RelativeItem(1)
+                        .AlignLeft()
+                        .AlignMiddle()
+                        .Image(GetImage("footer.png"))
+                        .FitWidth();
+
+                    // Espaço vazio à direita para equilíbrio
                     row.RelativeItem(4);
-                    row.RelativeItem(1).Image(GetImage("logo.png"));
                 });
 
+                // ===== CONTEÚDO =====
                 page.Content()
                     .Column(column =>
                     {
                         column.Item().Text("ESPECIFICAÇÃO TÉCNICA").Style(Typography.Title).AlignCenter();
-                        column.Item().Text("").Style(Typography.Normal);
                         column.Item().Text($"Empreendimento: {empreendimento.Nome}.").Style(Typography.Normal);
                         column.Item().Text($"Localização: {empreendimento.Localizacao}.").Style(Typography.Normal);
                         column.Item().Text($"Descrição: {empreendimento.Descricao}").Style(Typography.Normal);
@@ -39,11 +47,11 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
                         {
                             AddListTopic(column, 0, $"{et.Posicao}.", et.Topico.Nome, Typography.Topic);
 
-                            if (et.TopicoId != 3) // Diferente de Marcas
+                            if (et.TopicoId != 3) 
                             {
                                 et.TopicoAmbientes.OrderBy(ta => ta.Posicao).ToList().ForEach(ta =>
                                 {
-                                    column.Item().Text("").Style(Typography.Normal);
+                                    column.Item().PaddingTop(10);
                                     AddListTopic(column, 1, $"{et.Posicao}.{ta.Posicao}.", ta.Ambiente.Nome, Typography.Topic);
                                     column.Item().Text("").Style(Typography.Normal);
 
@@ -69,10 +77,9 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
                                     });
                                 });
                             }
-
                             else
                             {
-                                column.Item().Text("").Style(Typography.Normal);
+                                column.Item().PaddingTop(10);
                                 column.Item().Table(table =>
                                 {
                                     if (et.TopicoMateriais.Count > 0)
@@ -97,10 +104,31 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
                             column.Item().Text("").Style(Typography.Normal);
                         });
                     });
-
+                
                 page.Footer().Height(40).Row(row =>
                 {
-                    row.RelativeItem().AlignCenter().PaddingTop(12).Image(GetImage("footer.png")).FitHeight();
+                    // Espaço vazio à esquerda
+                    row.RelativeItem(1);
+
+                    // CNPJ centralizado com estilo marca d'água
+                    row.RelativeItem(2)
+                        .AlignCenter()
+                        .AlignMiddle()
+                        .Text("CNPJ: 16.202.491/0001-93  Jotanunes Construtora Ltda.")
+                        .FontSize(9)
+                        .FontColor("#CCCCCC"); // Cor cinza claro para efeito marca d'água
+
+                    // Numeração de página à direita
+                    row.RelativeItem(1)
+                        .AlignRight()
+                        .AlignMiddle()
+                        .Text(text =>
+                        {
+                            text.Span("Página ").Style(Typography.Small);
+                            text.CurrentPageNumber().Style(Typography.Small);
+                            text.Span(" de ").Style(Typography.Small);
+                            text.TotalPages().Style(Typography.Small);
+                        });
                 });
             });
     }
