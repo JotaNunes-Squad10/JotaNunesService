@@ -18,22 +18,18 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
             .Page(page =>
             {
                 page.Margin(50);
-
-                // ===== HEADER =====
+                
                 page.Header().Height(60).Row(row =>
                 {
-                    // Logo do footer agora no canto superior esquerdo
                     row.RelativeItem(1)
                         .AlignLeft()
                         .AlignMiddle()
                         .Image(GetImage("footer.png"))
                         .FitWidth();
 
-                    // Espaço vazio à direita para equilíbrio
                     row.RelativeItem(4);
                 });
 
-                // ===== CONTEÚDO =====
                 page.Content()
                     .Column(column =>
                     {
@@ -107,10 +103,8 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
                 
                 page.Footer().Height(40).Row(row =>
                 {
-                    // Espaço vazio à esquerda
                     row.RelativeItem(1);
 
-                    // CNPJ centralizado com estilo marca d'água
                     row.RelativeItem(2)
                         .AlignCenter()
                         .AlignMiddle()
