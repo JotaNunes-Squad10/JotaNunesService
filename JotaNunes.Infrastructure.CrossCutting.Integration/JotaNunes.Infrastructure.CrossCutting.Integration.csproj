@@ -16,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services\QuestPdf\Assets\" />
       <Folder Include="Services\QuestPdf\Documents\" />
     </ItemGroup>
 

@@ -116,5 +116,5 @@ public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
     }
 
     private string GetImage(string image)
-        => Path.Combine(AppContext.BaseDirectory, "Services", "QuestPdf", "Assets", image);
+        => Path.Combine(AppContext.BaseDirectory, "Services", "QuestPdf", "Assets", "Images", image);
 }

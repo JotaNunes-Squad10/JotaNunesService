@@ -20,11 +20,11 @@ using KeycloakService = JotaNunes.Infrastructure.CrossCutting.Integration.Servic
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using QuestPDF.Infrastructure;
 using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using QuestPDF.Infrastructure;
 
 namespace JotaNunes.Api.Configuration.ApiConfig;
 
@@ -159,6 +159,7 @@ public static class ApiConfig
 
     private static void AddQuestPdfConfiguration(this IServiceCollection services)
     {
+        QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
         QuestPDF.Settings.License = LicenseType.Community;
     }
 
