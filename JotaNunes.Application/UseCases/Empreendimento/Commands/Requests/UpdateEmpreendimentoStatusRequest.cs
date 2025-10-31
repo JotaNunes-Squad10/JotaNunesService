@@ -3,8 +3,8 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
 
-public class UpdateEmpreendimentoRequest : IRequest<DefaultResponse>
+public class UpdateEmpreendimentoStatusRequest : IRequest<DefaultResponse>
 {
-    public long Id { get; set; }
-    public string? Nome { get; set; }
+    public Guid Id { get; set; }
+    public int Status { get; set; }
 }

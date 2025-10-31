@@ -34,7 +34,7 @@ public class TopicoAmbienteMapping : BaseAuditEntityMapping<TopicoAmbiente>
             .HasForeignKey(x => x.TopicoId);
 
         builder.HasOne(x => x.Ambiente)
-            .WithMany(x => x.EmpreendimentoAmbientes)
+            .WithMany(x => x.TopicoAmbientes)
             .HasForeignKey(x => x.AmbienteId);
     }
 }

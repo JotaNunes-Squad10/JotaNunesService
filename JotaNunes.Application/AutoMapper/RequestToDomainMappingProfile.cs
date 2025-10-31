@@ -15,7 +15,7 @@ public class RequestToDomainMappingProfile : Profile
     public RequestToDomainMappingProfile(IUser user)
     {
         CreateMap<CreateAmbienteRequest, Ambiente>().CreateMapper(user);
-        CreateMap<CreateEmpreendimentoRequest, Empreendimento>().CreateMapper(user);
+        CreateMap<CreateEmpreendimentoRequest, EmpreendimentoBase>().CreateMapper(user);
         CreateMap<CreateItemRequest, Item>().CreateMapper(user);
         CreateMap<CreateMarcaRequest, Marca>().CreateMapper(user);
         CreateMap<CreateMaterialRequest, Material>().CreateMapper(user);
@@ -27,7 +27,6 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<TopicoMaterialRequest, TopicoMaterial>().CreateMapper(user);
 
         CreateMap<UpdateAmbienteRequest, Ambiente>().UpdateMapper(user);
-        CreateMap<UpdateEmpreendimentoRequest, Empreendimento>().UpdateMapper(user);
         CreateMap<UpdateItemRequest, Item>().UpdateMapper(user);
         CreateMap<UpdateMarcaRequest, Marca>().UpdateMapper(user);
         CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);

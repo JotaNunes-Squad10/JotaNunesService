@@ -10,16 +10,14 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
 
 public class CreateEmpreendimentoHandler(
     IDomainService domainService,
-    IEmpreendimentoRepository repository
-) : BaseHandler<Domain.Models.Public.Empreendimento, CreateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
+    IEmpreendimentoBaseRepository repository
+) : BaseHandler<Domain.Models.Public.EmpreendimentoBase, CreateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoBaseRepository>(domainService, repository),
     IRequestHandler<CreateEmpreendimentoRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(CreateEmpreendimentoRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            var numberOfEmpreendimentosWithSameName = (await Repository.GetByNameAsync(request.Nome)).Count;
-            request.Versao = numberOfEmpreendimentosWithSameName + 1;
             var empreendimento = Map(request);
             return Response(await InsertAsync(empreendimento));
         }

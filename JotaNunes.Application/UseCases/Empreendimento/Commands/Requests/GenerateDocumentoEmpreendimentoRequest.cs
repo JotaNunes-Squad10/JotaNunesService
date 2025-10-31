@@ -5,5 +5,6 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
 
 public class GenerateDocumentoEmpreendimentoRequest : IRequest<DefaultResponse>
 {
-    public required long Id { get; set; }
+    public required Guid Id { get; set; }
+    public long? Version { get; set; }
 }

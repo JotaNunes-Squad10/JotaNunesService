@@ -2,7 +2,7 @@ using JotaNunes.Domain.Services;
 
 namespace JotaNunes.Domain.Interfaces.Base;
 
-public interface IBaseRepository<TEntity> 
+public interface IBaseRepository<TEntity>
     where TEntity : class
 {
     IDomainService DomainService { get; }

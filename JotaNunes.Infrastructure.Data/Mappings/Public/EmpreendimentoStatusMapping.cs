@@ -16,5 +16,8 @@ public class EmpreendimentoStatusMapping : BaseEntityMapping<EmpreendimentoStatu
         builder.Property(x => x.Descricao)
             .HasColumnName("descricao")
             .IsRequired();
+
+        builder.Property(x => x.Excluido)
+            .HasColumnName("fl_excluido");
     }
 }

@@ -17,10 +17,10 @@ public class EmpreendimentoController(
     public async Task<IActionResult> CreateEmpreendimentoAsync([FromBody] CreateEmpreendimentoRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpDelete("DeleteEmpreendimento/{id:long}")]
+    [HttpDelete("DeleteEmpreendimento/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DeleteEmpreendimentoAsync(long id)
+    public async Task<IActionResult> DeleteEmpreendimentoAsync(Guid id)
         => CustomResponse(await Send(new DeleteEmpreendimentoRequest { Id = id }));
 
     [HttpGet("GetAllEmpreendimentos")]
@@ -35,16 +35,16 @@ public class EmpreendimentoController(
     public async Task<IActionResult> GenerateDocumentoEmpreendimento([FromBody] GenerateDocumentoEmpreendimentoRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpGet("GetEmpreendimentoById/{id:long}")]
+    [HttpGet("GetEmpreendimentoById/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetEmpreendimentoByIdAsync(long id)
+    public async Task<IActionResult> GetEmpreendimentoByIdAsync(Guid id)
         => CustomResponse(await queries.GetByIdAsync(id));
 
     [HttpPatch("UpdateEmpreendimento")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateEmpreendimentoAsync([FromBody] UpdateEmpreendimentoRequest request)
-        => CustomResponse(await Send(request));
+    public async Task<IActionResult> UpdateEmpreendimentoAsync([FromBody] UpdateEmpreendimentoStatusRequest statusRequest)
+        => CustomResponse(await Send(statusRequest));
 }

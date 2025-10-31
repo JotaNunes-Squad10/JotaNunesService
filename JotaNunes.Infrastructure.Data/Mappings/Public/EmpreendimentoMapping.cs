@@ -13,6 +13,11 @@ public class EmpreendimentoMapping : BaseAuditEntityMapping<Empreendimento>
 
         builder.ToTable("tb_empreendimento", "public");
 
+        builder.Property(x => x.Guid)
+            .HasColumnName("guid")
+            .HasColumnType("uuid")
+            .IsRequired();
+
         builder.Property(x => x.Nome)
             .HasColumnName("nome")
             .HasMaxLength(50)
@@ -32,24 +37,20 @@ public class EmpreendimentoMapping : BaseAuditEntityMapping<Empreendimento>
             .HasColumnName("tamanho_area")
             .IsRequired();
 
-        builder.Property(x => x.Versao)
-            .HasColumnName("versao")
-            .IsRequired();
-
         builder.Property(x => x.Padrao)
             .HasColumnName("padrao_fk")
             .IsRequired();
 
-        builder.Property(x => x.Status)
-            .HasColumnName("status_fk")
+        builder.Property(x => x.Versao)
+            .HasColumnName("versao")
             .IsRequired();
+
+        builder.HasOne(x => x.EmpreendimentoBase)
+            .WithMany(x => x.Empreendimentos)
+            .HasForeignKey(x => x.Guid);
 
         builder.HasOne(x => x.EmpreendimentoPadrao)
             .WithMany(x => x.Empreendimentos)
             .HasForeignKey(x => x.Padrao);
-
-        builder.HasOne(x => x.EmpreendimentoStatus)
-            .WithMany(x => x.Empreendimentos)
-            .HasForeignKey(x => x.Status);
     }
 }

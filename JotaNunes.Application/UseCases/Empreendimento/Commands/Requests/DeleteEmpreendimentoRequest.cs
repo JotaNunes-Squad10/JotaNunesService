@@ -5,5 +5,5 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
 
 public class DeleteEmpreendimentoRequest : IRequest<DefaultResponse>
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 }

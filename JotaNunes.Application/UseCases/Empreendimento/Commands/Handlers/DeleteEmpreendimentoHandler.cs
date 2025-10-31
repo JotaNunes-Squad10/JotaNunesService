@@ -10,20 +10,20 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
 
 public class DeleteEmpreendimentoHandler(
     IDomainService domainService,
-    IEmpreendimentoRepository repository
-) : BaseHandler<Domain.Models.Public.Empreendimento, DeleteEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository),
+    IEmpreendimentoBaseRepository repository
+) : BaseHandler<Domain.Models.Public.EmpreendimentoBase, DeleteEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoBaseRepository>(domainService, repository),
     IRequestHandler<DeleteEmpreendimentoRequest, DefaultResponse>
 {
-    public async Task<DefaultResponse> Handle(DeleteEmpreendimentoRequest request, CancellationToken cancellationToken)
+    public Task<DefaultResponse> Handle(DeleteEmpreendimentoRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            return Response(await DeleteAsync(request.Id));
+            return Task.FromResult(Response());
         }
         catch (Exception e)
         {
             AddError("DeleteEmpreendimentoHandler", "Error deleting empreendimento:", e);
-            return Response();
+            return Task.FromResult(Response());
         }
     }
 }

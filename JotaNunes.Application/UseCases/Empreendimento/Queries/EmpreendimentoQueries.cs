@@ -1,21 +1,35 @@
 using JotaNunes.Application.UseCases.Base.Queries;
 using JotaNunes.Application.UseCases.Empreendimento.Responses;
 using JotaNunes.Domain.Interfaces;
+using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 
 namespace JotaNunes.Application.UseCases.Empreendimento.Queries;
 
-public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimentoRepository repository)
-    : BaseQueries<Domain.Models.Public.Empreendimento, EmpreendimentoResponse, IEmpreendimentoRepository>(domainService, repository), IEmpreendimentoQueries
+public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimentoBaseRepository repository)
+    : BaseQueries<EmpreendimentoBase, EmpreendimentoResultResponse, IEmpreendimentoBaseRepository>(domainService, repository), IEmpreendimentoQueries
 {
-    public override async Task<DefaultResponse> GetByIdAsync(long id)
+    private readonly IEmpreendimentoBaseRepository _repository = repository;
+    
+    public async Task<DefaultResponse> GetByIdAsync(Guid id)
     {
-        var entity = await Repository.GetByIdAsync(id);
+        var entity = await _repository.GetByIdAsync(id);
 
         if (IsNull(entity)) return Response();
 
-        var response = Map<EmpreendimentoFullResponse>(entity!);
+        var response = Map<EmpreendimentoResultResponse>(entity!);
+
+        return Response(response);
+    }
+
+    public async Task<DefaultResponse> GetByIdVersionAsync(Guid id, long version)
+    {
+        var entity = await _repository.GetByIdAsync(id);
+
+        if (IsNull(entity)) return Response();
+
+        var response = Map<EmpreendimentoResultResponse>(entity!);
 
         return Response(response);
     }

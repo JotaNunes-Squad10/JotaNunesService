@@ -12,15 +12,21 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
 
 public class GenerateDocumentoEmpreendimentoHandler(
     IDomainService domainService,
-    IEmpreendimentoRepository empreendimentoRepository
-) : BaseHandler<Domain.Models.Public.Empreendimento, GenerateDocumentoEmpreendimentoRequest, DocumentoEmpreendimentoResponse, IEmpreendimentoRepository>(domainService, empreendimentoRepository),
+    IEmpreendimentoBaseRepository empreendimentoRepository
+) : BaseHandler<Domain.Models.Public.EmpreendimentoBase, GenerateDocumentoEmpreendimentoRequest, DocumentoEmpreendimentoResponse, IEmpreendimentoBaseRepository>(domainService, empreendimentoRepository),
     IRequestHandler<GenerateDocumentoEmpreendimentoRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(GenerateDocumentoEmpreendimentoRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            var empreendimento = await Repository.GetByIdAsync(request.Id);
+            var empreendimentoBase = await Repository.GetByIdAsync(request.Id);
+
+            if (IsNull(empreendimentoBase)) return Response();
+
+            var empreendimento = request.Version > 0
+                ? empreendimentoBase!.Empreendimentos.FirstOrDefault(x => x.Versao == request.Version)
+                : empreendimentoBase!.Empreendimentos.MaxBy(x => x.Versao);
 
             if (IsNull(empreendimento)) return Response();
 
