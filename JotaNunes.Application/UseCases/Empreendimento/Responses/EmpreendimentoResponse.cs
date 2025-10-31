@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace JotaNunes.Application.UseCases.Empreendimento.Responses;
 
 public class EmpreendimentoBaseResponse()
@@ -30,6 +32,7 @@ public class EmpreendimentoResultResponse()
     public required string Padrao { get; set; }
     public required string Status { get; set; }
     public required long Versao { get; set; }
-    
+
+    [JsonIgnore]
     public required EmpreendimentoResponse Empreendimento { get; set; }
 }

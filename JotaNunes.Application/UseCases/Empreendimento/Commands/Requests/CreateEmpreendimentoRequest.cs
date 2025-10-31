@@ -6,25 +6,14 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
 
 public class CreateEmpreendimentoRequest : IRequest<DefaultResponse>
 {
-    [SwaggerIgnore]
-    public required int Status { get; set; }
-
-    public required EmpreendimentoRequest Empreendimento { get; set; }
-}
-
-public class InsertEmpreendimentoRequest : CreateEmpreendimentoRequest
-{
-    public required Guid Id { get; set; }
-}
-
-public class EmpreendimentoRequest : IRequest<DefaultResponse>
-{
-    public Guid? Guid { get; set; }
+    public Guid? Id { get; set; }
     public required string Nome { get; set; }
     public required string Descricao { get; set; }
     public required string Localizacao { get; set; }
     public required int TamanhoArea { get; set; }
-    public required int Padrao { get; set; }
+    public required long Padrao { get; set; }
+    [SwaggerIgnore]
+    public required int Status { get; set; }
     [SwaggerIgnore]
     public required long Versao { get; set; }
 

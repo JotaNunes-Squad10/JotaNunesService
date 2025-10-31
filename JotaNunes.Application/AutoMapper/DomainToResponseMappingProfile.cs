@@ -64,9 +64,6 @@ public class DomainToResponseMappingProfile : Profile
             }
         }
 
-        CreateMap<Ambiente, AmbienteResponse>()
-            .ForMember(dest => dest.Topico, opt => opt.MapFrom(src => src.Topico));
-
         CreateMap<EmpreendimentoBase, EmpreendimentoResultResponse>()
             .ForMember(dest => dest.Nome,           opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Nome))
             .ForMember(dest => dest.Descricao,      opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Descricao))
@@ -75,7 +72,6 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.Padrao,         opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.EmpreendimentoPadrao.Nome))
             .ForMember(dest => dest.Status,         opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
             .ForMember(dest => dest.Versao,         opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao))
-            .ForMember(dest => dest.Empreendimento, opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!))
             .ForMember(dest => dest.Empreendimento, opt => opt.Ignore());
 
         CreateMap<Material, MaterialResponse>()

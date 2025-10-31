@@ -23,14 +23,20 @@ public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimento
         return Response(response);
     }
 
-    public async Task<DefaultResponse> GetByIdVersionAsync(Guid id, long version)
+    public async Task<DefaultResponse> GetByVersionAsync(Guid id, long version)
     {
         var entity = await _repository.GetByIdAsync(id);
 
         if (IsNull(entity)) return Response();
-
+        
+        var empreendimentos = entity!.Empreendimentos.Where(x => x.Versao == version).ToList();
+        
+        if (ListIsNullOrEmpty(empreendimentos)) return Response();
+        
+        entity.Empreendimentos = empreendimentos;
+        
         var response = Map<EmpreendimentoResultResponse>(entity!);
-
+        
         return Response(response);
     }
 }
