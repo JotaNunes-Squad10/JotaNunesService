@@ -27,4 +27,11 @@ public static class Typography
         .FontColor("#000000")
         .FontSize(12)
         .LineHeight(2);
+    
+    public static TextStyle Small => TextStyle
+        .Default
+        .FontFamily("Calibri")
+        .FontColor("#555555") 
+        .FontSize(10)
+        .LineHeight(1);
 }
