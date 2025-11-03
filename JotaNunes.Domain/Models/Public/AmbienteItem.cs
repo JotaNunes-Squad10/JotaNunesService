@@ -6,6 +6,7 @@ public class AmbienteItem : BaseAuditEntity
 {
     public required long AmbienteId { get; set; }
     public required long ItemId { get; set; }
+    public List<int>? Versoes { get; set; }
 
     public required TopicoAmbiente TopicoAmbiente { get; set; }
     public required Item Item { get; set; }

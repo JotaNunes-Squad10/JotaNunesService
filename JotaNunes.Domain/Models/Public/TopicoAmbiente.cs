@@ -8,6 +8,7 @@ public class TopicoAmbiente : BaseAuditEntity
     public required long AmbienteId { get; set; }
     public required int Area { get; set; }
     public required int Posicao { get; set; }
+    public List<int>? Versoes { get; set; }
 
     public required EmpreendimentoTopico EmpreendimentoTopico { get; set; }
     public required Ambiente Ambiente { get; set; }

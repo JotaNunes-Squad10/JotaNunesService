@@ -9,6 +9,7 @@ public class EmpreendimentoBase : BaseAuditEntity
 
     public required EmpreendimentoStatus EmpreendimentoStatus { get; set; }
 
-    public required List<Empreendimento> Empreendimentos { get; set; }
     public required List<LogStatus> LogsStatus { get; set; }
+    public required List<Empreendimento> Empreendimentos { get; set; }
+    public required List<EmpreendimentoTopico> EmpreendimentoTopicos { get; set; }
 }

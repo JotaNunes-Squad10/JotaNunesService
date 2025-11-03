@@ -31,19 +31,15 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);
         CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
 
-        CreateMap<CreateEmpreendimentoRequest, EmpreendimentoBase>()
-            .ForMember(dest => dest.Status,        opt => opt.MapFrom(_ => (long)Status.Pendente))
-            .ForMember(dest => dest.Empreendimentos, opt => opt.MapFrom(_ => new List<Empreendimento>()))
-            .ForMember(dest => dest.LogsStatus,      opt => opt.MapFrom(_ => new List<LogStatus>()))
-            .CreateMapper(user);
+        CreateMap<CreateEmpreendimentoRequest, EmpreendimentoBase>().CreateMapper(user);
+        CreateMap<LogStatusRequest, LogStatus>().CreateMapper(user);
 
         CreateMap<CreateEmpreendimentoRequest, Empreendimento>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.EmpreendimentoBase, opt => opt.Ignore())
             .ForMember(dest => dest.EmpreendimentoPadrao, opt => opt.Ignore())
-            .ForMember(dest => dest.EmpreendimentoTopicos, opt => opt.Ignore())
-            .ForMember(dest => dest.Guid,   opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Guid")   ? (Guid)ctx.Items["Guid"]   : Guid.Empty))
-            .ForMember(dest => dest.Versao, opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Versao") ? (long)ctx.Items["Versao"] : 1))
+            .ForMember(dest => dest.Guid,   opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Guid")   ? (Guid)ctx.Items["Guid"]  : Guid.Empty))
+            .ForMember(dest => dest.Versao, opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Versao") ? (int)ctx.Items["Versao"] : 1))
             .CreateMapper(user);
     }
 }

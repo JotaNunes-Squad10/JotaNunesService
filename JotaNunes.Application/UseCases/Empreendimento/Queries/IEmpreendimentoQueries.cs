@@ -6,5 +6,5 @@ namespace JotaNunes.Application.UseCases.Empreendimento.Queries;
 public interface IEmpreendimentoQueries : IBaseQueries
 {
     Task<DefaultResponse> GetByIdAsync(Guid id);
-    Task<DefaultResponse> GetByVersionAsync(Guid id, long version);
+    Task<DefaultResponse> GetByVersionAsync(Guid id, int version);
 }

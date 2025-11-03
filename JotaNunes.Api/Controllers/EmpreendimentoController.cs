@@ -44,7 +44,7 @@ public class EmpreendimentoController(
     [HttpGet("GetEmpreendimentoByVersion/{id:guid}/{versionNumber:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetEmpreendimentoByVersionAsync([FromRoute] Guid id, [FromRoute] long versionNumber)
+    public async Task<IActionResult> GetEmpreendimentoByVersionAsync([FromRoute] Guid id, [FromRoute] int versionNumber)
         => CustomResponse(await queries.GetByVersionAsync(id, versionNumber));
 
     [HttpPatch("UpdateEmpreendimento")]

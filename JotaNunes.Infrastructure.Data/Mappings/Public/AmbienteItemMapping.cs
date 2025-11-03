@@ -20,6 +20,10 @@ public class AmbienteItemMapping : BaseAuditEntityMapping<AmbienteItem>
         builder.Property(x => x.ItemId)
             .HasColumnName("item_fk")
             .IsRequired();
+
+        builder.Property(x => x.Versoes)
+            .HasColumnName("versoes")
+            .HasColumnType("int[]");
         
         builder.HasOne(x => x.TopicoAmbiente)
             .WithMany(x => x.AmbienteItens)

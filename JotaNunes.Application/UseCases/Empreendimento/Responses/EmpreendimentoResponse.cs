@@ -18,7 +18,7 @@ public class EmpreendimentoResponse()
     public required string Localizacao { get; set; }
     public required long TamanhoArea { get; set; }
     public required string Padrao { get; set; }
-    public required long Versao { get; set; }
+    public required int Versao { get; set; }
 }
 
 
@@ -31,7 +31,7 @@ public class EmpreendimentoResultResponse()
     public required long TamanhoArea { get; set; }
     public required string Padrao { get; set; }
     public required string Status { get; set; }
-    public required long Versao { get; set; }
+    public required int Versao { get; set; }
 
     [JsonIgnore]
     public required EmpreendimentoResponse Empreendimento { get; set; }

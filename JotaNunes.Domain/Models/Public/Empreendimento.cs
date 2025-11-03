@@ -10,10 +10,8 @@ public class Empreendimento : BaseAuditEntity
     public required string Localizacao { get; set; }
     public required int TamanhoArea { get; set; }
     public required long Padrao { get; set; }
-    public required long Versao { get; set; }
+    public required int Versao { get; set; }
 
     public required EmpreendimentoBase EmpreendimentoBase { get; set; }
     public required Padrao EmpreendimentoPadrao { get; set; }
-
-    public required List<EmpreendimentoTopico> EmpreendimentoTopicos { get; set; }
 }

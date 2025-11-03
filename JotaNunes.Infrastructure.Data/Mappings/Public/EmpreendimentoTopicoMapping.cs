@@ -15,6 +15,7 @@ public class EmpreendimentoTopicoMapping : BaseAuditEntityMapping<Empreendimento
         
         builder.Property(x => x.EmpreendimentoId)
             .HasColumnName("empreendimento_fk")
+            .HasColumnType("uuid")
             .IsRequired();
         
         builder.Property(x => x.TopicoId)
@@ -24,6 +25,10 @@ public class EmpreendimentoTopicoMapping : BaseAuditEntityMapping<Empreendimento
         builder.Property(x => x.Posicao)
             .HasColumnName("posicao")
             .IsRequired();
+        
+        builder.Property(x => x.Versoes)
+            .HasColumnName("versoes")
+            .HasColumnType("int[]");
         
         builder.HasOne(x => x.Empreendimento)
             .WithMany(x => x.EmpreendimentoTopicos)

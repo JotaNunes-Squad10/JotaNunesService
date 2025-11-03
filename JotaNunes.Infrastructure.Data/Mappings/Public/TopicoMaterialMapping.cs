@@ -21,6 +21,10 @@ public class TopicoMaterialMapping : BaseAuditEntityMapping<TopicoMaterial>
             .HasColumnName("material_fk")
             .IsRequired();
 
+        builder.Property(x => x.Versoes)
+            .HasColumnName("versoes")
+            .HasColumnType("int[]");
+
         builder.HasOne(x => x.EmpreendimentoTopico)
             .WithMany(x => x.TopicoMateriais)
             .HasForeignKey(x => x.TopicoId);

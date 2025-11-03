@@ -29,6 +29,10 @@ public class TopicoAmbienteMapping : BaseAuditEntityMapping<TopicoAmbiente>
             .HasColumnName("posicao")
             .IsRequired();
 
+        builder.Property(x => x.Versoes)
+            .HasColumnName("versoes")
+            .HasColumnType("int[]");
+
         builder.HasOne(x => x.EmpreendimentoTopico)
             .WithMany(x => x.TopicoAmbientes)
             .HasForeignKey(x => x.TopicoId);

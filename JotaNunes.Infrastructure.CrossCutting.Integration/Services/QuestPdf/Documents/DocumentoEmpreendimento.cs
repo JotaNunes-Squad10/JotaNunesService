@@ -1,11 +1,11 @@
-using JotaNunes.Domain.Models.Public;
+using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Requests;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Styles;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 
 namespace JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents;
 
-public class DocumentoEmpreendimento(Empreendimento empreendimento) : IDocument
+public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimento) : IDocument
 {
     public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
     public DocumentSettings GetSettings() => DocumentSettings.Default;

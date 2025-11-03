@@ -23,7 +23,7 @@ public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimento
         return Response(response);
     }
 
-    public async Task<DefaultResponse> GetByVersionAsync(Guid id, long version)
+    public async Task<DefaultResponse> GetByVersionAsync(Guid id, int version)
     {
         var entity = await _repository.GetByIdAsync(id);
 
