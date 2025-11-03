@@ -1,7 +1,7 @@
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 
-namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
+namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 
 public class GenerateDocumentoEmpreendimentoRequest : IRequest<DefaultResponse>
 {

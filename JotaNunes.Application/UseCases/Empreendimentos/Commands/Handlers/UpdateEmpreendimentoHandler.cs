@@ -1,11 +1,11 @@
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
-using JotaNunes.Application.UseCases.Empreendimento.Responses;
+using JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
+using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
-namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
+namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Handlers;
 
 public class UpdateEmpreendimentoHandler(
     IDomainService domainService,

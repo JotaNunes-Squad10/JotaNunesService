@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace JotaNunes.Application.UseCases.Empreendimento.Responses;
+namespace JotaNunes.Application.UseCases.Empreendimentos.Responses;
 
 public class EmpreendimentoBaseResponse()
 {

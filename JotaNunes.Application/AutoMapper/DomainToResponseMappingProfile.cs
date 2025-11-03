@@ -1,6 +1,6 @@
 using JotaNunes.Application.UseCases.Ambiente.Responses;
 using JotaNunes.Application.UseCases.Authentication.Responses;
-using JotaNunes.Application.UseCases.Empreendimento.Responses;
+using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Application.UseCases.Material.Responses;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Domain.Models.Keycloak;

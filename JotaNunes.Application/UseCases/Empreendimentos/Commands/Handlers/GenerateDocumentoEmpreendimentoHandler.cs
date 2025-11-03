@@ -1,6 +1,6 @@
 using JotaNunes.Application.UseCases.Base.Commands;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
-using JotaNunes.Application.UseCases.Empreendimento.Responses;
+using JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
+using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
@@ -9,7 +9,7 @@ using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Reques
 using MediatR;
 using QuestPDF.Fluent;
 
-namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Handlers;
+namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Handlers;
 
 public class GenerateDocumentoEmpreendimentoHandler(
     IDomainService domainService,
@@ -30,7 +30,7 @@ public class GenerateDocumentoEmpreendimentoHandler(
                 : empreendimentoBase!.Empreendimentos.MaxBy(x => x.Versao);
 
             if (IsNull(empreendimento)) return Response();
-            
+
             var documentoRequest = new DocumentoEmpreendimentoRequest
             {
                 Id = empreendimentoBase.Id,

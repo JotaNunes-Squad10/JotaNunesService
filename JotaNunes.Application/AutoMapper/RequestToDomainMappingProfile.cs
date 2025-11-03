@@ -1,6 +1,6 @@
 using AutoMapper;
 using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
+using JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 using JotaNunes.Application.UseCases.Item.Commands.Requests;
 using JotaNunes.Application.UseCases.Marca.Commands.Requests;
 using JotaNunes.Application.UseCases.Material.Commands.Requests;

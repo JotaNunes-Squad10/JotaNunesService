@@ -1,7 +1,7 @@
 using JotaNunes.Application.UseCases.Base.Queries;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 
-namespace JotaNunes.Application.UseCases.Empreendimento.Queries;
+namespace JotaNunes.Application.UseCases.Empreendimentos.Queries;
 
 public interface IEmpreendimentoQueries : IBaseQueries
 {

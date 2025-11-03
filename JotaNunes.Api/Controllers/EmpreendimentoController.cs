@@ -1,6 +1,6 @@
 using JotaNunes.Api.Controllers.Base;
-using JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
-using JotaNunes.Application.UseCases.Empreendimento.Queries;
+using JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
+using JotaNunes.Application.UseCases.Empreendimentos.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

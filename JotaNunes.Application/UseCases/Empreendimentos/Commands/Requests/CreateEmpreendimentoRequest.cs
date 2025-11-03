@@ -2,7 +2,7 @@
 using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace JotaNunes.Application.UseCases.Empreendimento.Commands.Requests;
+namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 
 public class CreateEmpreendimentoRequest : IRequest<DefaultResponse>
 {
