@@ -13,9 +13,9 @@ public class CreateEmpreendimentoRequest : IRequest<DefaultResponse>
     public required int TamanhoArea { get; set; }
     public required long Padrao { get; set; }
     [SwaggerIgnore]
-    public required int Status { get; set; }
+    public required long Status { get; set; }
     [SwaggerIgnore]
-    public required long Versao { get; set; }
+    public required int Versao { get; set; }
 
     public required List<EmpreendimentoTopicoRequest> EmpreendimentoTopicos { get; set; }
 }
@@ -23,7 +23,7 @@ public class CreateEmpreendimentoRequest : IRequest<DefaultResponse>
 public class EmpreendimentoTopicoRequest
 {
     [SwaggerIgnore]
-    public required long EmpreendimentoId { get; set; }
+    public required Guid EmpreendimentoId { get; set; }
     public required long TopicoId { get; set; }
     public required int Posicao { get; set; }
 
@@ -54,4 +54,10 @@ public class AmbienteItemRequest
     [SwaggerIgnore]
     public required long AmbienteId { get; set; }
     public required long ItemId { get; set; }
+}
+
+public class LogStatusRequest
+{
+    public required Guid EmpreendimentoId { get; set; }
+    public required long Status { get; set; }
 }

@@ -5,6 +5,7 @@ using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents;
+using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Requests;
 using MediatR;
 using QuestPDF.Fluent;
 
@@ -29,8 +30,18 @@ public class GenerateDocumentoEmpreendimentoHandler(
                 : empreendimentoBase!.Empreendimentos.MaxBy(x => x.Versao);
 
             if (IsNull(empreendimento)) return Response();
+            
+            var documentoRequest = new DocumentoEmpreendimentoRequest
+            {
+                Id = empreendimentoBase.Id,
+                Nome = empreendimento!.Nome,
+                Descricao = empreendimento.Descricao,
+                Localizacao = empreendimento.Localizacao,
+                TamanhoArea = empreendimento.TamanhoArea,
+                EmpreendimentoTopicos = empreendimentoBase.EmpreendimentoTopicos
+            };
 
-            var documentoEmpreendimento = new DocumentoEmpreendimento(empreendimento!);
+            var documentoEmpreendimento = new DocumentoEmpreendimento(documentoRequest);
 
             var response = documentoEmpreendimento.GeneratePdf();
 
