@@ -21,16 +21,16 @@ public class GenerateDocumentoEmpreendimentoHandler(
     {
         try
         {
-            var empreendimentoBase = await Repository.GetByIdAsync(request.Id);
+            var version = request.Version ?? Repository.GetLastVersion(request.Id);
+
+            var empreendimentoBase = await Repository.GetByVersionAsync(request.Id, version);
 
             if (IsNull(empreendimentoBase)) return Response();
 
-            var empreendimento = request.Version > 0
-                ? empreendimentoBase!.Empreendimentos.FirstOrDefault(x => x.Versao == request.Version)
-                : empreendimentoBase!.Empreendimentos.MaxBy(x => x.Versao);
+            var empreendimento = empreendimentoBase!.Empreendimentos.FirstOrDefault();
 
             if (IsNull(empreendimento)) return Response();
-            
+
             var documentoRequest = new DocumentoEmpreendimentoRequest
             {
                 Id = empreendimentoBase.Id,

@@ -71,8 +71,7 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.TamanhoArea,    opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.TamanhoArea))
             .ForMember(dest => dest.Padrao,         opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.EmpreendimentoPadrao.Nome))
             .ForMember(dest => dest.Status,         opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
-            .ForMember(dest => dest.Versao,         opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao))
-            .ForMember(dest => dest.Empreendimento, opt => opt.Ignore());
+            .ForMember(dest => dest.Versao,         opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao));
 
         CreateMap<Material, MaterialResponse>()
             .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Marca.Nome));

@@ -7,4 +7,5 @@ public interface IEmpreendimentoBaseRepository : IBaseRepository<EmpreendimentoB
 {
     public Task<EmpreendimentoBase?> GetByIdAsync(Guid id);
     public Task<EmpreendimentoBase?> GetByVersionAsync(Guid id, int versao);
+    int GetLastVersion(Guid id);
 }

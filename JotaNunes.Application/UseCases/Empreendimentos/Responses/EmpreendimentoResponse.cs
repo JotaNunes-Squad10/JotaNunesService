@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace JotaNunes.Application.UseCases.Empreendimentos.Responses;
 
 public class EmpreendimentoBaseResponse()
@@ -11,16 +9,15 @@ public class EmpreendimentoBaseResponse()
 
 public class EmpreendimentoResponse()
 {
-    public required long Id { get; set; }
-    public required Guid Guid { get; set; }
+    public required Guid Id { get; set; }
     public required string Nome { get; set; }
     public required string Descricao { get; set; }
     public required string Localizacao { get; set; }
     public required long TamanhoArea { get; set; }
     public required string Padrao { get; set; }
+    public required string Status { get; set; }
     public required int Versao { get; set; }
 }
-
 
 public class EmpreendimentoResultResponse()
 {
@@ -32,7 +29,4 @@ public class EmpreendimentoResultResponse()
     public required string Padrao { get; set; }
     public required string Status { get; set; }
     public required int Versao { get; set; }
-
-    [JsonIgnore]
-    public required EmpreendimentoResponse Empreendimento { get; set; }
 }
