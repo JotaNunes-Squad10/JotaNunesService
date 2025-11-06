@@ -1,11 +1,12 @@
-using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
+﻿using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 
-public class CreateEmpreendimentoRequest : IRequest<DefaultResponse>
+public class UpdateEmpreendimentoRequest : IRequest<DefaultResponse>
 {
+    public Guid Id { get; set; }
     public required string Nome { get; set; }
     public required string Descricao { get; set; }
     public required string Localizacao { get; set; }
@@ -13,47 +14,52 @@ public class CreateEmpreendimentoRequest : IRequest<DefaultResponse>
     public required long Padrao { get; set; }
     [SwaggerIgnore]
     public required long Status { get; set; }
-    public int Versao = 1;
+    [SwaggerIgnore]
+    public int Versao { get; set; }
 
-    public List<CreateEmpreendimentoTopicoRequest>? EmpreendimentoTopicos { get; set; }
+    public List<UpdateEmpreendimentoTopicoRequest> EmpreendimentoTopicos { get; set; } = [];
 }
 
-public class CreateEmpreendimentoTopicoRequest
+public class UpdateEmpreendimentoTopicoRequest
 {
     [SwaggerIgnore]
     public required Guid EmpreendimentoId { get; set; }
     public required long TopicoId { get; set; }
     public required int Posicao { get; set; }
-    public List<int> Versoes = [1];
+    [SwaggerIgnore]
+        public List<int> Versoes { get; set; } = [];
 
-    public List<CreateTopicoAmbienteRequest>? TopicoAmbientes { get; set; }
-    public List<CreateTopicoMaterialRequest>? TopicoMateriais { get; set; }
+    public List<UpdateTopicoAmbienteRequest> TopicoAmbientes { get; set; } = [];
+    public List<UpdateTopicoMaterialRequest> TopicoMateriais { get; set; } = [];
 }
 
-public class CreateTopicoAmbienteRequest
+public class UpdateTopicoAmbienteRequest
 {
     [SwaggerIgnore]
     public required long TopicoId { get; set; }
     public required long AmbienteId { get; set; }
     public int? Area { get; set; }
     public required int Posicao { get; set; }
-    public List<int> Versoes = [1];
+    [SwaggerIgnore]
+        public List<int> Versoes { get; set; } = [];
 
-    public required List<CreateAmbienteItemRequest> AmbienteItens { get; set; }
+    public List<UpdateAmbienteItemRequest> AmbienteItens { get; set; } = [];
 }
 
-public class CreateTopicoMaterialRequest
+public class UpdateTopicoMaterialRequest
 {
     [SwaggerIgnore]
     public required long TopicoId { get; set; }
     public required long MaterialId { get; set; }
-    public List<int> Versoes = [1];
+    [SwaggerIgnore]
+        public List<int> Versoes { get; set; } = [];
 }
 
-public class CreateAmbienteItemRequest
+public class UpdateAmbienteItemRequest
 {
     [SwaggerIgnore]
     public required long AmbienteId { get; set; }
     public required long ItemId { get; set; }
-    public List<int> Versoes = [1];
+    [SwaggerIgnore]
+        public List<int> Versoes { get; set; } = [];
 }

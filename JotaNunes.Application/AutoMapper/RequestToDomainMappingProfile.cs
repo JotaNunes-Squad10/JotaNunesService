@@ -20,10 +20,10 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<CreateMaterialRequest, Material>().CreateMapper(user);
         CreateMap<CreateTopicoRequest, Topico>().CreateMapper(user);
 
-        CreateMap<AmbienteItemRequest, AmbienteItem>().CreateMapper(user);
-        CreateMap<EmpreendimentoTopicoRequest, EmpreendimentoTopico>().CreateMapper(user);
-        CreateMap<TopicoAmbienteRequest, TopicoAmbiente>().CreateMapper(user);
-        CreateMap<TopicoMaterialRequest, TopicoMaterial>().CreateMapper(user);
+        CreateMap<CreateAmbienteItemRequest, AmbienteItem>().CreateMapper(user);
+        CreateMap<CreateEmpreendimentoTopicoRequest, EmpreendimentoTopico>().CreateMapper(user);
+        CreateMap<CreateTopicoAmbienteRequest, TopicoAmbiente>().CreateMapper(user);
+        CreateMap<CreateTopicoMaterialRequest, TopicoMaterial>().CreateMapper(user);
 
         CreateMap<UpdateAmbienteRequest, Ambiente>().UpdateMapper(user);
         CreateMap<UpdateItemRequest, Item>().UpdateMapper(user);
@@ -31,8 +31,14 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);
         CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
 
+        CreateMap<UpdateAmbienteItemRequest, AmbienteItem>().CreateMapper(user);
+        CreateMap<UpdateEmpreendimentoTopicoRequest, EmpreendimentoTopico>().CreateMapper(user);
+        CreateMap<UpdateTopicoAmbienteRequest, TopicoAmbiente>().CreateMapper(user);
+        CreateMap<UpdateTopicoMaterialRequest, TopicoMaterial>().CreateMapper(user);
+
+        // ===== Create Empreendimento ======
+
         CreateMap<CreateEmpreendimentoRequest, EmpreendimentoBase>().CreateMapper(user);
-        CreateMap<LogStatusRequest, LogStatus>().CreateMapper(user);
 
         CreateMap<CreateEmpreendimentoRequest, Empreendimento>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -40,6 +46,31 @@ public class RequestToDomainMappingProfile : Profile
             .ForMember(dest => dest.EmpreendimentoPadrao, opt => opt.Ignore())
             .ForMember(dest => dest.Guid,   opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Guid")   ? (Guid)ctx.Items["Guid"]  : Guid.Empty))
             .ForMember(dest => dest.Versao, opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Versao") ? (int)ctx.Items["Versao"] : 1))
+            .CreateMapper(user);
+
+        CreateMap<LogStatusRequest, LogStatus>().CreateMapper(user);
+
+        // ===== Update Empreendimento =====
+
+        CreateMap<UpdateEmpreendimentoRequest, EmpreendimentoBase>()
+            .ForMember(dest => dest.EmpreendimentoTopicos, opt => opt.Ignore())
+            .CreateMapper(user);
+
+        CreateMap<UpdateEmpreendimentoRequest, Empreendimento>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.EmpreendimentoBase, opt => opt.Ignore())
+            .ForMember(dest => dest.EmpreendimentoPadrao, opt => opt.Ignore())
+            .ForMember(dest => dest.Guid,   opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Guid")   ? (Guid)ctx.Items["Guid"]  : Guid.Empty))
+            .ForMember(dest => dest.Versao, opt => opt.MapFrom((src, dest, _, ctx) => ctx.Items.ContainsKey("Versao") ? (int)ctx.Items["Versao"] : 1))
+            .CreateMapper(user);
+
+        CreateMap<UpdateEmpreendimentoTopicoRequest, EmpreendimentoTopico>()
+            .ForMember(dest => dest.TopicoAmbientes, opt => opt.Ignore())
+            .ForMember(dest => dest.TopicoMateriais, opt => opt.Ignore())
+            .CreateMapper(user);
+
+        CreateMap<UpdateTopicoAmbienteRequest, TopicoAmbiente>()
+            .ForMember(dest => dest.AmbienteItens, opt => opt.Ignore())
             .CreateMapper(user);
     }
 }

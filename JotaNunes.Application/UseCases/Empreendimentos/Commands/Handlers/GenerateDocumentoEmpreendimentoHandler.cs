@@ -30,7 +30,7 @@ public class GenerateDocumentoEmpreendimentoHandler(
                 : empreendimentoBase!.Empreendimentos.MaxBy(x => x.Versao);
 
             if (IsNull(empreendimento)) return Response();
-
+            
             var documentoRequest = new DocumentoEmpreendimentoRequest
             {
                 Id = empreendimentoBase.Id,
