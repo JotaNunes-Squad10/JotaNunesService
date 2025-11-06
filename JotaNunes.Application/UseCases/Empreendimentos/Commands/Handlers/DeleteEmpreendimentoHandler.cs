@@ -11,7 +11,7 @@ namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Handlers;
 public class DeleteEmpreendimentoHandler(
     IDomainService domainService,
     IEmpreendimentoBaseRepository repository
-) : BaseHandler<Domain.Models.Public.EmpreendimentoBase, DeleteEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoBaseRepository>(domainService, repository),
+) : BaseHandler<Domain.Models.Public.EmpreendimentoBase, DeleteEmpreendimentoRequest, EmpreendimentoBaseResponse, IEmpreendimentoBaseRepository>(domainService, repository),
     IRequestHandler<DeleteEmpreendimentoRequest, DefaultResponse>
 {
     public Task<DefaultResponse> Handle(DeleteEmpreendimentoRequest request, CancellationToken cancellationToken)

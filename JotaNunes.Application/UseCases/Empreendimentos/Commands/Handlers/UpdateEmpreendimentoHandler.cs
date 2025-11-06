@@ -17,7 +17,7 @@ public class UpdateEmpreendimentoHandler(
     ITopicoMaterialRepository topicoMaterialRepository,
     IAmbienteItemRepository ambienteItemRepository,
     ILogStatusRepository logStatusRepository
-) : BaseHandler<EmpreendimentoBase, UpdateEmpreendimentoRequest, EmpreendimentoResponse, IEmpreendimentoBaseRepository>(domainService, repository),
+) : BaseHandler<EmpreendimentoBase, UpdateEmpreendimentoRequest, EmpreendimentoBaseResponse, IEmpreendimentoBaseRepository>(domainService, repository),
     IRequestHandler<UpdateEmpreendimentoRequest, DefaultResponse>
 {
     public async Task<DefaultResponse> Handle(UpdateEmpreendimentoRequest request, CancellationToken cancellationToken)

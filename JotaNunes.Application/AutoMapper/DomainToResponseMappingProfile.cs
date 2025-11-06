@@ -64,14 +64,35 @@ public class DomainToResponseMappingProfile : Profile
             }
         }
 
-        CreateMap<EmpreendimentoBase, EmpreendimentoResultResponse>()
-            .ForMember(dest => dest.Nome,           opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Nome))
-            .ForMember(dest => dest.Descricao,      opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Descricao))
-            .ForMember(dest => dest.Localizacao,    opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Localizacao))
-            .ForMember(dest => dest.TamanhoArea,    opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.TamanhoArea))
-            .ForMember(dest => dest.Padrao,         opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.EmpreendimentoPadrao.Nome))
-            .ForMember(dest => dest.Status,         opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
-            .ForMember(dest => dest.Versao,         opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao));
+        CreateMap<EmpreendimentoBase, EmpreendimentoBaseResponse>()
+            .ForMember(dest => dest.Nome,        opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Nome))
+            .ForMember(dest => dest.Descricao,   opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Descricao))
+            .ForMember(dest => dest.Localizacao, opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Localizacao))
+            .ForMember(dest => dest.Padrao,      opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.EmpreendimentoPadrao.Nome))
+            .ForMember(dest => dest.Status,      opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
+            .ForMember(dest => dest.Versao,      opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao));
+
+        CreateMap<EmpreendimentoBase, EmpreendimentoBaseFullResponse>()
+            .ForMember(dest => dest.Nome,                  opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Nome))
+            .ForMember(dest => dest.Descricao,             opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Descricao))
+            .ForMember(dest => dest.Localizacao,           opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Localizacao))
+            .ForMember(dest => dest.Padrao,                opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.EmpreendimentoPadrao.Nome))
+            .ForMember(dest => dest.Status,                opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
+            .ForMember(dest => dest.Versao,                opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao))
+            .ForMember(dest => dest.Empreendimentos,               opt => opt.MapFrom(src => src.Empreendimentos))
+            .ForMember(dest => dest.EmpreendimentoTopicos, opt => opt.MapFrom(src => src.EmpreendimentoTopicos));
+
+        CreateMap<Empreendimento, EmpreendimentoFullResponse>();
+
+        CreateMap<EmpreendimentoTopico, EmpreendimentoTopicoResponse>()
+            .ForMember(dest => dest.TopicoAmbientes, opt => opt.MapFrom(src => src.TopicoAmbientes));
+
+        CreateMap<TopicoAmbiente, TopicoAmbienteResponse>()
+            .ForMember(dest => dest.AmbienteItens, opt => opt.MapFrom(src => src.AmbienteItens));
+
+        CreateMap<TopicoMaterial, TopicoMaterialResponse>();
+
+        CreateMap<AmbienteItem, AmbienteItemResponse>();
 
         CreateMap<Material, MaterialResponse>()
             .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Marca.Nome));

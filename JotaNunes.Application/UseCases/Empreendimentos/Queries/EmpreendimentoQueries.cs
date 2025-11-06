@@ -8,9 +8,18 @@ using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 namespace JotaNunes.Application.UseCases.Empreendimentos.Queries;
 
 public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimentoBaseRepository repository)
-    : BaseQueries<EmpreendimentoBase, EmpreendimentoResultResponse, IEmpreendimentoBaseRepository>(domainService, repository), IEmpreendimentoQueries
+    : BaseQueries<EmpreendimentoBase, EmpreendimentoBaseFullResponse, IEmpreendimentoBaseRepository>(domainService, repository), IEmpreendimentoQueries
 {
     private readonly IEmpreendimentoBaseRepository _repository = repository;
+
+    public new async Task<DefaultResponse> GetAllAsync()
+    {
+        var entities = await _repository.GetAllAsync();
+
+        var response = Map<List<EmpreendimentoBaseResponse>>(entities);
+
+        return Response(response);
+    }
 
     public async Task<DefaultResponse> GetByIdAsync(Guid id)
     {
@@ -18,7 +27,7 @@ public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimento
 
         if (IsNull(entity)) return Response();
 
-        var response = Map<EmpreendimentoResultResponse>(entity!);
+        var response = Map<EmpreendimentoBaseFullResponse>(entity!);
 
         return Response(response);
     }
@@ -35,7 +44,7 @@ public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimento
 
         entity.Empreendimentos = empreendimentos;
 
-        var response = Map<EmpreendimentoResultResponse>(entity);
+        var response = Map<EmpreendimentoBaseFullResponse>(entity);
 
         return Response(response);
     }
