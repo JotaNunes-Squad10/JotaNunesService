@@ -6,5 +6,5 @@ namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 public class UpdateEmpreendimentoStatusRequest : IRequest<DefaultResponse>
 {
     public Guid Id { get; set; }
-    public int Status { get; set; }
+    public long Status { get; set; }
 }

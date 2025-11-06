@@ -53,4 +53,11 @@ public class EmpreendimentoController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateEmpreendimentoAsync([FromBody] UpdateEmpreendimentoRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpPatch("UpdateEmpreendimentoStatus")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateEmpreendimentoStatusAsync([FromBody] UpdateEmpreendimentoStatusRequest request)
+        => CustomResponse(await Send(request));
 }
