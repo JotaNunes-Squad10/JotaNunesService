@@ -34,8 +34,7 @@ public class EmpreendimentoMapping : BaseAuditEntityMapping<Empreendimento>
             .IsRequired();
 
         builder.Property(x => x.TamanhoArea)
-            .HasColumnName("tamanho_area")
-            .IsRequired();
+            .HasColumnName("tamanho_area");
 
         builder.Property(x => x.Padrao)
             .HasColumnName("padrao_fk")

@@ -15,7 +15,7 @@ public class LogStatusMapping : BaseAuditEntityMapping<LogStatus>
 
         builder.Property(x => x.EmpreendimentoId)
             .HasColumnName("empreendimento_fk")
-            .HasMaxLength(36)
+            .HasColumnType("uuid")
             .IsRequired();
 
         builder.Property(x => x.Status)

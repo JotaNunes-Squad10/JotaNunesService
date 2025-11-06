@@ -8,7 +8,7 @@ public class DocumentoEmpreendimentoRequest
     public required string Nome { get; set; }
     public required string Descricao { get; set; }
     public required string Localizacao { get; set; }
-    public required int TamanhoArea { get; set; }
+    public int? TamanhoArea { get; set; }
 
     public required List<EmpreendimentoTopico> EmpreendimentoTopicos { get; set; }
 }

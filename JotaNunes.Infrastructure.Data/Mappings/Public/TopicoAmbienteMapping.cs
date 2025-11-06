@@ -10,9 +10,9 @@ public class TopicoAmbienteMapping : BaseAuditEntityMapping<TopicoAmbiente>
     public override void Configure(EntityTypeBuilder<TopicoAmbiente> builder)
     {
         base.Configure(builder);
-        
+
         builder.ToTable("rl_topico_ambiente", "public");
-        
+
         builder.Property(x => x.TopicoId)
             .HasColumnName("topico_fk")
             .IsRequired();
@@ -22,8 +22,7 @@ public class TopicoAmbienteMapping : BaseAuditEntityMapping<TopicoAmbiente>
             .IsRequired();
 
         builder.Property(x => x.Area)
-            .HasColumnName("area")
-            .IsRequired();
+            .HasColumnName("area");
 
         builder.Property(x => x.Posicao)
             .HasColumnName("posicao")

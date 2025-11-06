@@ -7,7 +7,7 @@ public class EmpreendimentoTopico : BaseAuditEntity
     public required Guid EmpreendimentoId { get; set; }
     public required long TopicoId { get; set; }
     public required long Posicao { get; set; }
-    public List<int>? Versoes { get; set; }
+    public required List<int> Versoes { get; set; }
 
     public required EmpreendimentoBase Empreendimento { get; set; }
     public required Topico Topico { get; set; }
