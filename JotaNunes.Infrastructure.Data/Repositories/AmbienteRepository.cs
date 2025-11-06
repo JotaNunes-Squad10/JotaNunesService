@@ -10,7 +10,6 @@ namespace JotaNunes.Infrastructure.Data.Repositories;
 public class AmbienteRepository(ApplicationContext applicationContext, IDomainService domainService)
     : BaseRepository<Ambiente>(applicationContext, domainService), IAmbienteRepository
 {
-    
     public override async Task<List<Ambiente>> GetAllAsync()
         => await GetTracking
             .Include(x => x.Topico)
