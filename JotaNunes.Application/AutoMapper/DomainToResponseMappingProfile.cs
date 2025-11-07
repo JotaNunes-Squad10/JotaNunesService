@@ -79,7 +79,7 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.Padrao,                opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.EmpreendimentoPadrao.Nome))
             .ForMember(dest => dest.Status,                opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
             .ForMember(dest => dest.Versao,                opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao))
-            .ForMember(dest => dest.Empreendimentos,               opt => opt.MapFrom(src => src.Empreendimentos))
+            .ForMember(dest => dest.Empreendimentos,       opt => opt.MapFrom(src => src.Empreendimentos))
             .ForMember(dest => dest.EmpreendimentoTopicos, opt => opt.MapFrom(src => src.EmpreendimentoTopicos));
 
         CreateMap<Empreendimento, EmpreendimentoFullResponse>();

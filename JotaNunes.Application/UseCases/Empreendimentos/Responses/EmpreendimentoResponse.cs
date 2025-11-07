@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 
 namespace JotaNunes.Application.UseCases.Empreendimentos.Responses;
 
@@ -10,6 +11,10 @@ public class EmpreendimentoBaseResponse()
     public required string Padrao { get; set; }
     public required string Status { get; set; }
     public required int Versao { get; set; }
+    [JsonIgnore]
+    public Guid UsuarioAlteracaoId { get; set; }
+    public string? UsuarioAlteracao { get; set; }
+    public required DateTime DataHoraAlteracao { get; set; }
 }
 
 public class EmpreendimentoBaseFullResponse()
@@ -21,6 +26,11 @@ public class EmpreendimentoBaseFullResponse()
     public required string Padrao { get; set; }
     public required string Status { get; set; }
     public required int Versao { get; set; }
+    [JsonIgnore]
+    public Guid UsuarioAlteracaoId { get; set; }
+    public string? UsuarioAlteracao { get; set; }
+    public required DateTime DataHoraAlteracao { get; set; }
+
     public List<EmpreendimentoFullResponse>? Empreendimentos { get; set; }
     public List<EmpreendimentoTopicoResponse>? EmpreendimentoTopicos { get; set; }
 }

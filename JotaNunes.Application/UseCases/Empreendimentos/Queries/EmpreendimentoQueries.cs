@@ -7,8 +7,11 @@ using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 
 namespace JotaNunes.Application.UseCases.Empreendimentos.Queries;
 
-public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimentoBaseRepository repository)
-    : BaseQueries<EmpreendimentoBase, EmpreendimentoBaseFullResponse, IEmpreendimentoBaseRepository>(domainService, repository), IEmpreendimentoQueries
+public class EmpreendimentoQueries(
+    IDomainService domainService,
+    IEmpreendimentoBaseRepository repository,
+    IUserRepository userRepository
+) : BaseQueries<EmpreendimentoBase, EmpreendimentoBaseFullResponse, IEmpreendimentoBaseRepository>(domainService, repository), IEmpreendimentoQueries
 {
     private readonly IEmpreendimentoBaseRepository _repository = repository;
 
@@ -17,6 +20,14 @@ public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimento
         var entities = await _repository.GetAllAsync();
 
         var response = Map<List<EmpreendimentoBaseResponse>>(entities);
+
+        response.ForEach(eb =>
+        {
+            var user = userRepository.GetByIdAsync(eb.UsuarioAlteracaoId).Result;
+            eb.UsuarioAlteracao = user != null
+                ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
+                : "Não autorado";
+        });
 
         return Response(response);
     }
@@ -28,6 +39,11 @@ public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimento
         if (IsNull(entity)) return Response();
 
         var response = Map<EmpreendimentoBaseFullResponse>(entity!);
+
+        var user = userRepository.GetByIdAsync(response.UsuarioAlteracaoId).Result;
+        response.UsuarioAlteracao = user != null
+            ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
+            : "Não autorado";
 
         return Response(response);
     }
@@ -45,6 +61,11 @@ public class EmpreendimentoQueries(IDomainService domainService, IEmpreendimento
         entity.Empreendimentos = empreendimentos;
 
         var response = Map<EmpreendimentoBaseFullResponse>(entity);
+
+        var user = userRepository.GetByIdAsync(response.UsuarioAlteracaoId).Result;
+        response.UsuarioAlteracao = user != null
+            ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
+            : "Não autorado";
 
         return Response(response);
     }
