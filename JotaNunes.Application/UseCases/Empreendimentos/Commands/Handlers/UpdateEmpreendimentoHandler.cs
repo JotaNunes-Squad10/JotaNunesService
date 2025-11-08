@@ -76,6 +76,8 @@ public class UpdateEmpreendimentoHandler(
                 if (et != null) topicosToAppendVersion.Add(et.Id);
                 else
                 {
+                    newEt.EmpreendimentoId = empreendimentoBase.Id;
+                    newEt.Versoes = [nextVersion];
                     var empreendimentoTopico = Repository.DomainService.Mapper.Map<EmpreendimentoTopico>(newEt);
                     await empreendimentoTopicoRepository.InsertAsync(empreendimentoTopico);
                 }
@@ -89,6 +91,8 @@ public class UpdateEmpreendimentoHandler(
                     if (ta != null) ambientesToAppendVersion.Add(ta.Id);
                     else
                     {
+                        newTa.TopicoId = et2.Id;
+                        newTa.Versoes = [nextVersion];
                         var topicoAmbiente = Repository.DomainService.Mapper.Map<TopicoAmbiente>(newTa);
                         await topicoAmbienteRepository.InsertAsync(topicoAmbiente);
                     }
@@ -102,6 +106,8 @@ public class UpdateEmpreendimentoHandler(
                         if (ai != null) itensToAppendVersion.Add(ai.Id);
                         else
                         {
+                            newAi.AmbienteId = ta2.Id;
+                            newAi.Versoes = [nextVersion];
                             var topicoItem = Repository.DomainService.Mapper.Map<AmbienteItem>(newAi);
                             await ambienteItemRepository.InsertAsync(topicoItem);
                         }
@@ -117,6 +123,8 @@ public class UpdateEmpreendimentoHandler(
                     if (tm != null) materiaisToAppendVersion.Add(tm.Id);
                     else
                     {
+                        newTm.TopicoId = et2.Id;
+                        newTm.Versoes = [nextVersion];
                         var topicoMaterial = Repository.DomainService.Mapper.Map<TopicoMaterial>(newTm);
                         await topicoMaterialRepository.InsertAsync(topicoMaterial);
                     }
