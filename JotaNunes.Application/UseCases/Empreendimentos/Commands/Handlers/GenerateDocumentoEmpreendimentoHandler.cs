@@ -21,7 +21,7 @@ public class GenerateDocumentoEmpreendimentoHandler(
     {
         try
         {
-            var version = request.Version ?? Repository.GetLastVersion(request.Id);
+            var version = request.Version ?? await Repository.GetLastVersionAsync(request.Id);
 
             var empreendimentoBase = await Repository.GetByVersionAsync(request.Id, version);
 

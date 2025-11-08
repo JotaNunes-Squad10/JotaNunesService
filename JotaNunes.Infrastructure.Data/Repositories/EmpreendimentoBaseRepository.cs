@@ -79,6 +79,8 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
                         .ThenInclude(m => m.Marca)
             .FirstOrDefaultAsync(eb => eb.Id == id);
 
-    public int GetLastVersion(Guid id)
-        => Get.Include(eb => eb.Empreendimentos).FirstOrDefault(eb => eb.Id == id)!.Empreendimentos.MaxBy(x => x.Versao)!.Versao;
+    public async Task<int> GetLastVersionAsync(Guid id)
+        => (await Get.Include(eb => eb.Empreendimentos)
+            .FirstOrDefaultAsync(eb => eb.Id == id))!
+            .Empreendimentos.MaxBy(x => x.Versao)!.Versao;
 }

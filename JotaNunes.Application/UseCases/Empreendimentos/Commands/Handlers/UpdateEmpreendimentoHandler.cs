@@ -64,7 +64,7 @@ public class UpdateEmpreendimentoHandler(
             var materiaisToAppendVersion = new List<long>();
 
             // 5.1 - Atualizar versões dos topicos
-            request.EmpreendimentoTopicos.ForEach(async void (newEt) =>
+            foreach (var newEt in request.EmpreendimentoTopicos)
             {
                 // if empreendimentoBase.EmpreendimentoTopicos already contains et.TopicoId
                 // => append new version
@@ -74,58 +74,54 @@ public class UpdateEmpreendimentoHandler(
                 var et = empreendimentoBase.EmpreendimentoTopicos.FirstOrDefault(et => et.TopicoId == newEt.TopicoId);
 
                 if (et != null) topicosToAppendVersion.Add(et.Id);
-
-                else {
+                else
+                {
                     var empreendimentoTopico = Repository.DomainService.Mapper.Map<EmpreendimentoTopico>(newEt);
                     await empreendimentoTopicoRepository.InsertAsync(empreendimentoTopico);
-                    await CommitAsync();
                 }
 
                 // 5.2 - Atualizar versões dos ambientes
-                newEt.TopicoAmbientes.ForEach(async void (newTa) => {
+                foreach (var newTa in newEt.TopicoAmbientes)
+                {
                     var et2 = empreendimentoBase.EmpreendimentoTopicos.FirstOrDefault(et2 => et2.TopicoId == newEt.TopicoId);
-
                     var ta = et2!.TopicoAmbientes.FirstOrDefault(ta2 => ta2.AmbienteId == newTa.AmbienteId);
 
                     if (ta != null) ambientesToAppendVersion.Add(ta.Id);
-
-                    else {
+                    else
+                    {
                         var topicoAmbiente = Repository.DomainService.Mapper.Map<TopicoAmbiente>(newTa);
                         await topicoAmbienteRepository.InsertAsync(topicoAmbiente);
-                        await CommitAsync();
                     }
 
                     // 5.3 - Atualizar versões dos itens
-                    newTa.AmbienteItens.ForEach(async void (newAi) => {
+                    foreach (var newAi in newTa.AmbienteItens)
+                    {
                         var ta2 = et2.TopicoAmbientes.FirstOrDefault(ta2 => ta2.AmbienteId == newTa.AmbienteId);
-
                         var ai = ta2!.AmbienteItens.FirstOrDefault(ai2 => ai2.ItemId == newAi.ItemId);
 
                         if (ai != null) itensToAppendVersion.Add(ai.Id);
-
-                        else {
+                        else
+                        {
                             var topicoItem = Repository.DomainService.Mapper.Map<AmbienteItem>(newAi);
                             await ambienteItemRepository.InsertAsync(topicoItem);
-                            await CommitAsync();
                         }
-                    });
-                });
+                    }
+                }
 
                 // 5.4 - Atualizar versões dos materiais
-                newEt.TopicoMateriais.ForEach(async void (newTm) => {
+                foreach (var newTm in newEt.TopicoMateriais)
+                {
                     var et2 = empreendimentoBase.EmpreendimentoTopicos.FirstOrDefault(et2 => et2.TopicoId == newEt.TopicoId);
-
                     var tm = et2!.TopicoMateriais.FirstOrDefault(tm2 => tm2.MaterialId == newTm.MaterialId);
 
                     if (tm != null) materiaisToAppendVersion.Add(tm.Id);
-
-                    else {
+                    else
+                    {
                         var topicoMaterial = Repository.DomainService.Mapper.Map<TopicoMaterial>(newTm);
                         await topicoMaterialRepository.InsertAsync(topicoMaterial);
-                        await CommitAsync();
                     }
-                });
-            });
+                }
+            }
 
             if (topicosToAppendVersion.Count > 0)
                 await empreendimentoRepository.AppendVersionToTopicosAsync(topicosToAppendVersion.ToArray(), nextVersion);
