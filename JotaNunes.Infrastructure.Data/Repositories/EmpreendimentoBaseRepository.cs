@@ -29,7 +29,7 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
                             .ThenInclude(ai => ai.Item)
             .Include(eb => eb.EmpreendimentoTopicos)
                 .ThenInclude(et => et.TopicoMateriais)
-                    .ThenInclude(tm => tm.Material)
+                    .ThenInclude(tm => tm.MaterialMarca)
                         .ThenInclude(m => m.Marca)
             .ToListAsync();
 
@@ -52,7 +52,7 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
                             .ThenInclude(ai => ai.Item)
             .Include(eb => eb.EmpreendimentoTopicos)
                 .ThenInclude(et => et.TopicoMateriais)
-                    .ThenInclude(tm => tm.Material)
+                    .ThenInclude(tm => tm.MaterialMarca)
                         .ThenInclude(m => m.Marca)
             .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -75,7 +75,7 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
                             .ThenInclude(ai => ai.Item)
             .Include(eb => eb.EmpreendimentoTopicos.Where(et => et.Versoes.Contains(version)))
                 .ThenInclude(et => et.TopicoMateriais.Where(tm => tm.Versoes.Contains(version)))
-                    .ThenInclude(tm => tm.Material)
+                    .ThenInclude(tm => tm.MaterialMarca)
                         .ThenInclude(m => m.Marca)
             .FirstOrDefaultAsync(eb => eb.Id == id);
 

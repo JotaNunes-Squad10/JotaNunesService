@@ -1,4 +1,3 @@
-using JotaNunes.Application.UseCases.Ambiente.Responses;
 using JotaNunes.Application.UseCases.Authentication.Responses;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Application.UseCases.Material.Responses;
@@ -94,8 +93,9 @@ public class DomainToResponseMappingProfile : Profile
 
         CreateMap<AmbienteItem, AmbienteItemResponse>();
 
-        CreateMap<Material, MaterialResponse>()
-            .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Marca.Nome));
+        // CreateMap<MaterialMarca, MaterialMarcaResponse>()
+        //     .ForMember(dest => dest.Material, opt => opt.MapFrom(src => src.Material.Nome))
+        //     .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Marca.Nome));
 
         CreateMap<User, UserResponse>()
             .ForMember(dest => dest.Phone,

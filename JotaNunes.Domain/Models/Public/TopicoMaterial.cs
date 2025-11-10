@@ -9,5 +9,5 @@ public class TopicoMaterial : BaseAuditEntity
     public required List<int> Versoes { get; set; }
 
     public required EmpreendimentoTopico EmpreendimentoTopico { get; set; }
-    public required Material Material { get; set; }
+    public required MaterialMarca MaterialMarca { get; set; }
 }
