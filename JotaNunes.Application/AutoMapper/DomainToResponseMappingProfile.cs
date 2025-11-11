@@ -1,6 +1,7 @@
 using JotaNunes.Application.UseCases.Authentication.Responses;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Application.UseCases.Material.Responses;
+using JotaNunes.Application.UseCases.MaterialMarcas.Responses;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.Models.Public;
@@ -63,6 +64,8 @@ public class DomainToResponseMappingProfile : Profile
             }
         }
 
+        CreateMap<AmbienteItem, AmbienteItemResponse>();
+
         CreateMap<EmpreendimentoBase, EmpreendimentoBaseResponse>()
             .ForMember(dest => dest.Nome,        opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Nome))
             .ForMember(dest => dest.Descricao,   opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Descricao))
@@ -86,16 +89,22 @@ public class DomainToResponseMappingProfile : Profile
         CreateMap<EmpreendimentoTopico, EmpreendimentoTopicoResponse>()
             .ForMember(dest => dest.TopicoAmbientes, opt => opt.MapFrom(src => src.TopicoAmbientes));
 
+        CreateMap<Marca, MateriaisByMarcaResponse>()
+            .ForMember(dest => dest.MarcaId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Nome))
+            .ForMember(dest => dest.Materiais, opt => opt.MapFrom(src => src.MaterialMarcas.Select(x => x.Material.Nome)));
+
+        CreateMap<MaterialMarca, MaterialMarcaResponse>();
+
+        CreateMap<Material, MarcasByMaterialResponse>()
+            .ForMember(dest => dest.MaterialId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Material, opt => opt.MapFrom(src => src.Nome))
+            .ForMember(dest => dest.Marcas, opt => opt.MapFrom(src => src.MaterialMarcas.Select(x => x.Marca.Nome)));
+
         CreateMap<TopicoAmbiente, TopicoAmbienteResponse>()
             .ForMember(dest => dest.AmbienteItens, opt => opt.MapFrom(src => src.AmbienteItens));
 
         CreateMap<TopicoMaterial, TopicoMaterialResponse>();
-
-        CreateMap<AmbienteItem, AmbienteItemResponse>();
-
-        // CreateMap<MaterialMarca, MaterialMarcaResponse>()
-        //     .ForMember(dest => dest.Material, opt => opt.MapFrom(src => src.Material.Nome))
-        //     .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Marca.Nome));
 
         CreateMap<User, UserResponse>()
             .ForMember(dest => dest.Phone,
