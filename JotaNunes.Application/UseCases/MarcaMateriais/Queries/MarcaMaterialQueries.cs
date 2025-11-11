@@ -1,18 +1,18 @@
 using JotaNunes.Application.UseCases.Base.Queries;
-using JotaNunes.Application.UseCases.MaterialMarcas.Responses;
+using JotaNunes.Application.UseCases.MarcaMateriais.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 
-namespace JotaNunes.Application.UseCases.MaterialMarcas.Queries;
+namespace JotaNunes.Application.UseCases.MarcaMateriais.Queries;
 
-public class MaterialMarcaQueries(
+public class MarcaMaterialQueries(
     IDomainService domainService,
-    IMaterialMarcaRepository repository,
+    IMarcaMaterialRepository repository,
     IMarcaRepository marcaRepository,
     IMaterialRepository materialRepository
-) : BaseQueries<MaterialMarca, MaterialMarcaResponse, IMaterialMarcaRepository>(domainService, repository), IMaterialMarcaQueries
+) : BaseQueries<MarcaMaterial, MarcaMaterialResponse, IMarcaMaterialRepository>(domainService, repository), IMarcaMaterialQueries
 {
     public async Task<DefaultResponse> GetAllMarcasByMaterialIdAsync(long id)
     {

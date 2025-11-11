@@ -29,7 +29,7 @@ public class TopicoMaterialMapping : BaseAuditEntityMapping<TopicoMaterial>
             .WithMany(x => x.TopicoMateriais)
             .HasForeignKey(x => x.TopicoId);
 
-        builder.HasOne(x => x.MaterialMarca)
+        builder.HasOne(x => x.MarcaMaterial)
             .WithMany(x => x.TopicoMateriais)
             .HasForeignKey(x => x.MaterialId);
     }

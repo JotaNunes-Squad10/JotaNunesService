@@ -1,4 +1,4 @@
-namespace JotaNunes.Application.UseCases.MaterialMarcas.Responses;
+namespace JotaNunes.Application.UseCases.MarcaMateriais.Responses;
 
 public class MarcasByMaterialResponse
 {
