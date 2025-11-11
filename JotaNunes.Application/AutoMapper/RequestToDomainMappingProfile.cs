@@ -3,6 +3,7 @@ using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 using JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 using JotaNunes.Application.UseCases.Item.Commands.Requests;
 using JotaNunes.Application.UseCases.Marca.Commands.Requests;
+using JotaNunes.Application.UseCases.MarcaMateriais.Commands.Requests;
 using JotaNunes.Application.UseCases.Material.Commands.Requests;
 using JotaNunes.Application.UseCases.Topico.Commands.Requests;
 using JotaNunes.Domain.Interfaces;
@@ -17,6 +18,7 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<CreateAmbienteRequest, Ambiente>().CreateMapper(user);
         CreateMap<CreateItemRequest, Item>().CreateMapper(user);
         CreateMap<CreateMarcaRequest, Marca>().CreateMapper(user);
+        CreateMap<CreateMarcaMaterialRequest, MarcaMaterial>().CreateMapper(user);
         CreateMap<CreateMaterialRequest, Material>().CreateMapper(user);
         CreateMap<CreateTopicoRequest, Topico>().CreateMapper(user);
 
@@ -28,6 +30,7 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<UpdateAmbienteRequest, Ambiente>().UpdateMapper(user);
         CreateMap<UpdateItemRequest, Item>().UpdateMapper(user);
         CreateMap<UpdateMarcaRequest, Marca>().UpdateMapper(user);
+        CreateMap<UpdateMarcaMaterialRequest, MarcaMaterial>().UpdateMapper(user);
         CreateMap<UpdateMaterialRequest, Material>().UpdateMapper(user);
         CreateMap<UpdateTopicoRequest, Topico>().UpdateMapper(user);
 
