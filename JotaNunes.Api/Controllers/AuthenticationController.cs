@@ -44,7 +44,7 @@ public class AuthenticationController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetUserById([FromRoute] Guid id)
+    public async Task<IActionResult> GetUserByIdAsync([FromRoute] Guid id)
         => CustomResponse(await authenticationQueries.GetByIdAsync(id));
 
     [HttpGet("GetUserByUsername/{username}")]

@@ -10,8 +10,7 @@ namespace JotaNunes.Application.UseCases.Ambiente.Commands.Handlers;
 
 public class CreateAmbienteHandler(
     IDomainService domainService,
-    IAmbienteRepository repository,
-    ITopicoRepository topicoRepository
+    IAmbienteRepository repository
 ) : BaseHandler<Domain.Models.Public.Ambiente, CreateAmbienteRequest, AmbienteResponse, IAmbienteRepository>(domainService, repository),
     IRequestHandler<CreateAmbienteRequest, DefaultResponse>
 {
@@ -19,10 +18,6 @@ public class CreateAmbienteHandler(
     {
         try
         {
-            var topico = topicoRepository.GetByIdAsync(request.TopicoId);
-
-            if (IsNull(topico)) return Response();
-            
             return Response(await InsertAsync(request));
         }
         catch (Exception e)

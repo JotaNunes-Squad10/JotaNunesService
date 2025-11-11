@@ -16,27 +16,27 @@ public class TopicoController(
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateTopicoAsync([FromBody] CreateTopicoRequest request)
         => CustomResponse(await Send(request));
-    
+
     [HttpDelete("DeleteTopico/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteTopicoAsync([FromRoute] long id)
         => CustomResponse(await Send(new DeleteTopicoRequest { Id = id }));
-    
+
     [HttpGet("GetAllTopicos")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllTopicosAsync()
         => CustomResponse(await topicoQueries.GetAllAsync());
-    
+
     [HttpGet("GetTopicoById/{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetTopicoById([FromRoute] long id)
+    public async Task<IActionResult> GetTopicoByIdAsync([FromRoute] long id)
         => CustomResponse(await topicoQueries.GetByIdAsync(id));
-    
+
     [HttpPatch("UpdateTopico")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
