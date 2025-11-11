@@ -1,9 +1,9 @@
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 
-namespace JotaNunes.Application.UseCases.MaterialMarcas.Commands.Requests;
+namespace JotaNunes.Application.UseCases.MarcaMateriais.Commands.Requests;
 
-public class UpdateMaterialMarcaRequest : IRequest<DefaultResponse>
+public class UpdateMarcaMaterialRequest : IRequest<DefaultResponse>
 {
     public required long Id { get; set; }
     public long? MaterialId { get; set; }

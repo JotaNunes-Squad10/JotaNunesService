@@ -7,18 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JotaNunes.Infrastructure.Data.Repositories;
 
-public class MaterialMarcaRepository(ApplicationContext applicationContext, IDomainService domainService)
-    : BaseRepository<MaterialMarca>(applicationContext, domainService), IMaterialMarcaRepository
+public class MarcaMaterialRepository(ApplicationContext applicationContext, IDomainService domainService)
+    : BaseRepository<MarcaMaterial>(applicationContext, domainService), IMarcaMaterialRepository
 {
-    public override async Task<List<MaterialMarca>> GetAllAsync()
+    public override async Task<List<MarcaMaterial>> GetAllAsync()
         => await GetTracking
-            .Include(x => x.Material)
             .Include(x => x.Marca)
+            .Include(x => x.Material)
             .ToListAsync();
 
-    public override async Task<MaterialMarca?> GetByIdAsync(long id)
+    public override async Task<MarcaMaterial?> GetByIdAsync(long id)
         => await GetTracking
-            .Include(x => x.Material)
             .Include(x => x.Marca)
+            .Include(x => x.Material)
             .FirstOrDefaultAsync(x => x.Id == id);
 }

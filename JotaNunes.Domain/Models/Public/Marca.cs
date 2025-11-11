@@ -6,5 +6,5 @@ public class Marca : BaseAuditEntity
 {
     public required string Nome { get; set; }
 
-    public required List<MaterialMarca> MaterialMarcas { get; set; }
+    public required List<MarcaMaterial> MaterialMarcas { get; set; }
 }

@@ -1,7 +1,6 @@
 using JotaNunes.Application.UseCases.Authentication.Responses;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
-using JotaNunes.Application.UseCases.Material.Responses;
-using JotaNunes.Application.UseCases.MaterialMarcas.Responses;
+using JotaNunes.Application.UseCases.MarcaMateriais.Responses;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.Models.Public;
@@ -17,7 +16,6 @@ public class DomainToResponseMappingProfile : Profile
     public DomainToResponseMappingProfile()
     {
         var sufix = "Response";
-        var excludeTypes = new List<Type>();
 
         var responses = new[] { AppDataProvider.GetApplication(), AppDataProvider.GetIntegration() }
             .SelectMany(a => a.DefinedTypes)
@@ -42,7 +40,6 @@ public class DomainToResponseMappingProfile : Profile
                     && !x.IsEnum
                     && x.IsVisible
                     && x.IsPublic
-                    && !excludeTypes.Contains(x.UnderlyingSystemType)
                     && x.BaseType != null
                     && (x.BaseType.Name.Equals(nameof(BaseEntity))
                         || x.BaseType.Name.Equals(nameof(BaseAuditEntity))
@@ -94,7 +91,7 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Nome))
             .ForMember(dest => dest.Materiais, opt => opt.MapFrom(src => src.MaterialMarcas.Select(x => x.Material.Nome)));
 
-        CreateMap<MaterialMarca, MaterialMarcaResponse>();
+        CreateMap<MarcaMaterial, MarcaMaterialResponse>();
 
         CreateMap<Material, MarcasByMaterialResponse>()
             .ForMember(dest => dest.MaterialId, opt => opt.MapFrom(src => src.Id))

@@ -3,7 +3,7 @@ using JotaNunes.Domain.Models.Public;
 
 namespace JotaNunes.Domain.Interfaces;
 
-public interface IMaterialMarcaRepository : IBaseRepository<MaterialMarca>
+public interface IMarcaMaterialRepository : IBaseRepository<MarcaMaterial>
 {
 
 }

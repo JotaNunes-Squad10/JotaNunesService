@@ -86,10 +86,10 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
                                         table.Cell().Element(Table.HeaderCell).Text("Descrição");
                                     }
 
-                                    et.TopicoMateriais.OrderBy(tm => tm.MaterialMarca.Material.Nome).ToList().ForEach(tm =>
+                                    et.TopicoMateriais.OrderBy(tm => tm.MarcaMaterial.Material.Nome).ToList().ForEach(tm =>
                                     {
-                                        table.Cell().Element(Table.BodyCell).Text(tm.MaterialMarca.Material.Nome);
-                                        table.Cell().Element(Table.BodyCell).Text(tm.MaterialMarca.Marca.Nome);
+                                        table.Cell().Element(Table.BodyCell).Text(tm.MarcaMaterial.Material.Nome);
+                                        table.Cell().Element(Table.BodyCell).Text(tm.MarcaMaterial.Marca.Nome);
                                     });
                                 });
                             }
