@@ -45,7 +45,7 @@ public class EmpreendimentoRepository(ApplicationContext applicationContext, IDo
     public async Task AppendVersionToItensAsync(long[] aiIds, int nextVersion)
     {
         await _ctx.Database.ExecuteSqlInterpolatedAsync($@"
-            UPDATE public.rl_topico_item
+            UPDATE public.rl_ambiente_item
             SET versoes = array_append(coalesce(versoes, '{{}}'), {nextVersion})
             WHERE id = ANY({aiIds})
             AND NOT ({nextVersion} = ANY(coalesce(versoes, '{{}}')));
