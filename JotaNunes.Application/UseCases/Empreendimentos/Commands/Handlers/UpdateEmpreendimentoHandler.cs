@@ -80,36 +80,39 @@ public class UpdateEmpreendimentoHandler(
                     newEt.Versoes = [nextVersion];
                     var empreendimentoTopico = Repository.DomainService.Mapper.Map<EmpreendimentoTopico>(newEt);
                     await empreendimentoTopicoRepository.InsertAsync(empreendimentoTopico);
+                    await CommitAsync();
                 }
 
                 // 5.2 - Atualizar versões dos ambientes
                 foreach (var newTa in newEt.TopicoAmbientes)
                 {
                     var et2 = empreendimentoBase.EmpreendimentoTopicos.FirstOrDefault(et2 => et2.TopicoId == newEt.TopicoId);
-                    var ta = et2!.TopicoAmbientes.FirstOrDefault(ta2 => ta2.AmbienteId == newTa.AmbienteId);
+                    var ta = et2!.TopicoAmbientes == null ? null : et2.TopicoAmbientes.FirstOrDefault(ta2 => ta2.AmbienteId == newTa.AmbienteId);
 
-                    if (ta != null) ambientesToAppendVersion.Add(ta.Id);
-                    else
+                    if (ta != null) ambientesToAppendVersion.Add(ta.Id); // O ambiente já existe => atualizar versão
+                    else // O ambiente ainda não existe => registrar novo
                     {
                         newTa.TopicoId = et2.Id;
                         newTa.Versoes = [nextVersion];
                         var topicoAmbiente = Repository.DomainService.Mapper.Map<TopicoAmbiente>(newTa);
                         await topicoAmbienteRepository.InsertAsync(topicoAmbiente);
+                        await CommitAsync();
                     }
 
                     // 5.3 - Atualizar versões dos itens
                     foreach (var newAi in newTa.AmbienteItens)
                     {
                         var ta2 = et2.TopicoAmbientes.FirstOrDefault(ta2 => ta2.AmbienteId == newTa.AmbienteId);
-                        var ai = ta2!.AmbienteItens.FirstOrDefault(ai2 => ai2.ItemId == newAi.ItemId);
+                        var ai = ta2!.AmbienteItens == null ? null : ta2.AmbienteItens.FirstOrDefault(ai2 => ai2.ItemId == newAi.ItemId);
 
-                        if (ai != null) itensToAppendVersion.Add(ai.Id);
-                        else
+                        if (ai != null) itensToAppendVersion.Add(ai.Id); // O item já existe => atualizar versão
+                        else // O item ainda não existe => registrar novo
                         {
                             newAi.AmbienteId = ta2.Id;
                             newAi.Versoes = [nextVersion];
                             var topicoItem = Repository.DomainService.Mapper.Map<AmbienteItem>(newAi);
                             await ambienteItemRepository.InsertAsync(topicoItem);
+                            await CommitAsync();
                         }
                     }
                 }
@@ -118,15 +121,16 @@ public class UpdateEmpreendimentoHandler(
                 foreach (var newTm in newEt.TopicoMateriais)
                 {
                     var et2 = empreendimentoBase.EmpreendimentoTopicos.FirstOrDefault(et2 => et2.TopicoId == newEt.TopicoId);
-                    var tm = et2!.TopicoMateriais.FirstOrDefault(tm2 => tm2.MaterialId == newTm.MaterialId);
+                    var tm = et2!.TopicoMateriais == null ? null : et2.TopicoMateriais.FirstOrDefault(tm2 => tm2.MaterialId == newTm.MaterialId);
 
-                    if (tm != null) materiaisToAppendVersion.Add(tm.Id);
-                    else
+                    if (tm != null) materiaisToAppendVersion.Add(tm.Id); // O material já existe => atualizar versão
+                    else // O material ainda não existe => registrar novo
                     {
                         newTm.TopicoId = et2.Id;
                         newTm.Versoes = [nextVersion];
                         var topicoMaterial = Repository.DomainService.Mapper.Map<TopicoMaterial>(newTm);
                         await topicoMaterialRepository.InsertAsync(topicoMaterial);
+                        await CommitAsync();
                     }
                 }
             }
