@@ -86,11 +86,18 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
                                         table.Cell().Element(Table.HeaderCell).Text("Descrição");
                                     }
 
-                                    et.TopicoMateriais.OrderBy(tm => tm.MarcaMaterial.Material.Nome).ToList().ForEach(tm =>
-                                    {
-                                        table.Cell().Element(Table.BodyCell).Text(tm.MarcaMaterial.Material.Nome);
-                                        table.Cell().Element(Table.BodyCell).Text(tm.MarcaMaterial.Marca.Nome);
-                                    });
+                                    et.TopicoMateriais.GroupBy(tm => tm.MarcaMaterial.MaterialId)
+                                        .ToList().ForEach(group =>
+                                        {
+                                            var material = group.First().MarcaMaterial.Material.Nome;
+                                            var marcas = string.Join(", ", group
+                                                .Select(x => x.MarcaMaterial.Marca.Nome)
+                                                .Distinct()
+                                                .OrderBy(n => n));
+
+                                            table.Cell().Element(Table.BodyCell).Text(material);
+                                            table.Cell().Element(Table.BodyCell).Text(marcas);
+                                        });
                                 });
                             }
 
