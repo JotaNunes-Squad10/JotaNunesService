@@ -1,10 +1,11 @@
-﻿using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
+using JotaNunes.Application.UseCases.Base.Commands.Requests;
+using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 
-public class UpdateEmpreendimentoRequest : IRequest<DefaultResponse>
+public class UpdateEmpreendimentoRequest : IRequest<DefaultResponse>, ITransactionalRequest
 {
     public Guid Id { get; set; }
     public required string Nome { get; set; }

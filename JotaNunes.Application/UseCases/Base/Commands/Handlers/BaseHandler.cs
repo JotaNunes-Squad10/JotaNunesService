@@ -4,7 +4,7 @@ using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.ErrorMessages;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
 
-namespace JotaNunes.Application.UseCases.Base.Commands;
+namespace JotaNunes.Application.UseCases.Base.Commands.Handlers;
 
 public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDomainService domainService, TRepository repository)
     : BaseUseCase<TEntity, TResponse, TRepository>(domainService, repository)
@@ -15,7 +15,7 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
 {
     private readonly IDomainService _domainService = domainService;
     protected ExternalServices ExternalServices => _domainService.AppProvider.ExternalServices;
-    
+
     private async Task<TResponse?> CommitAsync(TEntity entity)
     {
         if (!IsNull(entity))
@@ -45,7 +45,7 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
             AddError(typeof(TRepository).Name, ErrorMessage.ErrorPersistData, e);
         }
     }
-    
+
     public TEntity Map(TRequest request)
         => Map<TEntity, TRequest>(request);
 
@@ -63,11 +63,11 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
     protected async Task<TResponse?> UpdateAsync(TRequest request)
     {
         var entity = await Repository.GetByIdAsync(Map(request).Id);
-        
+
         if (IsNull(entity)) return null;
-        
+
         Map(request, entity);
-        
+
         return await UpdateAsync(entity!);
     }
 
@@ -80,9 +80,9 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
     protected async Task<TResponse?> DeleteAsync(long id)
     {
         var entity = await Repository.GetByIdAsync(id);
-        
+
         if (IsNull(entity)) return null;
-        
+
         return await DeleteAsync(entity!);
     }
 

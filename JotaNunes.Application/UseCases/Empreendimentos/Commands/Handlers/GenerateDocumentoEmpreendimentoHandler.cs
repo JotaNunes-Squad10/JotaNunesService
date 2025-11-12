@@ -1,4 +1,4 @@
-using JotaNunes.Application.UseCases.Base.Commands;
+using JotaNunes.Application.UseCases.Base.Commands.Handlers;
 using JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Domain.Interfaces;

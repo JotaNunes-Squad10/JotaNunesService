@@ -1,11 +1,12 @@
+using JotaNunes.Application.UseCases.Base.Commands.Handlers;
 using JotaNunes.Application.UseCases.Empreendimentos.Commands.Requests;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
-using JotaNunes.Application.UseCases.Base.Commands;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using MediatR;
+
 namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Handlers;
 
 public class UpdateEmpreendimentoHandler(
@@ -157,8 +158,8 @@ public class UpdateEmpreendimentoHandler(
         }
         catch (Exception e)
         {
-            AddError("CreateEmpreendimentoHandler", "Error creating Empreendimento:", e);
-            return Response();
+            AddError("UpdateEmpreendimentoHandler", "Error updating Empreendimento:", e);
+            throw;
         }
     }
 }

@@ -1,5 +1,5 @@
 using JotaNunes.Application.UseCases.Authentication.Commands.Requests;
-using JotaNunes.Application.UseCases.Base.Commands;
+using JotaNunes.Application.UseCases.Base.Commands.Handlers;
 using JotaNunes.Domain.Extensions;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Models.Keycloak;
