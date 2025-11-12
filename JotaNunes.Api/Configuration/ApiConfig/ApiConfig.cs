@@ -2,6 +2,7 @@ using FluentValidation;
 using JotaNunes.Api.Configuration.AutoMapper;
 using JotaNunes.Api.Configuration.HealthChecks;
 using JotaNunes.Api.Configuration.Swagger;
+using JotaNunes.Application.Behaviors;
 using JotaNunes.Application.UseCases.Base.Queries;
 using JotaNunes.Domain.Extensions;
 using JotaNunes.Domain.Interfaces;
@@ -154,7 +155,11 @@ public static class ApiConfig
             .FindValidatorsInAssembly(assembly)
             .ForEach(result => services.AddScoped(result.InterfaceType, result.ValidatorType));
 
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssemblies(assembly);
+            cfg.AddOpenBehavior(typeof(PipelineBehavior<,>));
+        });
     }
 
     private static void AddQuestPdfConfiguration(this IServiceCollection services)
