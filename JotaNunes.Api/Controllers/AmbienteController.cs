@@ -43,4 +43,11 @@ public class AmbienteController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateAmbienteAsync([FromBody] UpdateAmbienteRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpPatch("UpdateAmbienteStatus")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateAmbienteStatusAsync([FromBody] UpdateAmbienteStatusRequest request)
+        => CustomResponse(await Send(request));
 }

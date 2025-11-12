@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace JotaNunes.Infrastructure.Data.Mappings.Public;
 
-public class EmpreendimentoStatusMapping : BaseEntityMapping<EmpreendimentoStatus>
+public class StatusRevisaoMapping : BaseEntityMapping<StatusRevisao>
 {
-    public override void Configure(EntityTypeBuilder<EmpreendimentoStatus> builder)
+    public override void Configure(EntityTypeBuilder<StatusRevisao> builder)
     {
         base.Configure(builder);
 
-        builder.ToTable("tb_empreendimento_status", "public");
+        builder.ToTable("tb_status_revisao");
 
         builder.Property(x => x.Descricao)
             .HasColumnName("descricao")
@@ -20,6 +20,6 @@ public class EmpreendimentoStatusMapping : BaseEntityMapping<EmpreendimentoStatu
 
         builder.Property(x => x.Excluido)
             .HasColumnName("fl_excluido")
-            .IsRequired();;
+            .IsRequired();
     }
 }

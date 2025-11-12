@@ -46,6 +46,7 @@ public class EmpreendimentoFullResponse()
 }
 public class EmpreendimentoTopicoResponse
 {
+    public required long Id { get; set; }
     public required long TopicoId { get; set; }
     public required int Posicao { get; set; }
     public required List<int> Versoes { get; set; }
@@ -56,6 +57,7 @@ public class EmpreendimentoTopicoResponse
 
 public class TopicoAmbienteResponse
 {
+    public required long Id { get; set; }
     public required long AmbienteId { get; set; }
     public required int Posicao { get; set; }
     public required List<int> Versoes { get; set; }
@@ -65,12 +67,14 @@ public class TopicoAmbienteResponse
 
 public class TopicoMaterialResponse
 {
+    public required long Id { get; set; }
     public required long MaterialId { get; set; }
     public required List<int> Versoes { get; set; }
 }
 
 public class AmbienteItemResponse
 {
+    public required long Id { get; set; }
     public required long ItemId { get; set; }
     public required List<int> Versoes { get; set; }
 }

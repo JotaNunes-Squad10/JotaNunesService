@@ -44,4 +44,11 @@ public class ItemsController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateItemAsync([FromBody] UpdateItemRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpPatch("UpdateItemStatus")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateItemStatusAsync([FromBody] UpdateItemStatusRequest request)
+        => CustomResponse(await Send(request));
 }
