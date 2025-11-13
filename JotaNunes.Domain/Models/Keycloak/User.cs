@@ -1,5 +1,6 @@
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Models.Base;
+using Microsoft.AspNetCore.Http;
 
 namespace JotaNunes.Domain.Models.Keycloak;
 

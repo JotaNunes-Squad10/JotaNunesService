@@ -46,6 +46,7 @@ public static class ApiConfig
         services.RegisterPatterns();
         services.RegisterIoC();
         services.AddHttpClient();
+        services.AddHttpContextAccessor();
         services.AddCustomAuth(configuration);
 
         return services;
@@ -116,7 +117,7 @@ public static class ApiConfig
 
     private static void AddCustomAuth(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IUser, User>();
+        services.AddScoped<IUser, AuthUser>();
 
         var keycloakSection = configuration.GetSection("ApplicationProvider:ExternalServices:KeycloakService");
 

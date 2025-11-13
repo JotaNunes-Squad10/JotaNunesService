@@ -10,38 +10,38 @@ public abstract class BaseUseCase<TEntity, TResponse, TRepository>(IDomainServic
     where TResponse : class
     where TRepository : IBaseRepository<TEntity>
 {
-    private readonly TRepository _repository = repository;
-    
-    protected TRepository Repository => _repository;
+    private readonly IDomainService _domainService = domainService;
+
+    protected TRepository Repository { get; } = repository;
 
     protected TDestination Map<TDestination, TSource>(TSource source)
-        => _repository.DomainService.Mapper.Map<TDestination>(source);
+        => _domainService.Mapper.Map<TDestination>(source);
 
     protected TDestination Map<TDestination>(object source, TDestination destination)
-        => _repository.DomainService.Mapper.Map(source, destination);
+        => _domainService.Mapper.Map(source, destination);
 
     protected TDestination Map<TDestination>(object entity)
-        => _repository.DomainService.Mapper.Map<TDestination>(entity);
+        => _domainService.Mapper.Map<TDestination>(entity);
 
     protected TResponse Map(TEntity entity)
         => Map<TResponse, TEntity>(entity);
 
     protected IEnumerable<TResponse> Map(IEnumerable<TEntity> listEntity)
         => Map<IEnumerable<TResponse>, IEnumerable<TEntity>>(listEntity);
-    
+
     protected DefaultResponse Response(object? data = null)
     {
         if (HasError)
-            domainService.Notifications.LogErrors();
+            _domainService.Notifications.LogErrors();
 
-        domainService.Response.Data = data;
+        _domainService.Response.Data = data;
 
-        return domainService.Response;
+        return _domainService.Response;
     }
 
     public void AddError(string property, string message)
-        => domainService.Notifications.AddError(property, message);
-    
+        => _domainService.Notifications.AddError(property, message);
+
     public void AddError(string property, string message, Exception e)
         => AddError(property, $"{message} {e.Message} {e.InnerException?.Message}");
 
