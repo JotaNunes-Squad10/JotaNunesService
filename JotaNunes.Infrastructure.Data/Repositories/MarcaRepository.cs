@@ -10,6 +10,12 @@ namespace JotaNunes.Infrastructure.Data.Repositories;
 public class MarcaRepository(ApplicationContext applicationContext, IDomainService domainService)
     : BaseRepository<Marca>(applicationContext, domainService), IMarcaRepository
 {
+    public async Task<List<Marca>> GetAllWithMateriaisAsync()
+        => await GetTracking
+            .Include(x => x.MaterialMarcas)
+                .ThenInclude(x => x.Material)
+            .ToListAsync();
+
     public async Task<Marca?> GetByIdWithMateriaisAsync(long id)
         => await GetTracking
             .Include(x => x.MaterialMarcas)

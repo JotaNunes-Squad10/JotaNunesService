@@ -18,6 +18,18 @@ public class MarcaMaterialController(
     public async Task<IActionResult> DeleteMarcaMaterialAsync([FromRoute] long id)
         => CustomResponse(await Send(new DeleteMarcaMaterialRequest { Id = id }));
 
+    [HttpGet("GetAllGroupByMarcaId/{marcaId:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAllGroupByMarcaId([FromRoute] long marcaId)
+        => CustomResponse(await materialMarcaQueries.GetAllGroupByMarcaIdAsync(marcaId));
+
+    [HttpGet("GetAllGroupByMaterialId/{materialId:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetAllGroupByMaterialId([FromRoute] long materialId)
+        => CustomResponse(await materialMarcaQueries.GetAllGroupByMaterialIdAsync(materialId));
+
     [HttpGet("GetAllMarcaMateriais")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -31,19 +43,19 @@ public class MarcaMaterialController(
     public async Task<IActionResult> GetMarcaMaterialByIdAsync([FromRoute] long id)
         => CustomResponse(await materialMarcaQueries.GetByIdAsync(id));
 
-    [HttpGet("GetAllMarcasByMaterialId/{id:long}")]
+    [HttpGet("GetAllMarcasByMaterialId/{materialId:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllMarcasByMaterialIdAsync([FromRoute] long id)
-        => CustomResponse(await materialMarcaQueries.GetAllMarcasByMaterialIdAsync(id));
+    public async Task<IActionResult> GetAllMarcasByMaterialIdAsync([FromRoute] long materialId)
+        => CustomResponse(await materialMarcaQueries.GetAllMarcasByMaterialIdAsync(materialId));
 
-    [HttpGet("GetAllMateriaisByMarcaId/{id:long}")]
+    [HttpGet("GetAllMateriaisByMarcaId/{marcaId:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAllMateriaisByMarcaIdAsync([FromRoute] long id)
-        => CustomResponse(await materialMarcaQueries.GetAllMateriaisByMarcaIdAsync(id));
+    public async Task<IActionResult> GetAllMateriaisByMarcaIdAsync([FromRoute] long marcaId)
+        => CustomResponse(await materialMarcaQueries.GetAllMateriaisByMarcaIdAsync(marcaId));
 
     [HttpPatch("UpdateMarcaMaterial")]
     [ProducesResponseType(StatusCodes.Status200OK)]

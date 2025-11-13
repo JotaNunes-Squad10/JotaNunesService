@@ -14,9 +14,31 @@ public class MarcaMaterialQueries(
     IMaterialRepository materialRepository
 ) : BaseQueries<MarcaMaterial, MarcaMaterialResponse, IMarcaMaterialRepository>(domainService, repository), IMarcaMaterialQueries
 {
-    public async Task<DefaultResponse> GetAllMarcasByMaterialIdAsync(long id)
+    public async Task<DefaultResponse> GetAllGroupByMarcaIdAsync(long marcaId)
     {
-        var material = await materialRepository.GetByIdWithMarcasAsync(id);
+        var marcas = await marcaRepository.GetAllWithMateriaisAsync();
+
+        if (IsNull(marcas)) return Response();
+
+        var response = Map<List<MateriaisByMarcaResponse>>(marcas);
+
+        return Response(response);
+    }
+
+    public async Task<DefaultResponse> GetAllGroupByMaterialIdAsync(long materialId)
+    {
+        var materiais = await materialRepository.GetAllWithMarcasAsync();
+
+        if (IsNull(materiais)) return Response();
+
+        var response = Map<List<MarcasByMaterialResponse>>(materiais);
+
+        return Response(response);
+    }
+
+    public async Task<DefaultResponse> GetAllMarcasByMaterialIdAsync(long materialId)
+    {
+        var material = await materialRepository.GetByIdWithMarcasAsync(materialId);
 
         if (IsNull(material)) return Response();
 
@@ -25,9 +47,9 @@ public class MarcaMaterialQueries(
         return Response(response);
     }
 
-    public async Task<DefaultResponse> GetAllMateriaisByMarcaIdAsync(long id)
+    public async Task<DefaultResponse> GetAllMateriaisByMarcaIdAsync(long marcaId)
     {
-        var marca = await marcaRepository.GetByIdWithMateriaisAsync(id);
+        var marca = await marcaRepository.GetByIdWithMateriaisAsync(marcaId);
 
         if (IsNull(marca)) return Response();
 

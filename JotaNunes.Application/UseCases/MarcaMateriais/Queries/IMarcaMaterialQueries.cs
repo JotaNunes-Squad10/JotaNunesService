@@ -5,6 +5,8 @@ namespace JotaNunes.Application.UseCases.MarcaMateriais.Queries;
 
 public interface IMarcaMaterialQueries : IBaseQueries
 {
-    Task<DefaultResponse> GetAllMarcasByMaterialIdAsync(long id);
-    Task<DefaultResponse> GetAllMateriaisByMarcaIdAsync(long id);
+    Task<DefaultResponse> GetAllGroupByMarcaIdAsync(long marcaId);
+    Task<DefaultResponse> GetAllGroupByMaterialIdAsync(long materialId);
+    Task<DefaultResponse> GetAllMarcasByMaterialIdAsync(long materialId);
+    Task<DefaultResponse> GetAllMateriaisByMarcaIdAsync(long marcaId);
 }

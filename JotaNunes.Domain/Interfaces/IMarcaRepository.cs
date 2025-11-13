@@ -5,5 +5,6 @@ namespace JotaNunes.Domain.Interfaces;
 
 public interface IMarcaRepository : IBaseRepository<Marca>
 {
+    Task<List<Marca>> GetAllWithMateriaisAsync();
     Task<Marca?> GetByIdWithMateriaisAsync(long id);
 }
