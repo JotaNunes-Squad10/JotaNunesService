@@ -21,7 +21,7 @@ public class PipelineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReque
             .Where(f => f != null)
             .ToList();
 
-        if (failures.Any())
+        if (failures.Count > 0)
         {
             failures.ForEach(domainService.Notifications.AddError);
 
@@ -36,7 +36,7 @@ public class PipelineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReque
                 await domainService.UnitOfWork.BeginTransactionAsync(ct);
                 try
                 {
-                    var response = await next();
+                    var response = await next(ct);
                     await domainService.UnitOfWork.CommitTransactionAsync(ct);
                     return response;
                 }
@@ -50,6 +50,6 @@ public class PipelineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReque
             }, cancellationToken);
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 }

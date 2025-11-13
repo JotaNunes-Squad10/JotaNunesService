@@ -38,7 +38,7 @@ public abstract class BaseHandler<TEntity, TRequest, TResponse, TRepository>(IDo
     {
         try
         {
-            await Repository.DomainService.UnitOfWork.CommitAsync(Repository.DomainService.User.Id);
+            await _domainService.UnitOfWork.CommitAsync(_domainService.User.Id);
         }
         catch (Exception e)
         {

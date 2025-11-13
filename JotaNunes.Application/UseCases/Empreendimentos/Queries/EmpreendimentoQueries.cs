@@ -21,9 +21,10 @@ public class EmpreendimentoQueries(
 
         var response = Map<List<EmpreendimentoBaseResponse>>(entities);
 
-        response.ForEach(eb =>
+        var users = await userRepository.GetAllAsync();
+        response.ForEach(async void (eb) =>
         {
-            var user = userRepository.GetByIdAsync(eb.UsuarioAlteracaoId).Result;
+            var user = users.FirstOrDefault(x => x.Id == eb.UsuarioAlteracaoId);
             eb.UsuarioAlteracao = user != null
                 ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
                 : "Não autorado";
@@ -40,7 +41,7 @@ public class EmpreendimentoQueries(
 
         var response = Map<EmpreendimentoBaseFullResponse>(entity!);
 
-        var user = userRepository.GetByIdAsync(response.UsuarioAlteracaoId).Result;
+        var user = await userRepository.GetByIdAsync(response.UsuarioAlteracaoId);
         response.UsuarioAlteracao = user != null
             ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
             : "Não autorado";

@@ -11,11 +11,13 @@ namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Handlers;
 
 public class UpdateEmpreendimentoStatusHandler(
     IDomainService domainService,
-    IEmpreendimentoBaseRepository repository,
+    IEmpreendimentoBaseRepository empreendimentoBaseRepository,
     ILogStatusRepository logStatusRepository
-) : BaseHandler<EmpreendimentoBase, UpdateEmpreendimentoStatusRequest, EmpreendimentoBaseResponse, IEmpreendimentoBaseRepository>(domainService, repository),
+) : BaseHandler<EmpreendimentoBase, UpdateEmpreendimentoStatusRequest, EmpreendimentoBaseResponse, IEmpreendimentoBaseRepository>(domainService, empreendimentoBaseRepository),
     IRequestHandler<UpdateEmpreendimentoStatusRequest, DefaultResponse>
 {
+    private readonly IEmpreendimentoBaseRepository _empreendimentoBaseRepository = empreendimentoBaseRepository;
+
     public async Task<DefaultResponse> Handle(UpdateEmpreendimentoStatusRequest request, CancellationToken cancellationToken)
     {
         try
@@ -34,11 +36,12 @@ public class UpdateEmpreendimentoStatusHandler(
                 Status = empreendimentoBase.Status
             };
 
-            var logStatus = Repository.DomainService.Mapper.Map<LogStatus>(logStatusRequest);
+            var logStatus = Map<LogStatus, LogStatusRequest>(logStatusRequest);
             await logStatusRepository.InsertAsync(logStatus);
-            await CommitAsync();
 
-            await UpdateAsync(empreendimentoBase);
+            _empreendimentoBaseRepository.Update(empreendimentoBase);
+
+            await CommitAsync();
 
             var response = await Repository.GetByIdAsync(empreendimentoBase.Id);
 
