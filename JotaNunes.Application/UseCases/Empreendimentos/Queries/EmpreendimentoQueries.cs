@@ -35,23 +35,35 @@ public class EmpreendimentoQueries(
 
     public async Task<DefaultResponse> GetByIdAsync(Guid id)
     {
-        var entity = await _repository.GetByIdAsync(id);
+        try
+        {
+            var version = await _repository.GetLastVersionAsync(id);
 
-        if (IsNull(entity)) return Response();
+            if (IsNull(version)) return Response();
 
-        var response = Map<EmpreendimentoBaseFullResponse>(entity!);
+            var entity = await _repository.GetByVersionAsync(id, version);
 
-        var user = await userRepository.GetByIdAsync(response.UsuarioAlteracaoId);
-        response.UsuarioAlteracao = user != null
-            ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
-            : "Não autorado";
+            if (IsNull(entity)) return Response();
 
-        return Response(response);
+            var response = Map<EmpreendimentoBaseFullResponse>(entity!);
+
+            var user = await userRepository.GetByIdAsync(response.UsuarioAlteracaoId);
+            response.UsuarioAlteracao = user != null
+                ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
+                : "Não autorado";
+
+            return Response(response);
+        }
+        catch (Exception e)
+        {
+            AddError(e);
+            return Response();
+        }
     }
 
     public async Task<DefaultResponse> GetByVersionAsync(Guid id, int version)
     {
-        var entity = await _repository.GetByIdAsync(id);
+        var entity = await _repository.GetByVersionAsync(id, version);
 
         if (IsNull(entity)) return Response();
 

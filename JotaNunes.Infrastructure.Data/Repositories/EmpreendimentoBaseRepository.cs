@@ -1,6 +1,7 @@
 ﻿using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.Services;
+using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.ErrorMessages;
 using JotaNunes.Infrastructure.Data.Contexts;
 using JotaNunes.Infrastructure.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -74,12 +75,12 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
             .Include(eb => eb.EmpreendimentoTopicos.Where(et => et.Versoes.Contains(version)))
                 .ThenInclude(et => et.Topico)
             .Include(eb => eb.EmpreendimentoTopicos.Where(et => et.Versoes.Contains(version)))
-                .ThenInclude(et => et.TopicoAmbientes)
+                .ThenInclude(et => et.TopicoAmbientes.Where(ta => ta.Versoes.Contains(version)))
                         .ThenInclude(ta => ta.Ambiente)
                             .ThenInclude(a => a.Topico)
             .Include(eb => eb.EmpreendimentoTopicos.Where(et => et.Versoes.Contains(version)))
                 .ThenInclude(et => et.TopicoAmbientes.Where(ta => ta.Versoes.Contains(version)))
-                    .ThenInclude(ta => ta.AmbienteItens)
+                    .ThenInclude(ta => ta.AmbienteItens.Where(ai => ai.Versoes.Contains(version)))
                             .ThenInclude(ai => ai.Item)
             .Include(eb => eb.EmpreendimentoTopicos.Where(et => et.Versoes.Contains(version)))
                 .ThenInclude(et => et.TopicoMateriais.Where(tm => tm.Versoes.Contains(version)))
@@ -92,7 +93,10 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
             .FirstOrDefaultAsync(eb => eb.Id == id);
 
     public async Task<int> GetLastVersionAsync(Guid id)
-        => (await Get.Include(eb => eb.Empreendimentos)
-            .FirstOrDefaultAsync(eb => eb.Id == id))!
-            .Empreendimentos.MaxBy(x => x.Versao)!.Versao;
+    {
+        var empreendimentoBase = await Get.Include(eb => eb.Empreendimentos).FirstOrDefaultAsync(eb => eb.Id == id);
+        if (empreendimentoBase == null) throw new Exception(ErrorMessage.ObjectNotFound);
+        var lastVersion = empreendimentoBase.Empreendimentos.MaxBy(x => x.Versao)!.Versao;
+        return lastVersion;
+    }
 }
