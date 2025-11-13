@@ -30,6 +30,9 @@ public class UpdateEmpreendimentoHandler(
 
             if (IsNull(empreendimentoBase)) return Response();
 
+            if ((Status)empreendimentoBase!.Status == Status.Cancelado)
+                return Response("A atualização não é permitida, pois o empreendimento está cancelado.");
+
             // 2 - Calcular próxima versão
             var nextVersion = empreendimentoBase!.Empreendimentos.Count > 0
                 ? empreendimentoBase.Empreendimentos.Max(x => x.Versao) + 1 : 1;

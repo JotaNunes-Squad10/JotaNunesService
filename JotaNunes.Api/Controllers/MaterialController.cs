@@ -43,4 +43,11 @@ public class MaterialController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateMaterialAsync([FromBody] UpdateMaterialRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpPatch("UpdateMaterialStatus")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateMaterialStatusAsync([FromBody] UpdateMaterialStatusRequest request)
+        => CustomResponse(await Send(request));
 }

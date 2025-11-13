@@ -1,6 +1,10 @@
+using JotaNunes.Application.UseCases.Ambiente.Responses;
 using JotaNunes.Application.UseCases.Authentication.Responses;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
+using JotaNunes.Application.UseCases.Item.Responses;
 using JotaNunes.Application.UseCases.MarcaMateriais.Responses;
+using JotaNunes.Application.UseCases.Material.Responses;
+using JotaNunes.Application.UseCases.Topico.Responses;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.Models.Public;
@@ -97,6 +101,14 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.MaterialId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Material, opt => opt.MapFrom(src => src.Nome))
             .ForMember(dest => dest.Marcas, opt => opt.MapFrom(src => src.MaterialMarcas.Select(x => x.Marca.Nome)));
+
+        CreateMap<RevisaoAmbiente, AmbienteStatusResponse>();
+
+        CreateMap<RevisaoItem, ItemStatusResponse>();
+
+        CreateMap<RevisaoMaterial, MaterialStatusResponse>();
+
+        CreateMap<RevisaoTopico, TopicoStatusResponse>();
 
         CreateMap<TopicoAmbiente, TopicoAmbienteResponse>()
             .ForMember(dest => dest.AmbienteItens, opt => opt.MapFrom(src => src.AmbienteItens));
