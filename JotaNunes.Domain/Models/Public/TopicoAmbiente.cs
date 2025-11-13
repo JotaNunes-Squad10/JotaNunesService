@@ -14,4 +14,6 @@ public class TopicoAmbiente : BaseAuditEntity
     public required Ambiente Ambiente { get; set; }
 
     public List<AmbienteItem>? AmbienteItens { get; set; }
+
+    public List<RevisaoAmbiente>? RevisoesAmbiente { get; set; }
 }

@@ -10,4 +10,6 @@ public class TopicoMaterial : BaseAuditEntity
 
     public required EmpreendimentoTopico EmpreendimentoTopico { get; set; }
     public required MarcaMaterial MarcaMaterial { get; set; }
+
+    public required List<RevisaoMaterial> RevisoesMaterial { get; set; }
 }

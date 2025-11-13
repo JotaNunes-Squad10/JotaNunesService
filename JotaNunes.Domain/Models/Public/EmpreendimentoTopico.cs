@@ -14,4 +14,5 @@ public class EmpreendimentoTopico : BaseAuditEntity
 
     public List<TopicoAmbiente>? TopicoAmbientes { get; set; }
     public List<TopicoMaterial>? TopicoMateriais { get; set; }
+    public List<RevisaoTopico>? RevisoesTopico { get; set; }
 }
