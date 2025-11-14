@@ -68,12 +68,28 @@ public class DomainToResponseMappingProfile : Profile
         CreateMap<AmbienteItem, AmbienteItemResponse>();
 
         CreateMap<EmpreendimentoBase, EmpreendimentoBaseResponse>()
-            .ForMember(dest => dest.Nome,        opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Nome))
-            .ForMember(dest => dest.Descricao,   opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Descricao))
-            .ForMember(dest => dest.Localizacao, opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Localizacao))
-            .ForMember(dest => dest.Padrao,      opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.EmpreendimentoPadrao.Nome))
-            .ForMember(dest => dest.Status,      opt => opt.MapFrom(src => src.EmpreendimentoStatus.Descricao))
-            .ForMember(dest => dest.Versao,      opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Versao));
+            .ForMember(dest => dest.Nome, opt => opt.MapFrom((src, dest) =>
+                src.Empreendimentos.Any()
+                    ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Nome
+                    : string.Empty))
+            .ForMember(dest => dest.Descricao, opt => opt.MapFrom((src, dest) =>
+                src.Empreendimentos.Any()
+                    ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Descricao
+                    : string.Empty))
+            .ForMember(dest => dest.Localizacao, opt => opt.MapFrom((src, dest) =>
+                src.Empreendimentos.Any()
+                    ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Localizacao
+                    : string.Empty))
+            .ForMember(dest => dest.Padrao, opt => opt.MapFrom((src, dest) =>
+                src.Empreendimentos.Any()
+                    ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().EmpreendimentoPadrao.Nome
+                    : string.Empty))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
+                src.EmpreendimentoStatus.Descricao))
+            .ForMember(dest => dest.Versao, opt => opt.MapFrom((src, dest) =>
+                src.Empreendimentos.Any()
+                    ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Versao
+                    : 0));
 
         CreateMap<EmpreendimentoBase, EmpreendimentoBaseFullResponse>()
             .ForMember(dest => dest.Nome,                  opt => opt.MapFrom(src => src.Empreendimentos.MaxBy(x => x.Versao)!.Nome))
