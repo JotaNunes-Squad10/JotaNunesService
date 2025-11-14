@@ -77,14 +77,15 @@ public class UpdateEmpreendimentoHandler(
                 // Same logic for all components
                 var et = empreendimentoBase.EmpreendimentoTopicos.FirstOrDefault(et => et.TopicoId == newEt.TopicoId);
 
-                if (et != null) topicosToAppendVersion.Add(et.Id);
-                else
+                if (et != null) topicosToAppendVersion.Add(et.Id); // O topico já existe => atualizar versão
+                else // O topico ainda não existe => registrar novo
                 {
                     newEt.EmpreendimentoId = empreendimentoBase.Id;
                     newEt.Versoes = [nextVersion];
                     var empreendimentoTopico = Repository.DomainService.Mapper.Map<EmpreendimentoTopico>(newEt);
                     await empreendimentoTopicoRepository.InsertAsync(empreendimentoTopico);
                     await CommitAsync();
+                    et = empreendimentoBase.EmpreendimentoTopicos.FirstOrDefault(et2 => et2.TopicoId == newEt.TopicoId); // Recupera o empreendimentoTopico recém-criado
                 }
 
                 // 5.2 - Atualizar versões dos ambientes
@@ -100,6 +101,7 @@ public class UpdateEmpreendimentoHandler(
                         var topicoAmbiente = Repository.DomainService.Mapper.Map<TopicoAmbiente>(newTa);
                         await topicoAmbienteRepository.InsertAsync(topicoAmbiente);
                         await CommitAsync();
+                        ta = et.TopicoAmbientes == null ? null : et.TopicoAmbientes.FirstOrDefault(ta2 => ta2.AmbienteId == newTa.AmbienteId); // Recupera o topicoAmbiente recém-criado
                     }
 
                     // 5.3 - Atualizar versões dos itens
