@@ -69,25 +69,27 @@ public class DomainToResponseMappingProfile : Profile
 
         CreateMap<EmpreendimentoBase, EmpreendimentoBaseResponse>()
             .ForMember(dest => dest.Nome, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos.Any()
+                src.Empreendimentos != null && src.Empreendimentos.Any()
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Nome
                     : string.Empty))
             .ForMember(dest => dest.Descricao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos.Any()
+                src.Empreendimentos != null && src.Empreendimentos.Any()
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Descricao
                     : string.Empty))
             .ForMember(dest => dest.Localizacao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos.Any()
+                src.Empreendimentos != null && src.Empreendimentos.Any()
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Localizacao
                     : string.Empty))
             .ForMember(dest => dest.Padrao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos.Any()
+                src.Empreendimentos != null && src.Empreendimentos.Any()
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().EmpreendimentoPadrao.Nome
                     : string.Empty))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
-                src.EmpreendimentoStatus.Descricao))
+                src.EmpreendimentoStatus != null
+                    ? src.EmpreendimentoStatus.Descricao
+                    : string.Empty))
             .ForMember(dest => dest.Versao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos.Any()
+                src.Empreendimentos != null && src.Empreendimentos.Any()
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Versao
                     : 0));
 
