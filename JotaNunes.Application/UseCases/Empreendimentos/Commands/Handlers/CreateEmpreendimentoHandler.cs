@@ -22,7 +22,7 @@ public class CreateEmpreendimentoHandler(
         try
         {
             // 1 - Registrar empreendimento base
-            request.Status = (long)Status.Pendente;
+            request.Status = (long)Status.Editando;
 
             var empreendimentoBase = await InsertAsync(request);
 
@@ -32,15 +32,15 @@ public class CreateEmpreendimentoHandler(
             var newEmpreendimento = Repository.DomainService.Mapper.Map<Empreendimento>(
                 request, opt => {
                     opt.Items["Guid"] = empreendimentoBase!.Id;
-                    opt.Items["Status"] = (long)Status.Pendente;
+                    opt.Items["Status"] = (long)Status.Editando;
                 });
             await empreendimentoRepository.InsertAsync(newEmpreendimento);
 
-            // 3 - Registrar status
+            // 3 - Registrar log de status
             var logStatusRequest = new LogStatusRequest
             {
                 EmpreendimentoId = empreendimentoBase!.Id,
-                Status = (long)Status.Pendente
+                Status = (long)Status.Editando
             };
 
             var logStatus = Repository.DomainService.Mapper.Map<LogStatus>(logStatusRequest);
