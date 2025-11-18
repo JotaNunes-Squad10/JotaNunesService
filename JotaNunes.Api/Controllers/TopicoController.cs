@@ -44,7 +44,7 @@ public class TopicoController(
     public async Task<IActionResult> UpdateTopicoAsync([FromBody] UpdateTopicoRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpPatch("UpdateTopicoStatus")]
+    [HttpPatch("UpdateTopicoComentario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -45,7 +45,7 @@ public class ItemsController(
     public async Task<IActionResult> UpdateItemAsync([FromBody] UpdateItemRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpPatch("UpdateItemStatus")]
+    [HttpPatch("UpdateItemComentario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

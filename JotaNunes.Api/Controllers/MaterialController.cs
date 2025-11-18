@@ -44,7 +44,7 @@ public class MaterialController(
     public async Task<IActionResult> UpdateMaterialAsync([FromBody] UpdateMaterialRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpPatch("UpdateMaterialStatus")]
+    [HttpPatch("UpdateMaterialComentario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
