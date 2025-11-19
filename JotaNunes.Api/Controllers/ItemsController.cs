@@ -55,6 +55,6 @@ public class ItemsController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> ClearItemComentario([FromRoute] long itemId)
-        => CustomResponse(await Send(new ClearItemStatusRequest { ItemId = itemId }));
+    public async Task<IActionResult> ClearRevisaoItemAsync([FromRoute] long itemId)
+        => CustomResponse(await Send(new ClearRevisaoItemRequest { ItemId = itemId }));
 }

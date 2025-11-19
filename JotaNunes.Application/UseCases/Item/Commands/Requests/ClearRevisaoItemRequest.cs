@@ -3,7 +3,7 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Item.Commands.Requests;
 
-public class ClearItemStatusRequest : IRequest<DefaultResponse>
+public class ClearRevisaoItemRequest : IRequest<DefaultResponse>
 {
     public long ItemId { get; set; }
 }

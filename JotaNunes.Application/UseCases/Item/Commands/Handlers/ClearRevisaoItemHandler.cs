@@ -9,16 +9,16 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Item.Commands.Handlers;
 
-public class ClearItemStatusHandler(
+public class ClearRevisaoItemHandler(
     IDomainService domainService,
     IAmbienteItemRepository ambienteItemRepository,
     IRevisaoItemRepository revisaoItemRepository
-) : BaseHandler<RevisaoItem, ClearItemStatusRequest, RevisaoItemResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
-    IRequestHandler<ClearItemStatusRequest, DefaultResponse>
+) : BaseHandler<RevisaoItem, ClearRevisaoItemRequest, RevisaoItemResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
+    IRequestHandler<ClearRevisaoItemRequest, DefaultResponse>
 {
     private readonly IRevisaoItemRepository _revisaoItemRepository = revisaoItemRepository;
 
-    public async Task<DefaultResponse> Handle(ClearItemStatusRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(ClearRevisaoItemRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,7 +26,7 @@ public class ClearItemStatusHandler(
 
             if (IsNull(ambienteItem))
             {
-                AddError(nameof(PostRevisaoItemHandler), "Item not found");
+                AddError(nameof(PostRevisaoItemHandler), "Item not found.");
                 return Response();
             }
 
@@ -42,11 +42,11 @@ public class ClearItemStatusHandler(
             }
 
             await CommitAsync();
-            return Response("Item status cleared");
+            return Response("Item revisions cleared.");
         }
         catch (Exception e)
         {
-            AddError(nameof(ClearItemStatusHandler), "Error deleting item status:", e);
+            AddError(nameof(ClearRevisaoItemHandler), "Error deleting Item revisions:", e);
             return Response();
         }
     }

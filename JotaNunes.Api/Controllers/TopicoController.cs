@@ -50,4 +50,11 @@ public class TopicoController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PostRevisaoTopicoAsync([FromBody] PostRevisaoTopicoRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpDelete("ClearTopicoComentario/{topicoId:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ClearRevisaoTopicoAsync([FromRoute] long topicoId)
+        => CustomResponse(await Send(new ClearRevisaoTopicoRequest { TopicoId = topicoId }));
 }

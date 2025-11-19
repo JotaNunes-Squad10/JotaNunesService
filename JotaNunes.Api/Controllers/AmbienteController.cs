@@ -50,4 +50,11 @@ public class AmbienteController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PostRevisaoAmbienteAsync([FromBody] PostRevisaoAmbienteRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpDelete("ClearAmbienteComentario/{ambienteId:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ClearRevisaoAmbienteAsync([FromRoute] long ambienteId)
+        => CustomResponse(await Send(new ClearRevisaoAmbienteRequest { AmbienteId = ambienteId }));
 }

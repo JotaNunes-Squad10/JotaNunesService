@@ -50,4 +50,11 @@ public class MaterialController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PostRevisaoMaterialAsync([FromBody] PostRevisaoMaterialRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpDelete("ClearMaterialComentario/{materialId:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ClearRevisaoMaterialAsync([FromRoute] long materialId)
+        => CustomResponse(await Send(new ClearRevisaoMaterialRequest { MaterialId = materialId }));
 }
