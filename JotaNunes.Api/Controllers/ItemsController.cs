@@ -48,5 +48,13 @@ public class ItemsController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> PostItemStatusAsync([FromBody] PostItemStatusRequest request)
         => CustomResponse(await Send(request));
+
+    [HttpDelete("ClearItemComentario/{itemId:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ClearItemComentario([FromRoute] long itemId)
+        => CustomResponse(await Send(new ClearItemStatusRequest { ItemId = itemId }));
 }
