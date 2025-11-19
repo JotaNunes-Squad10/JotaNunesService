@@ -31,11 +31,11 @@ public class EmpreendimentoBaseFullResponse()
     public string? UsuarioAlteracao { get; set; }
     public required DateTime DataHoraAlteracao { get; set; }
 
-    public List<EmpreendimentoFullResponse>? Empreendimentos { get; set; }
+    public List<EmpreendimentoResponse>? Empreendimentos { get; set; }
     public List<EmpreendimentoTopicoResponse>? EmpreendimentoTopicos { get; set; }
 }
 
-public class EmpreendimentoFullResponse()
+public class EmpreendimentoResponse()
 {
     public required long Id { get; set; }
     public required string Nome { get; set; }
@@ -44,6 +44,7 @@ public class EmpreendimentoFullResponse()
     public required string Padrao { get; set; }
     public required int Versao { get; set; }
 }
+
 public class EmpreendimentoTopicoResponse
 {
     public required long Id { get; set; }
@@ -73,4 +74,13 @@ public class AmbienteItemResponse
 {
     public required long Id { get; set; }
     public required long ItemId { get; set; }
+    
+    public required RevisaoItemResponse RevisaoItem { get; set; }
+}
+
+public class RevisaoItemResponse
+{
+    public required long Id { get; set; }
+    public required string Status { get; set; }
+    public required string Observacao { get; set; }
 }

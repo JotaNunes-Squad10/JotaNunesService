@@ -65,23 +65,27 @@ public class DomainToResponseMappingProfile : Profile
             }
         }
 
-        CreateMap<AmbienteItem, AmbienteItemResponse>();
+        CreateMap<AmbienteItem, AmbienteItemResponse>()
+            .ForMember(dest => dest.RevisaoItem, opt => opt.MapFrom((src, dest) =>
+                src.RevisoesItem is { Count: > 0 }
+                    ? src.RevisoesItem.LastOrDefault()
+                    : null));
 
         CreateMap<EmpreendimentoBase, EmpreendimentoBaseResponse>()
             .ForMember(dest => dest.Nome, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos != null && src.Empreendimentos.Any()
+                src.Empreendimentos is { Count: > 0}
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Nome
                     : string.Empty))
             .ForMember(dest => dest.Descricao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos != null && src.Empreendimentos.Any()
+                src.Empreendimentos is { Count: > 0}
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Descricao
                     : string.Empty))
             .ForMember(dest => dest.Localizacao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos != null && src.Empreendimentos.Any()
+                src.Empreendimentos is { Count: > 0}
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Localizacao
                     : string.Empty))
             .ForMember(dest => dest.Padrao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos != null && src.Empreendimentos.Any()
+                src.Empreendimentos is { Count: > 0}
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().EmpreendimentoPadrao.Nome
                     : string.Empty))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
@@ -89,7 +93,7 @@ public class DomainToResponseMappingProfile : Profile
                     ? src.EmpreendimentoStatus.Descricao
                     : string.Empty))
             .ForMember(dest => dest.Versao, opt => opt.MapFrom((src, dest) =>
-                src.Empreendimentos != null && src.Empreendimentos.Any()
+                src.Empreendimentos is { Count: > 0}
                     ? src.Empreendimentos.OrderByDescending(x => x.Versao).First().Versao
                     : 0));
 
@@ -103,7 +107,7 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.Empreendimentos,       opt => opt.MapFrom(src => src.Empreendimentos))
             .ForMember(dest => dest.EmpreendimentoTopicos, opt => opt.MapFrom(src => src.EmpreendimentoTopicos));
 
-        CreateMap<Empreendimento, EmpreendimentoFullResponse>();
+        CreateMap<Empreendimento, EmpreendimentoResponse>();
 
         CreateMap<EmpreendimentoTopico, EmpreendimentoTopicoResponse>()
             .ForMember(dest => dest.TopicoAmbientes, opt => opt.MapFrom(src => src.TopicoAmbientes));
@@ -123,6 +127,9 @@ public class DomainToResponseMappingProfile : Profile
         CreateMap<RevisaoAmbiente, AmbienteStatusResponse>();
 
         CreateMap<RevisaoItem, ItemStatusResponse>();
+
+        CreateMap<RevisaoItem, RevisaoItemResponse>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusRevisao.Descricao));
 
         CreateMap<RevisaoMaterial, MaterialStatusResponse>();
 
