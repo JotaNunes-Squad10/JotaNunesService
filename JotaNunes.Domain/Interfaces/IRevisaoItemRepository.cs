@@ -5,5 +5,5 @@ namespace JotaNunes.Domain.Interfaces;
 
 public interface IRevisaoItemRepository : IBaseRepository<RevisaoItem>
 {
-    Task<RevisaoItem?> GetLastByItemIdAsync(long id);
+    Task<List<RevisaoItem>> GetByItemIdAsync(long id);
 }

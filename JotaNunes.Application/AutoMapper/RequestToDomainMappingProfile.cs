@@ -40,7 +40,7 @@ public class RequestToDomainMappingProfile : Profile
         CreateMap<UpdateTopicoMaterialRequest, TopicoMaterial>().CreateMapper(user);
 
         CreateMap<UpdateAmbienteItemRequest, RevisaoAmbiente>().UpdateMapper(user);
-        CreateMap<UpdateItemStatusRequest, RevisaoItem>().UpdateMapper(user);
+        CreateMap<PostItemStatusRequest, RevisaoItem>().UpdateMapper(user);
         CreateMap<UpdateMaterialStatusRequest, RevisaoMaterial>().UpdateMapper(user);
         CreateMap<UpdateTopicoStatusRequest, RevisaoTopico>().CreateMapper(user);
 

@@ -11,7 +11,6 @@ public class ItemsController(
     IItemQueries itemQueries
 ) : BaseController(mediator)
 {
-
     [HttpPost("CreateItem")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -45,10 +44,9 @@ public class ItemsController(
     public async Task<IActionResult> UpdateItemAsync([FromBody] UpdateItemRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpPatch("UpdateItemComentario")]
+    [HttpPost("SetItemComentario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateItemStatusAsync([FromBody] UpdateItemStatusRequest request)
         => CustomResponse(await Send(request));
 }

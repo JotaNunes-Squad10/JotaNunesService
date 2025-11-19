@@ -9,16 +9,16 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Item.Commands.Handlers;
 
-public class UpdateItemStatusHandler(
+public class PostItemStatusHandler(
     IDomainService domainService,
     IAmbienteItemRepository ambienteItemRepository,
     IRevisaoItemRepository revisaoItemRepository
-) : BaseHandler<RevisaoItem, UpdateItemStatusRequest, ItemStatusResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
-    IRequestHandler<UpdateItemStatusRequest, DefaultResponse>
+) : BaseHandler<RevisaoItem, PostItemStatusRequest, ItemStatusResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
+    IRequestHandler<PostItemStatusRequest, DefaultResponse>
 {
     private readonly IRevisaoItemRepository _revisaoItemRepository = revisaoItemRepository;
 
-    public async Task<DefaultResponse> Handle(UpdateItemStatusRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(PostItemStatusRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,20 +26,28 @@ public class UpdateItemStatusHandler(
 
             if (IsNull(ambienteItem))
             {
-                AddError("UpdateAmbienteItemHandler", "Item not found");
+                AddError(nameof(PostItemStatusHandler), "Item not found");
                 return Response();
             }
 
-            var revisaoItem = await _revisaoItemRepository.GetLastByItemIdAsync(request.ItemId);
+            var revisoesItem = await _revisaoItemRepository.GetByItemIdAsync(request.ItemId);
 
-            if (revisaoItem != null || revisaoItem?.StatusId == request.StatusId)
+            if (revisoesItem is { Count: > 0 }
+                && revisoesItem.LastOrDefault()!.StatusId == request.StatusId
+                && revisoesItem.LastOrDefault()!.Observacao == request.Observacao)
                 return Response("Item status not updated");
+
+            revisoesItem.ForEach(ri =>
+            {
+                ri.Delete();
+                _revisaoItemRepository.Update(ri);
+            });
 
             return Response(await InsertAsync(request));
         }
         catch (Exception e)
         {
-            AddError("UpdateAmbienteItemHandler", "Error updating item status:", e);
+            AddError(nameof(PostItemStatusHandler), "Error updating item status:", e);
             return Response();
         }
     }
