@@ -3,7 +3,7 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Topico.Commands.Requests;
 
-public class UpdateTopicoStatusRequest : IRequest<DefaultResponse>
+public class PostRevisaoTopicoRequest : IRequest<DefaultResponse>
 {
     public required int TopicoId { get; set; }
     public required int StatusId { get; set; }

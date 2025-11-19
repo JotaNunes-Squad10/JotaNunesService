@@ -13,7 +13,7 @@ public class ClearItemStatusHandler(
     IDomainService domainService,
     IAmbienteItemRepository ambienteItemRepository,
     IRevisaoItemRepository revisaoItemRepository
-) : BaseHandler<RevisaoItem, ClearItemStatusRequest, ItemStatusResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
+) : BaseHandler<RevisaoItem, ClearItemStatusRequest, RevisaoItemResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
     IRequestHandler<ClearItemStatusRequest, DefaultResponse>
 {
     private readonly IRevisaoItemRepository _revisaoItemRepository = revisaoItemRepository;
@@ -26,7 +26,7 @@ public class ClearItemStatusHandler(
 
             if (IsNull(ambienteItem))
             {
-                AddError(nameof(PostItemStatusHandler), "Item not found");
+                AddError(nameof(PostRevisaoItemHandler), "Item not found");
                 return Response();
             }
 

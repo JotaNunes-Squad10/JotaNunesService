@@ -44,10 +44,10 @@ public class MaterialController(
     public async Task<IActionResult> UpdateMaterialAsync([FromBody] UpdateMaterialRequest request)
         => CustomResponse(await Send(request));
 
-    [HttpPatch("UpdateMaterialComentario")]
+    [HttpPost("SetMaterialComentario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateMaterialStatusAsync([FromBody] UpdateMaterialStatusRequest request)
+    public async Task<IActionResult> PostRevisaoMaterialAsync([FromBody] PostRevisaoMaterialRequest request)
         => CustomResponse(await Send(request));
 }

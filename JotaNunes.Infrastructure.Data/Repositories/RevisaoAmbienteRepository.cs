@@ -10,9 +10,9 @@ namespace JotaNunes.Infrastructure.Data.Repositories;
 public class RevisaoAmbienteRepository(ApplicationContext applicationContext, IDomainService domainService)
     : BaseRepository<RevisaoAmbiente>(applicationContext, domainService), IRevisaoAmbienteRepository
 {
-    public async Task<RevisaoAmbiente?> GetLastByAmbienteIdAsync(long id)
+    public async Task<List<RevisaoAmbiente>> GetByAmbienteIdAsync(long id)
         => await GetTracking
             .Include(x => x.TopicoAmbiente)
-            .OrderBy(x => x.DataHoraInclusao)
-            .LastOrDefaultAsync(x => x.AmbienteId == id);
+            .Where(x => x.AmbienteId == id)
+            .ToListAsync();
 }

@@ -9,16 +9,16 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Topico.Commands.Handlers;
 
-public class UpdateTopicoStatusHandler(
+public class PostRevisaoTopicoHandler(
     IDomainService domainService,
     IEmpreendimentoTopicoRepository empreendimentoTopicoRepository,
     IRevisaoTopicoRepository revisaoTopicoRepository
-) : BaseHandler<RevisaoTopico, UpdateTopicoStatusRequest, TopicoStatusResponse, IRevisaoTopicoRepository>(domainService, revisaoTopicoRepository),
-    IRequestHandler<UpdateTopicoStatusRequest, DefaultResponse>
+) : BaseHandler<RevisaoTopico, PostRevisaoTopicoRequest, RevisaoTopicoResponse, IRevisaoTopicoRepository>(domainService, revisaoTopicoRepository),
+    IRequestHandler<PostRevisaoTopicoRequest, DefaultResponse>
 {
     private readonly IRevisaoTopicoRepository _revisaoTopicoRepository = revisaoTopicoRepository;
 
-    public async Task<DefaultResponse> Handle(UpdateTopicoStatusRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(PostRevisaoTopicoRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,20 +26,28 @@ public class UpdateTopicoStatusHandler(
 
             if (IsNull(empreendimentoTopico))
             {
-                AddError("UpdateTopicoStatusHandler", "Topico not found");
+                AddError(nameof(PostRevisaoTopicoHandler), "Topico not found.");
                 return Response();
             }
 
-            var revisaoTopico = await _revisaoTopicoRepository.GetLastByTopicoIdAsync(request.TopicoId);
+            var revisaoTopico = await _revisaoTopicoRepository.GetByTopicoIdAsync(request.TopicoId);
 
-            if (revisaoTopico != null || revisaoTopico?.StatusId == request.StatusId)
-                return Response("Topico status not updated");
+            if (revisaoTopico is { Count: > 0 }
+                && revisaoTopico.LastOrDefault()!.StatusId == request.StatusId
+                && revisaoTopico.LastOrDefault()!.Observacao == request.Observacao)
+                return Response("The status of the Topico has not changed.");
+
+            revisaoTopico.ForEach(rt =>
+            {
+                rt.Delete();
+                _revisaoTopicoRepository.Update(rt);
+            });
 
             return Response(await InsertAsync(request));
         }
         catch (Exception e)
         {
-            AddError("UpdateTopicoStatusHandler", "Error updating topico status:", e);
+            AddError(nameof(PostRevisaoTopicoHandler), "Error creating revision for Topico:", e);
             return Response();
         }
     }

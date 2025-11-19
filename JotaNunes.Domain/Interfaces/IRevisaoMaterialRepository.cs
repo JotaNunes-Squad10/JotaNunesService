@@ -5,5 +5,5 @@ namespace JotaNunes.Domain.Interfaces;
 
 public interface IRevisaoMaterialRepository : IBaseRepository<RevisaoMaterial>
 {
-    Task<RevisaoMaterial?> GetLastByMaterialIdAsync(long id);
+    Task<List<RevisaoMaterial>> GetByMaterialIdAsync(long id);
 }

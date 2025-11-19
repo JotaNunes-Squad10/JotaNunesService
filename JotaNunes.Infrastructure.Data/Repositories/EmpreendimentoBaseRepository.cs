@@ -41,6 +41,10 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
                 .ThenInclude(et => et.TopicoMateriais)
                     .ThenInclude(tm => tm.MarcaMaterial)
                         .ThenInclude(m => m.Material)
+            .Include(eb => eb.EmpreendimentoTopicos)
+                .ThenInclude(et => et.TopicoMateriais)
+                    .ThenInclude(tm => tm.RevisoesMaterial)
+                        .ThenInclude(ri => ri.StatusRevisao)
             .ToListAsync();
 
     public async Task<EmpreendimentoBase?> GetByIdAsync(Guid id)
@@ -73,6 +77,10 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
                 .ThenInclude(et => et.TopicoMateriais)
                     .ThenInclude(tm => tm.MarcaMaterial)
                         .ThenInclude(m => m.Material)
+            .Include(eb => eb.EmpreendimentoTopicos)
+                .ThenInclude(et => et.TopicoMateriais)
+                    .ThenInclude(tm => tm.RevisoesMaterial)
+                        .ThenInclude(ri => ri.StatusRevisao)
             .FirstOrDefaultAsync(x => x.Id == id);
 
     public async Task<EmpreendimentoBase?> GetByVersionAsync(Guid id, int version)
@@ -105,6 +113,9 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
                 .ThenInclude(et => et.TopicoMateriais.Where(tm => tm.Versoes.Contains(version)))
                     .ThenInclude(tm => tm.MarcaMaterial)
                         .ThenInclude(m => m.Material)
+            .Include(eb => eb.EmpreendimentoTopicos.Where(et => et.Versoes.Contains(version)))
+                .ThenInclude(et => et.TopicoMateriais.Where(tm => tm.Versoes.Contains(version)))
+                    .ThenInclude(tm => tm.RevisoesMaterial)
             .FirstOrDefaultAsync(eb => eb.Id == id);
 
     public async Task<int> GetLastVersionAsync(Guid id)

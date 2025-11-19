@@ -68,17 +68,26 @@ public class TopicoMaterialResponse
 {
     public required long Id { get; set; }
     public required long MaterialId { get; set; }
+
+    public required RevisaoMaterialResponse RevisaoMaterial { get; set; }
 }
 
 public class AmbienteItemResponse
 {
     public required long Id { get; set; }
     public required long ItemId { get; set; }
-    
+
     public required RevisaoItemResponse RevisaoItem { get; set; }
 }
 
 public class RevisaoItemResponse
+{
+    public required long Id { get; set; }
+    public required string Status { get; set; }
+    public required string Observacao { get; set; }
+}
+
+public class RevisaoMaterialResponse
 {
     public required long Id { get; set; }
     public required string Status { get; set; }

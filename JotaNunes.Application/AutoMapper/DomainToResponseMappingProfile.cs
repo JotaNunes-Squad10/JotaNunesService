@@ -1,9 +1,7 @@
 using JotaNunes.Application.UseCases.Ambiente.Responses;
 using JotaNunes.Application.UseCases.Authentication.Responses;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
-using JotaNunes.Application.UseCases.Item.Responses;
 using JotaNunes.Application.UseCases.MarcaMateriais.Responses;
-using JotaNunes.Application.UseCases.Material.Responses;
 using JotaNunes.Application.UseCases.Topico.Responses;
 using JotaNunes.Domain.Models.Base;
 using JotaNunes.Domain.Models.Keycloak;
@@ -12,6 +10,8 @@ using JotaNunes.Domain.ValueObjects.Base;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Providers;
 using UserProfile = JotaNunes.Application.UseCases.Authentication.Responses.Profile;
 using Profile = AutoMapper.Profile;
+using RevisaoItemResponse = JotaNunes.Application.UseCases.Item.Responses.RevisaoItemResponse;
+using RevisaoMaterialResponse = JotaNunes.Application.UseCases.Material.Responses.RevisaoMaterialResponse;
 
 namespace JotaNunes.Application.AutoMapper;
 
@@ -124,21 +124,24 @@ public class DomainToResponseMappingProfile : Profile
             .ForMember(dest => dest.Material, opt => opt.MapFrom(src => src.Nome))
             .ForMember(dest => dest.Marcas, opt => opt.MapFrom(src => src.MaterialMarcas.Select(x => x.Marca.Nome)));
 
-        CreateMap<RevisaoAmbiente, AmbienteStatusResponse>();
-
-        CreateMap<RevisaoItem, ItemStatusResponse>();
-
-        CreateMap<RevisaoItem, RevisaoItemResponse>()
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusRevisao.Descricao));
-
-        CreateMap<RevisaoMaterial, MaterialStatusResponse>();
-
-        CreateMap<RevisaoTopico, TopicoStatusResponse>();
-
         CreateMap<TopicoAmbiente, TopicoAmbienteResponse>()
             .ForMember(dest => dest.AmbienteItens, opt => opt.MapFrom(src => src.AmbienteItens));
 
         CreateMap<TopicoMaterial, TopicoMaterialResponse>();
+
+        CreateMap<RevisaoAmbiente, RevisaoAmbienteResponse>();
+
+        CreateMap<RevisaoItem, RevisaoItemResponse>();
+
+        CreateMap<RevisaoItem, UseCases.Empreendimentos.Responses.RevisaoItemResponse>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusRevisao.Descricao));
+
+        CreateMap<RevisaoMaterial, RevisaoMaterialResponse>();
+
+        CreateMap<RevisaoMaterial, UseCases.Empreendimentos.Responses.RevisaoMaterialResponse>()
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.StatusRevisao.Descricao));
+
+        CreateMap<RevisaoTopico, RevisaoTopicoResponse>();
 
         CreateMap<User, UserResponse>()
             .ForMember(dest => dest.Phone,

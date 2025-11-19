@@ -9,16 +9,16 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Item.Commands.Handlers;
 
-public class PostItemStatusHandler(
+public class PostRevisaoItemHandler(
     IDomainService domainService,
     IAmbienteItemRepository ambienteItemRepository,
     IRevisaoItemRepository revisaoItemRepository
-) : BaseHandler<RevisaoItem, PostItemStatusRequest, ItemStatusResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
-    IRequestHandler<PostItemStatusRequest, DefaultResponse>
+) : BaseHandler<RevisaoItem, PostRevisaoItemRequest, RevisaoItemResponse, IRevisaoItemRepository>(domainService, revisaoItemRepository),
+    IRequestHandler<PostRevisaoItemRequest, DefaultResponse>
 {
     private readonly IRevisaoItemRepository _revisaoItemRepository = revisaoItemRepository;
 
-    public async Task<DefaultResponse> Handle(PostItemStatusRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(PostRevisaoItemRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,7 +26,7 @@ public class PostItemStatusHandler(
 
             if (IsNull(ambienteItem))
             {
-                AddError(nameof(PostItemStatusHandler), "Item not found");
+                AddError(nameof(PostRevisaoItemHandler), "Item not found.");
                 return Response();
             }
 
@@ -35,7 +35,7 @@ public class PostItemStatusHandler(
             if (revisoesItem is { Count: > 0 }
                 && revisoesItem.LastOrDefault()!.StatusId == request.StatusId
                 && revisoesItem.LastOrDefault()!.Observacao == request.Observacao)
-                return Response("Item status not updated");
+                return Response("The status of the Item has not changed.");
 
             revisoesItem.ForEach(ri =>
             {
@@ -47,7 +47,7 @@ public class PostItemStatusHandler(
         }
         catch (Exception e)
         {
-            AddError(nameof(PostItemStatusHandler), "Error updating item status:", e);
+            AddError(nameof(PostRevisaoItemHandler), "Error creating revision for Item:", e);
             return Response();
         }
     }

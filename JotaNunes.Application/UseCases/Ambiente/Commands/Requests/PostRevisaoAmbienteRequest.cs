@@ -3,7 +3,7 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 
-public class UpdateAmbienteStatusRequest : IRequest<DefaultResponse>
+public class PostRevisaoAmbienteRequest : IRequest<DefaultResponse>
 {
     public required int AmbienteId { get; set; }
     public required int StatusId { get; set; }

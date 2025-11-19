@@ -1,6 +1,6 @@
 namespace JotaNunes.Application.UseCases.Item.Responses;
 
-public class ItemStatusResponse
+public class RevisaoItemResponse
 {
     public required long ItemId { get; set; }
     public required long StatusId { get; set; }

@@ -48,7 +48,7 @@ public class ItemsController(
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> PostItemStatusAsync([FromBody] PostItemStatusRequest request)
+    public async Task<IActionResult> PostRevisaoItemAsync([FromBody] PostRevisaoItemRequest request)
         => CustomResponse(await Send(request));
 
     [HttpDelete("ClearItemComentario/{itemId:long}")]

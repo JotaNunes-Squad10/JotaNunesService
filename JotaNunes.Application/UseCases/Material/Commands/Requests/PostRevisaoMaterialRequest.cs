@@ -3,9 +3,9 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Material.Commands.Requests;
 
-public class UpdateMaterialStatusRequest : IRequest<DefaultResponse>
+public class PostRevisaoMaterialRequest : IRequest<DefaultResponse>
 {
-    public required int MaterialId { get; set; }
-    public required int StatusId { get; set; }
+    public required long MaterialId { get; set; }
+    public required long StatusId { get; set; }
     public string? Observacao { get; set; }
 }

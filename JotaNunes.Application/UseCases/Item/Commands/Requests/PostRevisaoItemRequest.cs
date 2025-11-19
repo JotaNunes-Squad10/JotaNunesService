@@ -3,7 +3,7 @@ using MediatR;
 
 namespace JotaNunes.Application.UseCases.Item.Commands.Requests;
 
-public class PostItemStatusRequest : IRequest<DefaultResponse>
+public class PostRevisaoItemRequest : IRequest<DefaultResponse>
 {
     public required long ItemId { get; set; }
     public required long StatusId { get; set; }
