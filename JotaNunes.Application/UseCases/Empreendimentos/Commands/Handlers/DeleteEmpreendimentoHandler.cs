@@ -14,16 +14,20 @@ public class DeleteEmpreendimentoHandler(
 ) : BaseHandler<Domain.Models.Public.EmpreendimentoBase, DeleteEmpreendimentoRequest, EmpreendimentoBaseResponse, IEmpreendimentoBaseRepository>(domainService, repository),
     IRequestHandler<DeleteEmpreendimentoRequest, DefaultResponse>
 {
-    public Task<DefaultResponse> Handle(DeleteEmpreendimentoRequest request, CancellationToken cancellationToken)
+    public async Task<DefaultResponse> Handle(DeleteEmpreendimentoRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            return Task.FromResult(Response());
+            var empreendimento = await Repository.GetByIdAsync(request.Id);
+
+            if (IsNull(empreendimento)) return Response();
+
+            return Response(await DeleteAsync(empreendimento!));
         }
         catch (Exception e)
         {
-            AddError("DeleteEmpreendimentoHandler", "Error deleting empreendimento:", e);
-            return Task.FromResult(Response());
+            AddError(nameof(DeleteEmpreendimentoHandler), "Error deleting empreendimento:", e);
+            return Response();
         }
     }
 }
