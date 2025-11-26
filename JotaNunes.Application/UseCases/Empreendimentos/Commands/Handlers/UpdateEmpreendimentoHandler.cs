@@ -43,7 +43,11 @@ public class UpdateEmpreendimentoHandler(
                     opt.Items["Versao"] = nextVersion;
                 });
 
-            // 3 - Atualizar status
+            // 3 - Registrar nova versão do empreendimento
+            await UpdateAsync(empreendimentoBase);
+            await empreendimentoRepository.InsertAsync(newEmpreendimento);
+
+            // 4 - Atualizar status
             var currentStatus = empreendimentoBase.LogsStatus.OrderByDescending(ls => ls.DataHoraInclusao).FirstOrDefault();
 
             if ( currentStatus is not { Status: (long)Status.Pendente })
@@ -57,9 +61,6 @@ public class UpdateEmpreendimentoHandler(
                 var logStatus = Repository.DomainService.Mapper.Map<LogStatus>(logStatusRequest);
                 await logStatusRepository.InsertAsync(logStatus);
             }
-
-            // 4 - Registrar nova versão do empreendimento
-            await empreendimentoRepository.InsertAsync(newEmpreendimento);
 
             // 5 - Atualizar versões dos componentes
             var topicosToAppendVersion = new List<long>();
