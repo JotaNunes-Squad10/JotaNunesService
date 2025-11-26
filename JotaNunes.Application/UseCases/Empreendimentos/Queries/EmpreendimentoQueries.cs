@@ -1,6 +1,7 @@
 using JotaNunes.Application.UseCases.Base.Queries;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Domain.Interfaces;
+using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
@@ -22,7 +23,7 @@ public class EmpreendimentoQueries(
         var response = Map<List<EmpreendimentoBaseResponse>>(entities);
 
         var users = await userRepository.GetAllAsync();
-        response.ForEach(async void (eb) =>
+        response.ForEach(void (eb) =>
         {
             var user = users.FirstOrDefault(x => x.Id == eb.UsuarioAlteracaoId);
             eb.UsuarioAlteracao = user != null
@@ -47,10 +48,23 @@ public class EmpreendimentoQueries(
 
             var response = Map<EmpreendimentoBaseFullResponse>(entity!);
 
-            var user = await userRepository.GetByIdAsync(response.UsuarioAlteracaoId);
+            var users = await userRepository.GetAllAsync();
+            var user = users.FirstOrDefault(x => x.Id == response.UsuarioAlteracaoId);
+
             response.UsuarioAlteracao = user != null
                 ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
                 : "Não autorado";
+
+            if (response.Empreendimentos is { Count: > 0 })
+            {
+                response.Empreendimentos.ForEach(void (e) =>
+                {
+                    user = users.FirstOrDefault(x => x.Id == e.UsuarioAlteracaoId);
+                    e.UsuarioAlteracao = user != null
+                        ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
+                        : "Não autorado";
+                });
+            }
 
             return Response(response);
         }
@@ -75,10 +89,23 @@ public class EmpreendimentoQueries(
 
         var response = Map<EmpreendimentoBaseFullResponse>(entity);
 
-        var user = userRepository.GetByIdAsync(response.UsuarioAlteracaoId).Result;
+        var users = await userRepository.GetAllAsync();
+        var user = users.FirstOrDefault(x => x.Id == response.UsuarioAlteracaoId);
+
         response.UsuarioAlteracao = user != null
             ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
             : "Não autorado";
+
+        if (response.Empreendimentos is { Count: > 0 })
+        {
+            response.Empreendimentos.ForEach(void (e) =>
+            {
+                user = users.FirstOrDefault(x => x.Id == e.UsuarioAlteracaoId);
+                e.UsuarioAlteracao = user != null
+                    ? $"{user.FirstName ?? ""} {user.LastName ?? ""}"
+                    : "Não autorado";
+            });
+        }
 
         return Response(response);
     }

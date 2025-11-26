@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace JotaNunes.Application.UseCases.Empreendimentos.Responses;
 
-public class EmpreendimentoBaseResponse()
+public class EmpreendimentoBaseResponse
 {
     public required Guid Id { get; set; }
     public required string Nome { get; set; }
@@ -17,7 +17,7 @@ public class EmpreendimentoBaseResponse()
     public required DateTime DataHoraAlteracao { get; set; }
 }
 
-public class EmpreendimentoBaseFullResponse()
+public class EmpreendimentoBaseFullResponse
 {
     public required Guid Id { get; set; }
     public required string Nome { get; set; }
@@ -35,7 +35,7 @@ public class EmpreendimentoBaseFullResponse()
     public List<EmpreendimentoTopicoResponse>? EmpreendimentoTopicos { get; set; }
 }
 
-public class EmpreendimentoResponse()
+public class EmpreendimentoResponse
 {
     public required long Id { get; set; }
     public required string Nome { get; set; }
@@ -43,6 +43,10 @@ public class EmpreendimentoResponse()
     public required string Localizacao { get; set; }
     public required string Padrao { get; set; }
     public required int Versao { get; set; }
+    [JsonIgnore]
+    public Guid UsuarioAlteracaoId { get; set; }
+    public string? UsuarioAlteracao { get; set; }
+    public required DateTime DataHoraAlteracao { get; set; }
 }
 
 public class EmpreendimentoTopicoResponse
@@ -76,6 +80,7 @@ public class AmbienteItemResponse
 {
     public required long Id { get; set; }
     public required long ItemId { get; set; }
+    public required string Descricao { get; set; }
 
     public required RevisaoItemResponse RevisaoItem { get; set; }
 }

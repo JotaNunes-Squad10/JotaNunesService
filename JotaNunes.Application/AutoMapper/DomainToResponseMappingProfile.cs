@@ -66,6 +66,7 @@ public class DomainToResponseMappingProfile : Profile
         }
 
         CreateMap<AmbienteItem, AmbienteItemResponse>()
+            .ForMember(dest => dest.Descricao, opt => opt.MapFrom(src => src.Item.Descricao))
             .ForMember(dest => dest.RevisaoItem, opt => opt.MapFrom((src, dest) =>
                 src.RevisoesItem is { Count: > 0 }
                     ? src.RevisoesItem.LastOrDefault()
