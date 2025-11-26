@@ -22,11 +22,11 @@ public class MarcaMaterialMapping : BaseAuditEntityMapping<MarcaMaterial>
             .IsRequired();
 
         builder.HasOne(x => x.Marca)
-            .WithMany(x => x.MaterialMarcas)
+            .WithMany(x => x.MarcaMateriais)
             .HasForeignKey(x => x.MarcaId);
 
         builder.HasOne(x => x.Material)
-            .WithMany(x => x.MaterialMarcas)
+            .WithMany(x => x.MarcaMateriais)
             .HasForeignKey(x => x.MaterialId);
     }
 }

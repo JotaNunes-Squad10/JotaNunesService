@@ -12,13 +12,13 @@ public class MaterialRepository(ApplicationContext applicationContext, IDomainSe
 {
     public async Task<List<Material>> GetAllWithMarcasAsync()
         => await GetTracking
-            .Include(x => x.MaterialMarcas)
+            .Include(x => x.MarcaMateriais)
             .ThenInclude(x => x.Marca)
             .ToListAsync();
 
     public async Task<Material?> GetByIdWithMarcasAsync(long id)
         => await GetTracking
-            .Include(x => x.MaterialMarcas)
+            .Include(x => x.MarcaMateriais)
             .ThenInclude(x => x.Marca)
             .FirstOrDefaultAsync(x => x.Id == id);
 }

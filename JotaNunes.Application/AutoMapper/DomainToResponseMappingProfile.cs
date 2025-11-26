@@ -116,14 +116,14 @@ public class DomainToResponseMappingProfile : Profile
         CreateMap<Marca, MateriaisByMarcaResponse>()
             .ForMember(dest => dest.MarcaId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Marca, opt => opt.MapFrom(src => src.Nome))
-            .ForMember(dest => dest.Materiais, opt => opt.MapFrom(src => src.MaterialMarcas.Select(x => x.Material.Nome)));
+            .ForMember(dest => dest.Materiais, opt => opt.MapFrom(src => src.MarcaMateriais.Select(x => x.Material.Nome)));
 
         CreateMap<MarcaMaterial, MarcaMaterialResponse>();
 
         CreateMap<Material, MarcasByMaterialResponse>()
             .ForMember(dest => dest.MaterialId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Material, opt => opt.MapFrom(src => src.Nome))
-            .ForMember(dest => dest.Marcas, opt => opt.MapFrom(src => src.MaterialMarcas.Select(x => x.Marca.Nome)));
+            .ForMember(dest => dest.Marcas, opt => opt.MapFrom(src => src.MarcaMateriais.Select(x => x.Marca.Nome)));
 
         CreateMap<TopicoAmbiente, TopicoAmbienteResponse>()
             .ForMember(dest => dest.AmbienteItens, opt => opt.MapFrom(src => src.AmbienteItens));
