@@ -16,10 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Services\QuestPdf\Documents\" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Content Include="Services\QuestPdf\Assets\**\*.*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>

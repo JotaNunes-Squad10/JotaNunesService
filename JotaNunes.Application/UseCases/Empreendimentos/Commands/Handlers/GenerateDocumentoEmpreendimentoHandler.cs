@@ -4,10 +4,12 @@ using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Domain.Interfaces;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
-using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents;
+using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents.Version1;
+using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents.Version2;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Requests;
 using MediatR;
 using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 
 namespace JotaNunes.Application.UseCases.Empreendimentos.Commands.Handlers;
 
@@ -21,7 +23,7 @@ public class GenerateDocumentoEmpreendimentoHandler(
     {
         try
         {
-            var version = request.Version ?? await Repository.GetLastVersionAsync(request.Id);
+            var version = request.EmpreendimentoVersion ?? await Repository.GetLastVersionAsync(request.Id);
 
             var empreendimentoBase = await Repository.GetByVersionAsync(request.Id, version);
 
@@ -41,7 +43,19 @@ public class GenerateDocumentoEmpreendimentoHandler(
                 EmpreendimentoTopicos = empreendimentoBase.EmpreendimentoTopicos
             };
 
-            var documentoEmpreendimento = new DocumentoEmpreendimento(documentoRequest);
+            IDocument documentoEmpreendimento;
+
+            switch (request.DocumentVersion)
+            {
+                case 1:
+                    documentoEmpreendimento = new DocumentoEmpreendimento(documentoRequest);
+                    break;
+                case 2 or null:
+                    documentoEmpreendimento = new DocumentoEmpreendimento2(documentoRequest);
+                    break;
+                default:
+                    return Response();
+            }
 
             var response = documentoEmpreendimento.GeneratePdf();
 
