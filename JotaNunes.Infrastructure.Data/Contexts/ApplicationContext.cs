@@ -6,11 +6,6 @@ namespace JotaNunes.Infrastructure.Data.Contexts;
 public class ApplicationContext(DbContextOptions<ApplicationContext> options, ApplicationProvider appProvider)
     : DbContext(options)
 {
-    static ApplicationContext()
-    {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-    }
-    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
