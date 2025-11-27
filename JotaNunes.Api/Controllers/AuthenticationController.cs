@@ -40,6 +40,7 @@ public class AuthenticationController(
     public async Task<IActionResult> GetAllUsersAsync()
         => CustomResponse(await authenticationQueries.GetAllAsync());
 
+    [AuthorizeGroup(Group.Administrador)]
     [HttpGet("GetUserById/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -47,12 +48,20 @@ public class AuthenticationController(
     public async Task<IActionResult> GetUserByIdAsync([FromRoute] Guid id)
         => CustomResponse(await authenticationQueries.GetByIdAsync(id));
 
+    [AuthorizeGroup(Group.Administrador)]
     [HttpGet("GetUserByUsername/{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetUserByUsername([FromRoute] string username)
         => CustomResponse(await authenticationQueries.GetByUsernameAsync(username));
+
+    [HttpGet("GetUserRequiredActionsByUsername/{username}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetUserRequiredActionsByUsernameAsync([FromRoute] string username)
+        => CustomResponse(await authenticationQueries.GetRequiredActionsByUsernameAsync(username));
 
     [AuthorizeGroup(Group.Administrador)]
     [HttpPatch("ResetPassword")]

@@ -8,7 +8,7 @@ using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 namespace JotaNunes.Application.UseCases.Authentication.Queries;
 
 public class AuthenticationQueries(IDomainService domainService, IUserRepository repository)
-    : BaseQueries<Domain.Models.Keycloak.User, UserResponse, IUserRepository>(domainService, repository), IAuthenticationQueries
+    : BaseQueries<User, UserResponse, IUserRepository>(domainService, repository), IAuthenticationQueries
 {
     public new async Task<DefaultResponse> GetAllAsync()
     {
@@ -40,6 +40,19 @@ public class AuthenticationQueries(IDomainService domainService, IUserRepository
         if (IsNull(user)) return Response();
 
         var response = Map(user!);
+
+        return Response(response);
+    }
+
+    public virtual async Task<DefaultResponse> GetRequiredActionsByUsernameAsync(string username)
+    {
+        var user = await Repository.GetByUsernameAsync(username);
+
+        var response = new RequiredActionsResponse
+        {
+            Username = username,
+            RequiredActions = user?.UserRequiredActions.Select(ura => ura.Action).ToList() ?? []
+        };
 
         return Response(response);
     }
