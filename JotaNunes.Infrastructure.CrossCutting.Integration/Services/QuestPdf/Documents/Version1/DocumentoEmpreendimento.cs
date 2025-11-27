@@ -1,9 +1,9 @@
+using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents.Version1.Styles;
 using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Requests;
-using JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Styles;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 
-namespace JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents;
+namespace JotaNunes.Infrastructure.CrossCutting.Integration.Services.QuestPdf.Documents.Version1;
 
 public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimento) : IDocument
 {
@@ -22,7 +22,7 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
                 page.Header().Height(100).Row(row =>
                 {
                     row.RelativeItem(4);
-                    row.RelativeItem(1).Image(GetImage("logo.png"));
+                    row.RelativeItem().Image(GetImage("logo.png"));
                 });
 
                 page.Content()
@@ -41,7 +41,7 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
 
                             if (et.TopicoId != 3) // Diferente de Marcas
                             {
-                                et.TopicoAmbientes.OrderBy(ta => ta.Posicao).ToList().ForEach(ta =>
+                                et.TopicoAmbientes?.OrderBy(ta => ta.Posicao).ToList().ForEach(ta =>
                                 {
                                     column.Item().Text("").Style(Typography.Normal);
                                     AddListTopic(column, 1, $"{et.Posicao}.{ta.Posicao}.", ta.Ambiente.Nome, Typography.Topic);
@@ -55,13 +55,13 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
                                             columns.RelativeColumn(7);
                                         });
 
-                                        if (ta.AmbienteItens.Count > 0)
+                                        if (ta.AmbienteItens?.Count > 0)
                                         {
                                             table.Cell().Element(Table.HeaderCell).Text("Item");
                                             table.Cell().Element(Table.HeaderCell).Text("Descrição");
                                         }
 
-                                        ta.AmbienteItens.OrderBy(ai => ai.Item.Nome).ToList().ForEach(ai =>
+                                        ta.AmbienteItens?.OrderBy(ai => ai.Item.Nome).ToList().ForEach(ai =>
                                         {
                                             table.Cell().Element(Table.BodyCell).Text(ai.Item.Nome);
                                             table.Cell().Element(Table.BodyCell).Text(ai.Item.Descricao);
@@ -75,7 +75,7 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
                                 column.Item().Text("").Style(Typography.Normal);
                                 column.Item().Table(table =>
                                 {
-                                    if (et.TopicoMateriais.Count > 0)
+                                    if (et.TopicoMateriais?.Count > 0)
                                     {
                                         table.ColumnsDefinition(columns =>
                                         {
@@ -86,7 +86,7 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
                                         table.Cell().Element(Table.HeaderCell).Text("Descrição");
                                     }
 
-                                    et.TopicoMateriais.GroupBy(tm => tm.MarcaMaterial.MaterialId)
+                                    et.TopicoMateriais?.GroupBy(tm => tm.MarcaMaterial.MaterialId)
                                         .ToList().ForEach(group =>
                                         {
                                             var material = group.First().MarcaMaterial.Material.Nome;
@@ -112,7 +112,7 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
             });
     }
 
-    private void AddListTopic(ColumnDescriptor column, int nestingLevel, string bulletText, string text, TextStyle style)
+    private static void AddListTopic(ColumnDescriptor column, int nestingLevel, string bulletText, string text, TextStyle style)
     {
         column.Item().Row(row =>
         {
@@ -122,6 +122,6 @@ public class DocumentoEmpreendimento(DocumentoEmpreendimentoRequest empreendimen
         });
     }
 
-    private string GetImage(string image)
+    private static string GetImage(string image)
         => Path.Combine(AppContext.BaseDirectory, "Services", "QuestPdf", "Assets", "Images", image);
 }
