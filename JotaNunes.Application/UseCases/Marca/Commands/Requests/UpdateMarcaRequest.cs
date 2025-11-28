@@ -5,6 +5,7 @@ namespace JotaNunes.Application.UseCases.Marca.Commands.Requests;
 
 public class UpdateMarcaRequest : IRequest<DefaultResponse>
 {
-    public long Id { get; set; }
-    public string? Nome { get; set; }
+    public required long Id { get; set; }
+    public required string Nome { get; set; }
+    public required List<long> MaterialIds { get; set; }
 }

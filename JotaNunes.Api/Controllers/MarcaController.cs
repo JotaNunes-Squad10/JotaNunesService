@@ -35,7 +35,7 @@ public class MarcaController(
     public async Task<IActionResult> GetMarcaByIdAsync(long id)
         => CustomResponse(await queries.GetByIdAsync(id));
 
-    [HttpPatch("UpdateMarca")]
+    [HttpPut("UpdateMarca")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -37,7 +37,7 @@ public class MaterialController(
     public async Task<IActionResult> GetMaterialByIdAsync([FromRoute] long id)
         => CustomResponse(await materialQueries.GetByIdAsync(id));
 
-    [HttpPatch("UpdateMaterial")]
+    [HttpPut("UpdateMaterial")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
