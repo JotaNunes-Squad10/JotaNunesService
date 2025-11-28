@@ -21,4 +21,18 @@ public class MarcaMaterialRepository(ApplicationContext applicationContext, IDom
             .Include(x => x.Marca)
             .Include(x => x.Material)
             .FirstOrDefaultAsync(x => x.Id == id);
+
+    public async Task<List<MarcaMaterial>> GetByMarcaIdAsync(long marcaId)
+        => await GetTracking
+            .Include(x => x.Marca)
+            .Include(x => x.Material)
+            .Where(x => x.MarcaId == marcaId)
+            .ToListAsync();
+
+    public async Task<List<MarcaMaterial>> GetByMaterialIdAsync(long materialId)
+        => await GetTracking
+            .Include(x => x.Marca)
+            .Include(x => x.Material)
+            .Where(x => x.MaterialId == materialId)
+            .ToListAsync();
 }
