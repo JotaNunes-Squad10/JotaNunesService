@@ -29,7 +29,7 @@ public class GenerateDocumentoEmpreendimentoHandler(
 
             if (IsNull(empreendimentoBase)) return Response();
 
-            var empreendimento = empreendimentoBase!.Empreendimentos.FirstOrDefault();
+            var empreendimento = empreendimentoBase!.Empreendimentos.FirstOrDefault(e => e.Versao == version);
 
             if (IsNull(empreendimento)) return Response();
 
@@ -40,6 +40,7 @@ public class GenerateDocumentoEmpreendimentoHandler(
                 Descricao = empreendimento.Descricao,
                 Localizacao = empreendimento.Localizacao,
                 TamanhoArea = empreendimento.TamanhoArea,
+                Versao = empreendimento.Versao,
                 EmpreendimentoTopicos = empreendimentoBase.EmpreendimentoTopicos
             };
 

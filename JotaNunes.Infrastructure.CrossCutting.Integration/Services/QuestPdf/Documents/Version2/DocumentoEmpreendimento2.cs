@@ -27,7 +27,13 @@ public class DocumentoEmpreendimento2(DocumentoEmpreendimentoRequest empreendime
                         .Image(GetImage("footer.png"))
                         .FitWidth();
 
-                    row.RelativeItem(4);
+                    row.RelativeItem(3);
+
+                    row.RelativeItem()
+                        .AlignRight()
+                        .AlignMiddle()
+                        .Text($"Versão {empreendimento.Versao}")
+                        .FontSize(9);
                 });
 
                 page.Content()
