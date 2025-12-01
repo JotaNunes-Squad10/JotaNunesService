@@ -5,7 +5,8 @@ namespace JotaNunes.Domain.Interfaces;
 
 public interface IEmpreendimentoBaseRepository : IBaseRepository<EmpreendimentoBase>
 {
-    public Task<EmpreendimentoBase?> GetByIdAsync(Guid id);
-    public Task<EmpreendimentoBase?> GetByVersionAsync(Guid id, int versao);
-    public Task<int> GetLastVersionAsync(Guid id);
+    Task<List<EmpreendimentoBase>> GetAllFullAsync();
+    Task<EmpreendimentoBase?> GetByIdAsync(Guid id);
+    Task<EmpreendimentoBase?> GetByVersionAsync(Guid id, int versao);
+    Task<int> GetLastVersionAsync(Guid id);
 }

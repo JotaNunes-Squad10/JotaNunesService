@@ -18,6 +18,15 @@ public class EmpreendimentoBaseRepository(ApplicationContext applicationContext,
             .Include(eb => eb.EmpreendimentoStatus)
             .Include(eb => eb.Empreendimentos)
                 .ThenInclude(e => e.EmpreendimentoPadrao)
+            .ToListAsync();
+
+    public async Task<List<EmpreendimentoBase>> GetAllFullAsync()
+        => await GetTracking
+            .Include(eb => eb.LogsStatus)
+            .Include(eb => eb.Empreendimentos)
+            .Include(eb => eb.EmpreendimentoStatus)
+            .Include(eb => eb.Empreendimentos)
+                .ThenInclude(e => e.EmpreendimentoPadrao)
             .Include(eb => eb.EmpreendimentoTopicos)
                 .ThenInclude(et => et.Topico)
             .Include(eb => eb.EmpreendimentoTopicos)

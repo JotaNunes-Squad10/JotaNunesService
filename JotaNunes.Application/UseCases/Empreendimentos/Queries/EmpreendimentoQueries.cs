@@ -1,7 +1,6 @@
 using JotaNunes.Application.UseCases.Base.Queries;
 using JotaNunes.Application.UseCases.Empreendimentos.Responses;
 using JotaNunes.Domain.Interfaces;
-using JotaNunes.Domain.Models.Keycloak;
 using JotaNunes.Domain.Models.Public;
 using JotaNunes.Domain.Services;
 using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
@@ -14,11 +13,9 @@ public class EmpreendimentoQueries(
     IUserRepository userRepository
 ) : BaseQueries<EmpreendimentoBase, EmpreendimentoBaseFullResponse, IEmpreendimentoBaseRepository>(domainService, repository), IEmpreendimentoQueries
 {
-    private readonly IEmpreendimentoBaseRepository _repository = repository;
-
     public new async Task<DefaultResponse> GetAllAsync()
     {
-        var entities = await _repository.GetAllAsync();
+        var entities = await Repository.GetAllAsync();
 
         var response = Map<List<EmpreendimentoBaseResponse>>(entities);
 
@@ -38,11 +35,11 @@ public class EmpreendimentoQueries(
     {
         try
         {
-            var version = await _repository.GetLastVersionAsync(id);
+            var version = await Repository.GetLastVersionAsync(id);
 
             if (IsNull(version)) return Response();
 
-            var entity = await _repository.GetByVersionAsync(id, version);
+            var entity = await Repository.GetByVersionAsync(id, version);
 
             if (IsNull(entity)) return Response();
 
@@ -77,7 +74,7 @@ public class EmpreendimentoQueries(
 
     public async Task<DefaultResponse> GetByVersionAsync(Guid id, int version)
     {
-        var entity = await _repository.GetByVersionAsync(id, version);
+        var entity = await Repository.GetByVersionAsync(id, version);
 
         if (IsNull(entity)) return Response();
 
