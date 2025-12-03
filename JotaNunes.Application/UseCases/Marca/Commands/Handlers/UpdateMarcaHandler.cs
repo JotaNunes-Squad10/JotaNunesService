@@ -26,6 +26,8 @@ public class UpdateMarcaHandler(
 
             if (IsNull(marca)) return Response();
 
+            await UpdateAsync(request);
+
             var marcaMateriais = await materialMarcaRepository.GetByMarcaIdAsync(request.Id);
 
             marcaMateriais.Where(x => !request.MaterialIds.Contains(x.MaterialId)).ToList().ForEach(x =>
