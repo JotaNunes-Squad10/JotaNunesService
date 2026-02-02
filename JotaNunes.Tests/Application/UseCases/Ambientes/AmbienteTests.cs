@@ -2,7 +2,6 @@ using JotaNunes.Application.UseCases.Ambiente.Commands.Handlers;
 using JotaNunes.Application.UseCases.Ambiente.Commands.Requests;
 using JotaNunes.Application.UseCases.Ambiente.Responses;
 using JotaNunes.Domain.Interfaces;
-using JotaNunes.Infrastructure.CrossCutting.Commons.Patterns.Response;
 using JotaNunes.Tests.Application.UseCases.Base;
 using NSubstitute;
 
@@ -11,12 +10,11 @@ namespace JotaNunes.Tests.Application.UseCases.Ambientes;
 public class AmbienteTests : IClassFixture<ClassFixture>
 {
     private readonly CreateAmbienteHandler _handler;
+    private IAmbienteRepository repoMock { get; } = Substitute.For<IAmbienteRepository>();
 
     public AmbienteTests(ClassFixture fixture)
     {
-        var domainService = fixture.DomainService;
-        var repoMock = Substitute.For<IAmbienteRepository>();
-        _handler = new CreateAmbienteHandler(domainService, repoMock);
+        _handler = new CreateAmbienteHandler(fixture.DomainService, repoMock);
     }
 
     [Fact]
@@ -32,9 +30,14 @@ public class AmbienteTests : IClassFixture<ClassFixture>
 
         var data = Assert.IsType<AmbienteResponse>(result.Data);
 
-        Assert.NotNull(result);
+        await repoMock.Received().InsertAsync(
+            Arg.Do<Domain.Models.Public.Ambiente>(a => _ = a)
+        );
+
         Assert.NotNull(data);
-        Assert.Equal(request.Nome, data.Nome);
+        Assert.Equal(
+            new { request.Nome, request.TopicoId },
+            new { data.Nome, TopicoId = data.Topico.Id });
         Assert.True(result.ValidationResult.IsValid);
     }
 }
