@@ -23,7 +23,9 @@ public class GenerateDocumentoEmpreendimentoHandler(
     {
         try
         {
-            var version = request.EmpreendimentoVersion ?? await Repository.GetLastVersionAsync(request.Id);
+            var version = request.EmpreendimentoVersion ?? 0;
+
+            version = version == 0 ? await Repository.GetLastVersionAsync(request.Id) : version;
 
             var empreendimentoBase = await Repository.GetByVersionAsync(request.Id, version);
 
@@ -51,11 +53,9 @@ public class GenerateDocumentoEmpreendimentoHandler(
                 case 1:
                     documentoEmpreendimento = new DocumentoEmpreendimento(documentoRequest);
                     break;
-                case 2 or null:
+                default:
                     documentoEmpreendimento = new DocumentoEmpreendimento2(documentoRequest);
                     break;
-                default:
-                    return Response();
             }
 
             var response = documentoEmpreendimento.GeneratePdf();
@@ -64,7 +64,7 @@ public class GenerateDocumentoEmpreendimentoHandler(
         }
         catch (Exception e)
         {
-            AddError("GenerateDocumentoEmpreendimentoHandler", "Error generating empreendimento document:", e);
+            AddError(nameof(GenerateDocumentoEmpreendimentoHandler), "Error generating empreendimento document:", e);
             return Response();
         }
     }
